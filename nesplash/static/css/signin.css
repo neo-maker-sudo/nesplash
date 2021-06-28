@@ -1,0 +1,92 @@
+.signin-form {
+    background-color: transparent;
+    text-align: left;
+    padding: 20px 33px 20px 20px;
+    border-radius: 5px;
+    width: 500px;
+    height: 300px;
+    box-shadow: 0 5px 12px rgb(0 0 0 / 15%);
+    margin: 150px auto 0 auto;
+}
+
+.signin-title{
+    margin-top: 15px;
+    font-weight: 500;
+}
+
+.signin-password,
+.signin-email {
+    width: 97.5%;
+    height: 20px;
+    border-radius: 5px;
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #757575;
+}
+
+.signin-btn {
+    padding: 8px 10px;
+    border-radius: 5px;
+    background: transparent;
+    border: 1px solid rgb(94, 100, 184);
+    color: rgb(94, 100, 184);
+    font-weight: 600;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+.signin-btn:hover{
+    background: rgb(94, 100, 184);
+    color: white
+}
+
+.signin-forgot{
+    color: blue;
+    font-style: italic;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.signin-forgotDiv {
+    position: relative; 
+    top: 10px;
+}
+
+.signin-span{
+    position: relative;
+    top: 2px;
+    margin-left: 5px;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.6;
+}
+
+.signin-a{
+    margin-left: 5px;
+    text-decoration: none;
+}
+
+.signin-iconDiv{
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+
+.fa-google{
+    color:red;
+    font-size: 20px;
+    margin: 0 2px;
+    cursor: pointer;
+}
+
+.fa-github{
+    font-size: 20px;
+    margin: 0 2px;
+    cursor: pointer;
+}
+
+.signin-error{
+    margin: 0;
+    color: red;
+    font-style: italic;
+}

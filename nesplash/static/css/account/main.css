@@ -1,0 +1,587 @@
+.main-account-2 {
+    list-style: none;
+    display: flex;
+    animation: example 1s;
+    transition-timing-function: ease;
+}
+
+.account-2-a {
+    margin: 15px 15px 0 15px;
+    box-shadow: 0 5px 10px rgb(0 0 0 / 15%);
+    padding: 10px;
+    cursor: pointer;
+    transition: 1s;
+    text-decoration: none;
+    color: black;
+}
+
+.account-2-a:hover {
+    background-color: black;
+    color: white;
+}
+
+.select {
+    background-color: black;
+    color: white;
+}
+
+.person-section{
+    max-width: 1200px;
+    position: relative;
+}
+
+.person-topDiv {
+    display: flex;
+    background-color: transparent;
+    padding: 45px 0;
+    border-radius: 5px;
+    box-shadow: 0 5px 12px rgb(0 0 0 / 15%);
+    margin-top: 70px;
+    justify-content: center;
+    height: 400px;
+}
+
+.person-topDiv label {
+    text-align: left;
+}
+
+.data-area {
+    width: 40%; 
+    margin-right: 60px;
+    display: grid;
+}
+
+.label-name,
+.label-email,
+.label-bio,
+.label-location,
+.label-change-password{
+    margin-left: 25px;
+}
+
+.label-name::before {
+    content : "名稱 : "
+}
+
+.label-email::before {
+    content : "E-mail : "
+}
+
+.label-change-password::before {
+    content : "修改密碼 : "
+}
+
+.label-location::before {
+    content : "地區 : "
+}
+
+.person-publicDiv{
+    position: absolute;
+    left: 30%;
+    top: 5%;
+}
+
+.person-public{
+    color: #aaa;
+    font-style: italic;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.person-public:hover{
+    color:#f89753;
+}
+.person-confirm-spanDiv {
+    position: absolute;
+    right: 20px;
+    background: rgb(206, 161, 161);
+    border-radius: 24px;
+    color:rgb(165, 49, 49)
+}
+
+.success{
+    background-color: #b7e7cb;
+    color: #36a162;
+}
+.confirm-status{
+margin: 3px 8px;
+}
+
+.person-name,
+.person-email,
+.person-change-password,
+.person-location,
+.person-bio{
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+.person-bio{
+    margin-top: 10px;
+}
+.textarea-bio{
+    width: 300px;
+    height: 100px;
+}
+
+.person-modify-1,
+.person-modify-2,
+.person-modify-4{
+    cursor: pointer;
+}
+
+.person-modify-1:hover,
+.person-modify-2:hover,
+.person-modify-4:hover{
+    color: blue
+}
+
+.image-area{
+    text-align: center;
+}
+
+.person-changeImage {
+    padding: 10px;
+    margin-top: 5px;
+    transition: 1s;
+    cursor: pointer;
+}
+
+.person-delete {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    margin-top: 5px;
+    transition: 1s;
+    cursor: pointer;
+    background-color: #CCCCCC;
+}
+
+.person-upload{
+    background-color: #CCCCCC;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: 1s;
+}
+.person-upload-forbidden{
+    background-color: #CCCCCC;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: no-drop;
+    font-size: 13px;
+    transition: 1s;
+}
+.person-upload:hover,
+.upload-btn:hover {
+    background-color: transparent;
+    border: 1px solid black;
+    color : rgb(31, 192, 31);
+}
+
+.person-changeImage:hover {
+    color : rgb(31, 192, 31);
+}
+
+.person-delete-area{
+    text-align: end;
+    margin-top: 30px;
+}
+
+.person-upload-area{
+    text-align: end;
+    margin-top: 85px;
+}
+
+.person-delete:hover {
+    background-color: red;
+    color: white;
+}
+.remind-span{
+    position: absolute;
+    top: 0%;
+    color: red;
+    font-style: italic;
+    left: 10px;
+}
+
+.bind-neoDiv,
+.bind-googleDiv,
+.bind-githubDiv{
+    margin: 10px 0;
+}
+
+.fa-google{
+    color: red;
+}
+.fa-google,
+.fa-github,
+.fa-neos{
+    margin-right: 10px;
+    font-size: 25px;
+}
+.person-botDiv{
+    padding-left: 60px;
+    margin-bottom: 50px;
+}
+.bind-span{
+    font-size: 22px;
+    font-style: italic;
+}
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    text-align: center;
+}
+
+.fa-user,
+.fa-file,
+.fa-envelope,
+.fa-lock,
+.fa-location-arrow{
+    position: absolute;
+}
+
+.name-div,
+.delete-div,
+.location-div,
+.change-password-div{
+    position: relative;
+    max-width: 340px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 60px #aaaaaa;
+    border-radius: 6px;
+    margin: 0 auto;
+    z-index: 5;
+    padding: 10px;
+}
+
+.upload-div {
+    position: relative;
+    max-width: 50em;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 60px #aaaaaa;
+    border-radius: 6px;
+    margin: 0 auto;
+    z-index: 5;
+    padding: 10px;
+}
+.name-h3 {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 24px;
+    color: #666666;
+    margin: 15px 0 15px 11px;
+    text-align: left;
+}
+
+#name-input_1,
+#change-password-input_1,
+#change-password-input_2,
+#location-input{
+    width: 310px;
+    height: 45px;
+    border: 1px solid #CCCCCC;
+    border-radius: 5px;
+    margin: 15px 0;
+    padding-left: 10px;
+}
+
+.name-button{
+    height: 40px;
+    background: #f89753;
+    border-radius: 5px;
+    color: white;
+    border: none;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+.name-button:hover,
+.location-button:hover,
+.change-password-button:hover,
+.delete-button:hover {
+    opacity: 0.8;
+}
+
+.change-password-h3 {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 24px;
+    color: #666666;
+    margin: 15px 0 15px 11px;
+    text-align: left;
+}
+
+.change-password-button{
+    height: 40px;
+    background: #f89753;
+    border-radius: 5px;
+    color: white;
+    border: none;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+.delete-h3 {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 24px;
+    color: #666666;
+    margin: 15px 0 15px 11px;
+    text-align: left;
+}
+
+.delete-button{
+    height: 40px;
+    background: #f89753;
+    border-radius: 5px;
+    color: white;
+    border: none;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+.location-h3 {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 24px;
+    color: #666666;
+    margin: 15px 0 15px 11px;
+    text-align: left;
+}
+
+.location-button{
+    height: 40px;
+    background: #f89753;
+    border-radius: 5px;
+    color: white;
+    border: none;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+.upload-h3 {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 24px;
+    color: #666666;
+    margin: 15px 0 15px 11px;
+    text-align: left;
+}
+
+.upload-button{
+    height: 40px;
+    background: #f89753;
+    border-radius: 5px;
+    color: white;
+    border: none;
+    margin: 30px 0 20px 0;;
+    cursor: pointer;
+}
+
+.upload-button:hover{
+    opacity: 0.8;
+}
+
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    right: 15px;
+}
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.person-image {
+    border: solid 2px black;
+    border-radius: 50%;
+    width: 125px;
+    height: 125px;
+}
+.upload-btn{
+    position: absolute;
+    left: 0;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    transition: 1s;
+    top: 55px;
+    background-color: #CCCCCC;
+    border-radius: 5px;
+    margin-left: 8px;
+}
+
+
+#collect-section-2 {
+    display: flex;
+    max-width: 1200px;
+    flex-wrap: wrap;
+    margin-top: 40px;
+}
+
+.collect-section-2-img,
+.picture-section-2-img{
+    width: 100%;
+    height: 100%;
+}
+
+.picture-section-2-topDiv{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5px;
+}
+
+.collect-section-2-div,
+.picture-section-2-div {
+    height: 100%;
+    margin: 20px auto;
+    width: 320px;
+    min-height: 310px;
+    padding: 10px;
+    position: relative;
+    box-shadow: 0 5px 12px rgb(0 0 0 / 15%);
+    box-sizing: border-box;
+}
+
+.collect-section-2-div:hover,
+.picture-section-2-div:hover{
+    opacity: 0.8;
+}
+
+/* following and followers */
+
+.following-section-2-contributorDiv,
+.followers-section-2-contributorDiv{
+    margin: 20px auto;
+    width: 90%;
+    padding: 10px;
+    position: relative;
+    border-left: 1px solid #ccc;
+    box-shadow: 0px 0px 12px rgb(0 0 0 / 20%);
+    display: flex;
+    align-items: center;
+}
+
+.sec_2_contributorImgfile{
+    width: 60px;
+    height: 60px;
+    margin: 10px;
+    border-radius: 100%;
+}
+
+.following-section-2-contributor-linkDiv,
+.followers-section-2-contributor-linkDiv{
+    display: grid;
+    margin-top: 10px;
+}
+
+.following-section-2-contributor-inside-a,
+.followers-section-2-contributor-inside-a{
+    text-decoration: none;
+    color: black;
+    font-size: 26px;
+    font-weight: 600;
+    font-style: italic;
+    margin-bottom: 5px;
+}
+
+.following-section-2-contributor-outside-a,
+.followers-section-2-contributor-outside-a{
+    color:rgb(182, 179, 179);
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-style: italic;
+}
+
+.following-section-2-contributor-inside-a:hover,
+.following-section-2-contributor-outside-a:hover,
+.followers-section-2-contributor-inside-a:hover,
+.followers-section-2-contributor-outside-a:hover{
+    color: blue;
+}
+
+#following-section-2,
+#followers-section-2{
+    margin-top: 40px;
+}
+
+/* picture */
+#picture-section-2{
+    display: flex;
+    max-width: 1200px;
+    flex-wrap: wrap;
+    margin-top: 40px;
+}
+
+.upload-categoryDiv{
+    display: grid; 
+    margin-right: 60px;
+}
+
+.upload-categoryInfoFile{
+    display: grid;
+    height: 160px;
+}
+
+.upload-categoryDiv ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 16px 16px 16px;
+    text-align: left;
+}
+.upload-categoryDiv ul li {
+    padding: 5px;
+    border: solid 1px #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px 0;
+}
+
+.upload-categoryDiv ul li:hover{
+    background-color: #36a162;
+}
+
+.upload-CategoryTitle {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 24px;
+    color: #666666;
+    text-align: left;
+    margin: 0 0 15px 15px;
+}
+
+.picture-delete-button{
+    cursor: pointer;
+}
+
+/* confirm */
+
+.confirm-section-1 {
+    text-align: center;
+    margin-top: 100px;
+}

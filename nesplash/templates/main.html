@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+
+
+{% block style %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="main-section-1-div">
+        <legend class="main-bigTitle">A. Decorative Exhibition Via UnSplash Open API Data</legend>
+    </div>
+    
+    <section id="main-section-2">
+        <!-- dynamic loading photo's data -->
+    </section>
+{% endblock %}
+
+{% block script %}
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <!-- <script src="{{ url_for('static', filename='js/common.js') }}"></script> -->
+{% endblock %}

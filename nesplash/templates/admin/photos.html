@@ -1,0 +1,36 @@
+{% extends 'layout.html' %}
+
+{% block style %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/admin/photos.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="admin-section-1">
+        <a class="admin-a" href="{{ url_for('admin.admin_users_page') }}">Users</a>
+        <a class="admin-a" href="{{ url_for('admin.admin_photos_page') }}">Photos</a>
+    </div>
+
+    <div class="admin-search">
+        <input class="search-input" placeholder="輸入圖片id">
+        <button id="search-button">搜尋</button>
+    </div>
+
+    <div class="admin-section-2">
+        <!-- dynamic loading user's data -->
+    </div>
+
+    <form onsubmit="return false">
+        <div id="modal-delete" class="modal">
+            <div class="delete-div">
+                <span class="close">&times;</span>
+                <h3 class="delete-h3">Delete Photo</h3>
+                <button type="submit" class="delete-button">Confirm</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+
+
+{% block script %}
+    <script src="{{ url_for('static', filename='js/admin/photos.js') }}"></script>
+{% endblock %}

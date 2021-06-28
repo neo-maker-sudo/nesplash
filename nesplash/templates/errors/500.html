@@ -1,0 +1,13 @@
+{% extends 'layout.html' %}
+
+
+{% block style %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/errors/error.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="fiveoo-section-1-div">
+        <h1>Something went wrong (500)</h1>
+        <p>We're experiencing some trouble on our end. Please try again</p>
+    </div>
+{% endblock %}

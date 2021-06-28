@@ -1,0 +1,36 @@
+{% extends 'layout.html' %}
+
+{% block style %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/signin.css') }}" >
+{% endblock %}
+
+{% block content %}
+    <form class="signin-form" onsubmit="return false">
+        <div class="signin-iconDiv">
+            <legend class="signin-title">Log in</legend>
+            <div>
+                <a href="{{ url_for('auth.oauth_login', provider_name='google') }}"><i class="fab fa-google"></i></a>
+                <a href="{{ url_for('auth.oauth_login', provider_name='github') }}"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+        <hr>
+        <div class="signin-div">
+            <label class="signin-label">Email : </label>
+            <input class="signin-email" placeholder="輸入電子信箱" type="email" required>
+        </div>
+        <div class="signin-div">
+            <label class="signin-label">Password : </label>
+            <input class="signin-password" placeholder="輸入密碼" type="password" required>
+        </div>
+        <button class="signin-btn">signin</button>
+        <span class="signin-span">Don't have an account?<a class="signin-a"href="{{ url_for('user.signup') }}">Join</a></span>
+        <div class="signin-forgotDiv">
+            <a class="signin-forgot" href="{{ url_for('user.reset_page') }}">Forgot Passowrd?</a>
+        </div>
+    </form>
+{% endblock %}
+
+
+{% block script %}
+    <script src="{{ url_for('static', filename='js/signin.js') }}"></script>
+{% endblock %}

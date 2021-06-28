@@ -1,0 +1,174 @@
+{% extends 'layout.html' %}
+
+{% block style %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/account/main.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="main-account-2">
+        <a class="account-2-a" href="{{ url_for('user.person_data') }}">Personal Data</a>
+        <a class="account-2-a" href="{{ url_for('user.upload_pictures_page') }}">Upload_Pictures</a>
+        <a class="account-2-a" href="{{ url_for('user.collections_page') }}">Collections</a>
+        <a class="account-2-a" href="{{ url_for('user.following_page') }}">Following</a>
+        <a class="account-2-a" href="{{ url_for('user.followers_page') }}">Followers</a>
+    </div>
+    <div class="person-section">
+        <div class="person-confirm-spanDiv">
+            <p class="confirm-status"></p>
+        </div>
+        <div>
+            <div class="person-topDiv">
+                <div class="data-area">
+                    <div class="person-name">
+                        <i class="fas fa-user"></i>
+                        <label class="label-name"></label>
+                        <label class="person-modify-1">修改</label>
+                        <div class="person-publicDiv">
+                            <a class="person-public">public page</a>
+                        </div>
+                    </div>
+                    <div class="person-email">
+                        <i class="far fa-envelope"></i>
+                        <label class="label-email"></label>
+                    </div>
+                    <div class="person-change-password">
+                        <i class="fas fa-lock"></i>
+                        <label class="label-change-password">********</label>
+                        <label class="person-modify-2">修改</label>
+                    </div>
+                    <div class="person-location">
+                        <i class="fas fa-location-arrow"></i>
+                        <label class="label-location"></label>
+                        <label class="person-modify-4">修改</label>
+                    </div>
+                    <div>
+                        <i class="fas fa-file"></i>
+                        <label class="label-bio">自傳 : </label>
+                        <div class="person-bio">
+                            <textarea class="textarea-bio"></textarea>
+                            <label class="person-modify-3">修改</label>
+                        </div>
+
+                    </div>
+                </div>
+                <div>
+                    <div class="image-area">
+                        <div>
+                            <img class="person-image">
+                        </div>
+                        <form style="display: flex; position:relative;">
+                            <div>
+                                <input type="file" class="person-changeImage" accept=".jpg,.png" name="file" id="iform">
+                            </div>
+                            <button class="upload-btn">更換大頭貼</button>
+                        </form>
+                    </div>
+                    <div class="person-upload-area">
+                        <a class="person-upload">上傳照片</a>
+                    </div>
+                    <div class="person-delete-area">
+                        <button class="person-delete">刪除帳號</button>
+                    </div>
+                </div>
+            </div>
+            <div class="person-botDiv">
+                <h2>綁定帳號</h2>
+                <div class="bind-neoDiv">
+                    <i class="fab fa-neos"></i>
+                    <span class="bind-span">Nesplash</span>
+                </div>
+                <div class="bind-googleDiv">
+                    <i class="fab fa-google"></i>
+                    <span class="bind-span">Google</span>
+                </div>
+                <div class="bind-githubDiv">
+                    <i class="fab fa-github"></i>
+                    <span class="bind-span">Github</span>
+                </div>
+            </div>
+        </div>
+        <div>
+
+        </div>
+    </div>
+
+    <form onsubmit="return false">
+        <div id="modal-name" class="modal">
+            <div class="name-div">
+                <span class="close">&times;</span>
+                <h3 class="name-h3">Modify Username</h3>
+                <input type="text" placeholder="輸入姓名" name="email" id="name-input_1" minlength="3" maxlength="30" required>
+                <button type="submit" class="name-button">Confirm</button>
+            </div>
+        </div>
+    </form>
+
+    <form onsubmit="return false">
+        <div id="modal-change-password" class="modal">
+            <div class="change-password-div">
+                <span class="close">&times;</span>
+                <h3 class="change-password-h3">Modify Password</h3>
+                <input type="password" placeholder="新密碼" name="password" id="change-password-input_1" required>
+                <input type="password" placeholder="再次輸入密碼" name="password" id="change-password-input_2" required>
+                <button type="submit" class="change-password-button">Confirm</button>
+            </div>
+        </div>
+    </form>
+
+    <form onsubmit="return false">
+        <div id="modal-location" class="modal">
+            <div class="location-div">
+                <span class="close">&times;</span>
+                <h3 class="location-h3">Modify Location</h3>
+                <input type="test" placeholder="新地區" name="password" id="location-input" required>
+                <button type="submit" class="location-button">Confirm</button>
+            </div>
+        </div>
+    </form>
+
+    <form onsubmit="return false">
+        <div id="modal-delete" class="modal">
+            <div class="delete-div">
+                <span class="close">&times;</span>
+                <h3 class="delete-h3">Delete Account</h3>
+                <button type="submit" class="delete-button">Confirm</button>
+            </div>
+        </div>
+    </form>
+
+    <form onsubmit="return false">
+        <div id="modal-upload" class="modal">
+            <div class="upload-div">
+                <span class="close">&times;</span>
+                <h3 class="upload-h3">Upload Photo</h3>
+                <!-- 描述、類別、下載、檔案 -->
+                <div style="display: flex; justify-content: center; margin-top: 50px;">
+                    <div class="upload-categoryDiv">
+                        <h3 class="upload-CategoryTitle">Category</h3>
+                        <div style="display: flex;">
+                            <ul>
+                                <li class="category-li">architecture</li>
+                                <li class="category-li">athletics</li>
+                                <li class="category-li">food_drink</li>
+                            </ul>
+                            <ul>
+                                <li class="category-li">nature</li>
+                                <li class="category-li">people</li>
+                                <li class="category-li">travel</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="upload-categoryInfoFile">
+                        <input class="upload-publicImage" type="file" accept=".jpg,.png" id="iform_2">
+                        <textarea class="upload-textarea"></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="upload-button">Submit Photo</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+
+{% block script %}
+    <script src="{{ url_for('static', filename='js/account/person.js') }}"></script>
+{% endblock %}

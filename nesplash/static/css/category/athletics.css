@@ -1,0 +1,176 @@
+.athletics-title{
+    display: flex;
+    position: absolute;
+    padding: 10px 0;
+    font-weight: bold;
+    font-style: italic;
+    margin: 0 10px;
+}
+
+.athletics-title a {
+    margin: 0 5px;
+    cursor: pointer;
+    font-size: 20px;
+    text-decoration: none;
+    color: black;
+}
+
+.athletics-section-2{
+    display: flex;
+    max-width: 1200px;
+    flex-wrap: wrap;
+    padding-top: 40px;
+}
+
+.athletics-section-2-div{
+    height: 100%;
+    margin: 20px auto;
+    width: 320px;
+    min-height: 310px;
+    padding: 10px;
+    position:relative;
+    box-shadow: 0 5px 12px rgb(0 0 0 / 15%);
+}
+
+.sec_2_topDiv{
+    align-items: center;
+    display: flex;
+    position: relative;
+}
+
+.sec_2_imgfile{
+    width: 40px;
+    height: 40px;
+    margin: 10px;
+    border-radius: 20px;
+}
+
+.athletics-section-2-img {
+    width: 100%;
+    height: 100%;
+}
+
+.athletics-link-div {
+    display: grid;
+}
+
+.athletics-section-2-outside-a{
+    color:rgb(182, 179, 179);
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 13px;
+    font-style: italic;
+}
+
+.athletics-section-2-inside-a{
+    text-decoration: none;
+    cursor: pointer;
+    color:rgba(0, 0, 0, 0.8);
+    font-style: italic;
+    font-weight: bolder;
+    margin-bottom: 1px;
+}
+
+.athletics-sec_2_download{
+    width: 65px;
+    position: absolute;
+    right: 0;
+    margin-right: 10px;
+    border-radius: 5px;
+    color: black;
+    text-decoration: none;
+    font-style: italic;
+}
+
+.athletics-sec_2_download:hover,
+.athletics-section-2-inside-a:hover,
+.athletics-section-2-outside-a:hover{
+    color: blue;
+}
+
+/* video */
+.athletics-video{
+    width: 100%;
+    height: 100%;
+}
+
+.athletics-section-2-videoDiv{
+    height: 100%;
+    margin: 20px auto;
+    width: 320px;
+    padding: 10px;
+    position:relative;
+    background-color: black;
+    border-top: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.2) ;
+}
+
+.sec_2_videoTopDiv{
+    align-items: center;
+    display: flex;
+    position: relative;
+    background-color: black;
+}
+
+.athletics-section-2-video_a{
+    text-decoration: none;
+    cursor: pointer;
+    color: white;
+}
+
+/* contributor */
+.athletics-section-2-contributorDiv{
+    margin: 20px auto;
+    width: 90%;
+    padding: 10px;
+    position: relative;
+    border-left: 1px solid #ccc;
+    box-shadow: 0px 0px 12px rgb(0 0 0 / 20%);
+    display: flex;
+    align-items: center;
+}
+
+.sec_2_contributorImgfile{
+    width: 60px;
+    height: 60px;
+    margin: 10px;
+    border-radius: 100%;
+}
+
+.athletics-section-2-contributor-linkDiv{
+    display: grid;
+    margin-top: 10px;
+}
+
+.athletics-section-2-contributor-inside-a{
+    text-decoration: none;
+    color: black;
+    font-size: 26px;
+    font-weight: 600;
+    font-style: italic;
+    margin-bottom: 5px;
+}
+
+.athletics-section-2-contributor-outside-a{
+        color:rgb(182, 179, 179);
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-style: italic;
+}
+
+.athletics-section-2-contributor-inside-a:hover,
+.athletics-section-2-contributor-outside-a:hover{
+    color: blue;
+}
+
+.athletics-collect-icon{
+    position: absolute;
+    width: 23px;
+    height: 30px;
+    left: 67%;
+    top: 25%;
+    cursor: pointer;
+}

@@ -1,0 +1,151 @@
+/* form */
+.modal{
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    text-align: center;
+}
+
+.password-div,
+.authority-div {
+    position: relative;
+    max-width: 340px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 60px #aaaaaa;
+    border-radius: 6px;
+    margin: 0 auto;
+    z-index: 5;
+    padding: 10px;
+}
+
+.authority-ul{
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+}
+
+.authority-li{
+    padding: 5px;
+    border: solid 1px #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0 10px;
+    list-style: none;
+}
+
+.authority-li:hover{
+    background-color: #36a162;
+}
+
+.password-h3,
+.authority-h3 {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 24px;
+    color: #666666;
+    margin: 15px 0 15px 11px;
+    text-align: left;
+}
+
+.password-button,
+.authority-button{
+    height: 40px;
+    background: #f89753;
+    border-radius: 5px;
+    color: white;
+    border: none;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+.password-button:hover,
+.authority-button:hover{
+    opacity: 0.8;
+}
+
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    right: 15px;
+}
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* admin */
+.admin-section-1{
+    display: flex;
+    margin-top: 40px;
+    justify-content: center;
+}
+
+.admin-section-1 a {
+    margin-right: 20px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 25px;
+    font-style: italic;
+    font-weight: bolder;
+    color: black;
+}
+
+.admin-section-1 a:hover{
+    color: blue;
+}
+
+.admin-section-2{
+    display: flex;
+    max-width: 1200px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.admin-userDiv{
+    display: flex;
+    align-items: center;
+    margin: 30px 20px 0px 0;
+    border: 1px #ccc inset;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.admin-gridDiv{
+    display: grid;
+}
+.admin-userImage{
+    width: 50px;
+    margin-right: 10px;
+}
+.admin-userName{
+    text-decoration: none;
+    margin-bottom: 5px;
+    color: black;
+}
+
+.admin-userName:hover{
+    color:blue;
+}
+.admin-forgetBtn{
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.admin-lockBtn{
+    cursor: pointer;
+}

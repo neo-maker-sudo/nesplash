@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/signup.css') }}">
+{% endblock %}
+
+{% block content %}
+    <form class="signup-form" onsubmit="return false">
+        <legend class="signup-title">Register</legend>
+        <hr>
+        <div class="signup-div">
+            <label class="signup-label">Username : </label>
+            <input class="signup-username" placeholder="輸入姓名" type="email" minlength="3" maxlength="30" required>
+        </div>
+        <div class="signup-div">
+            <label class="signup-label">Email : </label>
+            <input class="signup-email" placeholder="輸入電子信箱" type="email" required>
+        </div>
+        <div class="signup-div">
+            <label class="signup-label">Password : </label>
+            <input class="signup-password" placeholder="輸入密碼" type="password" required>
+        </div>
+        <button class="signup-btn">signup</button>
+        <span class="signup-span">Already have an account?<a class="signup-a" href="{{ url_for('user.signin') }}">Login</a></span>
+        <div style="position: relative; top: 35px;"></div>
+    </form>
+{% endblock %}
+
+
+{% block script %}
+    <script src="{{ url_for('static', filename='js/signup.js') }}"></script>
+{% endblock %}

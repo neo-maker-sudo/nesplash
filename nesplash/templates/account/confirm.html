@@ -1,0 +1,19 @@
+{% extends 'layout.html' %}
+
+{% block style %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/account/main.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="confirm-section-1">
+        <h1 class="confirm-name"></h1>
+        <h3 class="confirm-title"></h3>
+    </div>
+
+{% endblock %}
+
+
+{% block script %}
+    <script src="{{ url_for('static', filename='js/account/confirm.js') }}"></script>
+    
+{% endblock %}

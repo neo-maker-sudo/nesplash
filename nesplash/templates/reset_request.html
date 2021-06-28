@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+
+{% block style %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/reset.css') }}">
+{% endblock %}
+
+{% block content %}
+    <form class="resetRequest-form" onsubmit="return false">
+        <div class="resetRequest-div">
+            <label class="resetRequest-label">Email : </label>
+            <input class="resetRequest-email" placeholder="輸入電子信箱" type="email" required>
+        </div>
+        <div class="resetRequest-div">
+        <button class="resetRequest-btn">Submit</button>
+    </form>
+{% endblock %}
+
+
+{% block script %}
+    <script src="{{ url_for('static', filename='js/reset.js') }}"></script>
+{% endblock %}

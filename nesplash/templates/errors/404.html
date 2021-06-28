@@ -1,0 +1,13 @@
+{% extends 'layout.html' %}
+
+
+{% block style %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/errors/error.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="fourofour-section-1-div">
+        <h1>Oops. Page Not Found (404)</h1>
+        <p>That page does not exist. Please try a different location</p>
+    </div>
+{% endblock %}

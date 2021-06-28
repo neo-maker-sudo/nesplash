@@ -1,0 +1,48 @@
+{% extends 'layout.html' %}
+
+{% block style %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/admin/users.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="admin-section-1">
+        <a class="admin-a" href="{{ url_for('admin.admin_users_page') }}">Users</a>
+        <a class="admin-a" href="{{ url_for('admin.admin_photos_page') }}">Photos</a>
+        <input>
+    </div>
+    <div class="admin-section-2">
+        <!-- dynamic loading user's data -->
+    </div>
+
+    <form onsubmit="return false">
+        <div id="modal-password" class="modal">
+            <div class="password-div">
+                <span class="close">&times;</span>
+                <h3 class="password-h3">Resend Password </h3>
+                <button type="submit" class="password-button">Confirm</button>
+            </div>
+        </div>
+    </form>
+
+    <form onsubmit="return false">
+        <div id="modal-authority" class="modal">
+            <div class="authority-div">
+                <span class="close">&times;</span>
+                <h3 class="authority-h3">Lower or Recover Authority</h3>
+                <div>
+                    <ul class="authority-ul">
+                        <li class="authority-li">Lock</li>
+                        <li class="authority-li">Unlock</li>
+                    </ul>
+                </div>
+
+                <button type="submit" class="authority-button">Confirm</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+
+
+{% block script %}
+    <script src="{{ url_for('static', filename='js/admin/users.js') }}"></script>
+{% endblock %}

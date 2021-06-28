@@ -1,0 +1,33 @@
+.resetRequest-form {
+    padding: 20px 33px 20px 20px;
+    width: 500px;
+    box-shadow: 0 5px 12px rgb(0 0 0 / 15%);
+    margin: 150px auto 0 auto;
+}
+
+.resetRequest-email,
+.resetRequest-password,
+.resetRequest-confirm-password {
+    width: 97.5%;
+    height: 20px;
+    border-radius: 5px;
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #757575;
+}
+
+.resetRequest-btn {
+    padding: 8px 10px;
+    border-radius: 5px;
+    background: transparent;
+    border: 1px solid rgb(94, 100, 184);
+    color: rgb(94, 100, 184);
+    font-weight: 600;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+.resetRequest-btn:hover{
+    background: rgb(94, 100, 184);
+    color: white
+}

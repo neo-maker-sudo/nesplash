@@ -1,0 +1,68 @@
+.signup-form {
+    background-color: transparent;
+    text-align: left;
+    padding: 20px 33px 20px 20px;
+    border-radius: 5px;
+    width: 500px;
+    height: 350px;
+    box-shadow: 0 5px 12px rgb(0 0 0 / 15%);
+    margin: 150px auto 0 auto;
+}
+
+.signup-title{
+    margin-top: 15px;
+    font-weight: 500;
+}
+
+.signup-password,
+.signup-email,
+.signup-username {
+    width: 97.5%;
+    height: 20px;
+    border-radius: 5px;
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #757575;
+}
+
+.signup-btn {
+    padding: 8px 10px;
+    border-radius: 5px;
+    background: transparent;
+    border: 1px solid rgb(94, 100, 184);
+    color: rgb(94, 100, 184);
+    font-weight: 600;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+.signup-btn:hover{
+    background: rgb(94, 100, 184);
+    color: white
+}
+
+.signup-forgot{
+    color: blue;
+    font-style: italic;
+    cursor: pointer;
+    font-size: 12px;
+}
+.signup-span{
+    position: relative;
+    top: 2px;
+    margin-left: 5px;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.6;
+}
+
+.signup-a{
+    margin-left: 5px;
+    text-decoration: none;
+}
+
+.signup-error{
+    margin: 0;
+    color: red;
+    font-style: italic;
+}
