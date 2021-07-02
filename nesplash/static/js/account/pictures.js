@@ -63,7 +63,7 @@ class Account {
             div.classList.add("picture-section-2-div");
             div.setAttribute("id", `${results[i].id}`)
             img.classList.add("picture-section-2-img");
-            img.setAttribute("src", `${results[i].imageUrl}`);
+            img.setAttribute("src", `${results[i].imageurl}`);
             p.textContent = `${results[i].description}`;
             button.textContent = "Delete";
             button.classList.add("picture-delete-button");

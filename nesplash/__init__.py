@@ -23,10 +23,6 @@ def create_app(config_name=None):
     app = Flask('nesplash')
     app.config.from_object(config[config_name])
 
-    @app.route("/people")
-    def people():
-        return render_template('category/people.html')
-
     register_blueprints(app)
     register_extensions(app)
     register_commands(app)

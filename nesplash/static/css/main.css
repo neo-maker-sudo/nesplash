@@ -12,6 +12,7 @@ body{
 .main-header li {
     cursor: pointer;
     font-style: italic;
+    position: relative;
 }
 .navbar-brand-2{
     text-decoration: none;
@@ -49,7 +50,9 @@ body{
     display: flex; 
     margin: 0 !important;
 }
-
+.section-1-searchBox{
+    display: flex;
+}
 
 
 /* section */
@@ -68,9 +71,40 @@ body{
     font-weight: bold;
     font-size: 28px;
     font-style: italic;
-    margin: 0 10px;
+    margin: 0 30px;
     text-align: center;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
 
+#section-1-input{
+    border: none;
+    border-radius: 5px 0 0 5px;
+    padding-left: 1em;
+    box-shadow: 0 5px 10px rgb(0 0 0 / 15%);
+}
+
+.section-1-searchDiv{
+    width: 60px;
+    height: 46px;
+    position: relative;
+}
+
+#section-1-mag{
+    position: absolute;
+    left: 15px;
+    top: 7px;
+}
+#mag-btn {
+    width: 60px;
+    height: 46px;
+    background: #465255;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0 5px 10px rgb(0 0 0 / 15%);
 }
 
 /* section 2 */
@@ -188,4 +222,8 @@ body{
 
 .pageLi{
     margin: 0 5px;
+}
+
+.main-no-data{
+    margin: 150px auto;
 }

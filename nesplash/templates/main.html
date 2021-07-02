@@ -7,6 +7,14 @@
 
 {% block content %}
     <div class="main-section-1-div">
+        <form class="section-1-searchBox">
+            <input type="text" placeholder="輸入關鍵字" id="section-1-input">
+            <div class="section-1-searchDiv">
+                <button id="mag-btn">
+                    <img src="{{ url_for('static', filename='icon_search.png') }}" id="section-1-mag" />
+                </button>
+            </div>
+        </form>
         <legend class="main-bigTitle">A. Decorative Exhibition Via UnSplash Open API Data</legend>
     </div>
     

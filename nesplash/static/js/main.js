@@ -3,11 +3,78 @@ const photos_id = document.getElementsByClassName("main-section-2-div");
 const icons = document.getElementsByClassName("main-collect-icon");
 const hearts_1 = document.getElementsByClassName("heart1");
 const hearts_2 = document.getElementsByClassName("heart2");
+const search_btn = document.getElementById("section-1-mag");
+
 
 var page = 0;
 var post_flag = false;
 
 class Main {
+    // for function for display
+    for_function(results){
+        for(var i=0;i<results.length;i++){
+            const div = document.createElement("div");
+            const link_div = document.createElement("div");
+            const inside_a = document.createElement("a");
+            const outside_a = document.createElement("a");
+            const s_div = document.createElement("div");
+            const s_img = document.createElement("img");
+            const img = document.createElement("img");
+            const p = document.createElement("p");
+            const download = document.createElement("a");
+            const icon = document.createElement("div");
+            const iconDiv_1 = document.createElement("div");
+            const iconDiv_2 = document.createElement("div");
+
+            section_2.appendChild(div);
+            div.appendChild(s_div);
+            s_div.appendChild(s_img);
+            s_div.appendChild(link_div);
+            link_div.appendChild(inside_a);
+            link_div.appendChild(outside_a);
+            s_div.appendChild(icon);
+            icon.appendChild(iconDiv_1);
+            icon.appendChild(iconDiv_2);
+            s_div.appendChild(download);
+            div.appendChild(img);
+            div.appendChild(p);
+
+            div.classList.add("main-section-2-div");
+            img.classList.add("main-section-2-img");
+            s_img.classList.add("sec_2_imgfile");
+            s_div.classList.add("sec_2_topDiv");
+            link_div.classList.add("main-link-div");
+            inside_a.classList.add("main-section-2-inside-a");
+            outside_a.classList.add("main-section-2-outside-a");
+            p.classList.add("main-section-2-p");
+            icon.classList.add("main-collect-icon");
+            download.classList.add("main-sec_2_download");
+            iconDiv_1.classList.add("heart1");
+            iconDiv_2.classList.add("heart2");
+
+            if(results[i].imageurl.split(".")[1] == "cloudfront"){
+                img.setAttribute("src", `${results[i].imageurl}`)
+            }
+            else{
+                img.setAttribute("src", `${results[i].imageurl}` + "&w=500&h=300&dpr=2");
+            }
+            
+            s_img.setAttribute("src", `${results[i].profile_image}`);
+            div.setAttribute("id", `${results[i].id}`);
+            outside_a.setAttribute("href", `${results[i].link}`);
+            outside_a.setAttribute("target", "_blank");
+            outside_a.textContent = "Unsplash";
+            inside_a.textContent = `${results[i].user}`;
+            inside_a.setAttribute("href", `/public/${results[i].user_id}`)
+            p.textContent = `${results[i].description}`;
+            download.setAttribute("target", "_blank");
+            download.setAttribute("href", `${results[i].download}` + "?force=true");
+            download.setAttribute('download', 'download');
+            download.textContent = "Download";
+        }
+        this.heartClick()
+        this.getCollectedData()
+    }
     // collect and uncollect api
     heartClick(){
         for(let i=0;i<photos_id.length;i++){
@@ -49,70 +116,98 @@ class Main {
             }
         }   
     }
+
+    // display search data function
+    async display_search_section_2(results){
+        await this.removeAttraction()
+        this.for_function(results)
+    }
+
+    // display no data after search
+    display_no_data(){
+        console.log(section_2)
+        const div = document.createElement("div");
+        const h3 = document.createElement("h3");
+
+        section_2.appendChild(div);
+        div.appendChild(h3);
+        div.classList.add("main-no-data")
+        h3.textContent = "dont have any data according to your keyword search"
+    }
+
+    // remove display data
+    removeAttraction(){
+        while(section_2.hasChildNodes()){
+            section_2.removeChild(section_2.firstChild)
+        }
+    }
+
+    // search keyword api for nextpage
+    search_nextpage_photos(nextpage, search_input){
+        if(post_flag){
+            return;
+        }
+        if(nextPage == null){
+            return
+        }
+        const url = `${window.port}/api/photos/search?page=${nextpage}&q=${search_input}`;
+        post_flag = true;
+        fetch(url)
+        .then( async ( response )=>{
+            const data = await response.json()
+            post_flag = false;
+            return data
+        })
+        .then((result)=>{
+            this.display_section_2(result.message)
+            window.onscroll = () => {
+                if(result.nextPage != null){
+                    if(window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 100){
+                        this.search_nextpage_photos(result.nextPage, search_input)
+                    } 
+                }
+            }
+        })
+}
+    // search keyword api
+    search_photos(page){
+        search_btn.onclick = (e)=>{
+            e.preventDefault()
+            if(post_flag){
+                return;
+            }
+            const search_input = document.getElementById("section-1-input").value;
+            const url = `${window.port}/api/photos/search?page=${page}&q=${search_input}`;
+            post_flag = true;
+            fetch(url)
+            .then( async ( response )=>{
+                const data = await response.json()
+                post_flag = false;
+                return data
+            })
+            .then((result)=>{
+                console.log(result, result.message)
+                if(result.message.length == 0){
+                    this.removeAttraction()
+                    this.display_no_data()
+                    return;
+                }
+                this.display_search_section_2(result.message)
+                window.onscroll = () => {
+                    if(result.nextPage != null){
+                        if(window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 100){
+                            console.log(result.nextPage)
+                            this.search_nextpage_photos(result.nextPage, search_input)
+                        } 
+                    }
+                }
+            })
+        }
+        
+    }
     // display data function
     display_section_2(results){
-        for(var i=0;i<results.length;i++){
-            const div = document.createElement("div");
-            const link_div = document.createElement("div");
-            const inside_a = document.createElement("a");
-            const outside_a = document.createElement("a");
-            const s_div = document.createElement("div");
-            const s_img = document.createElement("img");
-            const img = document.createElement("img");
-            const p = document.createElement("p");
-            const download = document.createElement("a");
-            const icon = document.createElement("div");
-            const iconDiv_1 = document.createElement("div");
-            const iconDiv_2 = document.createElement("div");
-
-            section_2.appendChild(div);
-            div.appendChild(s_div);
-            s_div.appendChild(s_img);
-            s_div.appendChild(link_div);
-            link_div.appendChild(inside_a);
-            link_div.appendChild(outside_a);
-            s_div.appendChild(icon);
-            icon.appendChild(iconDiv_1);
-            icon.appendChild(iconDiv_2);
-            s_div.appendChild(download);
-            div.appendChild(img);
-            div.appendChild(p);
-
-            div.classList.add("main-section-2-div");
-            img.classList.add("main-section-2-img");
-            s_img.classList.add("sec_2_imgfile");
-            s_div.classList.add("sec_2_topDiv");
-            link_div.classList.add("main-link-div");
-            inside_a.classList.add("main-section-2-inside-a");
-            outside_a.classList.add("main-section-2-outside-a");
-            p.classList.add("main-section-2-p");
-            icon.classList.add("main-collect-icon");
-            download.classList.add("main-sec_2_download");
-            iconDiv_1.classList.add("heart1");
-            iconDiv_2.classList.add("heart2");
-
-            if(results[i].imageUrl.split(".")[1] == "cloudfront"){
-                img.setAttribute("src", `${results[i].imageUrl}`)
-            }
-            else{
-                img.setAttribute("src", `${results[i].imageUrl}` + "&w=500&h=300&dpr=2");
-            }
-            
-            s_img.setAttribute("src", `${results[i].profile_image}`);
-            div.setAttribute("id", `${results[i].id}`);
-            outside_a.setAttribute("href", `${results[i].link}`);
-            outside_a.setAttribute("target", "_blank");
-            outside_a.textContent = "Unsplash";
-            inside_a.textContent = `${results[i].user}`;
-            inside_a.setAttribute("href", `/public/${results[i].user_id}`)
-            p.textContent = `${results[i].description}`;
-            download.setAttribute("target", "_blank");
-            download.setAttribute("href", `${results[i].download}` + "?force=true");
-            download.setAttribute('download', 'download');
-            download.textContent = "Download";
-        }
-        this.heartClick()
-        this.getCollectedData()
+        this.for_function(results)
     }
     // fetch api
     fetchData(page){
@@ -166,4 +261,5 @@ class Main {
 document.addEventListener('DOMContentLoaded', async ()=>{
     const main = new Main
     await main.fetchData(page)
+    main.search_photos(page)
 })

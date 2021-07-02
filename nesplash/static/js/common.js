@@ -2,6 +2,7 @@ const signin = document.getElementById("signin");
 const signup = document.getElementById("signup");
 const nav_right = document.querySelector(".nav-li-right");
 
+
 class Common {
     // change navbar info
     statusChange(data){

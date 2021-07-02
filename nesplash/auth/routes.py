@@ -30,6 +30,7 @@ google = oauth.remote_app(
     authorize_url='https://accounts.google.com/o/oauth2/auth',
 )
 
+
 providers = {
     'github': github,
     'google': google

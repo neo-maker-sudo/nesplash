@@ -31,7 +31,7 @@ class Foodie {
             video.classList.add("foodie-video");
 
             div.setAttribute("id", `${results[i].id}`);
-            source.setAttribute("src", `${results[i].videoUrl}`);
+            source.setAttribute("src", `${results[i].videourl}`);
             source.setAttribute("type", "video/mp4");
             s_img.setAttribute("src", `https://images.pexels.com/users/avatars/2659/pixabay-617.png?auto=compress&fit=crop&h=60&w=60`);
             a.setAttribute("href", `${results[i].link}`);

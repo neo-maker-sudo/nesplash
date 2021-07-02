@@ -22,7 +22,7 @@ def photos():
         photo = Photo.query.get_or_404(result["id"])
         data = {
             "id": result["id"],
-            "imageUrl": result["imageUrl"],
+            "imageurl": result["imageurl"],
             "description": result["description"],
             "download": result["download"],
             "user": photo.author.username,
@@ -44,19 +44,38 @@ def photos():
     else:
         return jsonify({"nextPage": None, "message": []})
 
-    sess = session.get("email")
-    if sess:
-        user = User.query.filter_by(email=sess).first()
-        photo = Photo.query.get_or_404(photo_id)
 
-        if photo is None:
-            return jsonify({"error": "not exist photo"}), 400
+@main_bp.route("/api/photos/search")
+def search_photos():
+    keyword = request.args.get("q", None)
+    page = request.args.get("page", None)
 
-        user.uncollect(photo)
+    arr = []
+    photos = Photo.query.filter(Photo.description.like(f"%%{keyword}%%")).order_by(Photo.timestamp.desc()).offset(int(page)*12).limit(12)
+    results = photoSchema.dump(photos)
+    for result in results:
+        photo = Photo.query.get_or_404(result["id"])
+        data = {
+            "id": result["id"],
+            "imageurl": result["imageurl"],
+            "description": result["description"],
+            "download": result["download"],
+            "user": photo.author.username,
+            "link": photo.author.link,
+            "profile_image": photo.author.profile_image,
+            "user_id": photo.author.id
+        }
+        arr.append(data)
 
-        return jsonify({"ok": True})
+    if len(results) < 12:
+        return jsonify({"nextPage": None, "message": arr})
     else:
-        return jsonify({"error": "you have to login first"})
+        photos_check = Photo.query.filter(Photo.description.like(f"%%{keyword}%%")).order_by(Photo.timestamp.desc()).offset((int(page)+1)*12).limit(12)
+        check_data = photoSchema.dump(photos_check)
+        if check_data != []:
+            return jsonify({"nextPage": int(page) +1, "message": arr})
+        else:
+            return jsonify({"nextPage": None, "message": arr})
 
 @main_bp.route("/api/collected_photo_id")
 def collected_photo_id():

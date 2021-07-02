@@ -29,7 +29,7 @@ def athletics_mainpage():
             photo = Photo.query.get_or_404(result["id"])
             data = {
                 "id": result["id"],
-                "imageUrl": result["imageUrl"],
+                "imageurl": result["imageurl"],
                 "description": result["description"],
                 "download": result["download"],
                 "user": photo.author.username,

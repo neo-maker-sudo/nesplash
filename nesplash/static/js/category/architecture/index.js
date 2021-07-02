@@ -93,11 +93,11 @@ class Architecture {
             iconDiv_1.classList.add("heart1");
             iconDiv_2.classList.add("heart2"); 
 
-            if(results[i].imageUrl.split(".")[1] == "cloudfront"){
-                img.setAttribute("src", `${results[i].imageUrl}`)
+            if(results[i].imageurl.split(".")[1] == "cloudfront"){
+                img.setAttribute("src", `${results[i].imageurl}`)
             }
             else{
-                img.setAttribute("src", `${results[i].imageUrl}` + "&w=500&h=300&dpr=2");
+                img.setAttribute("src", `${results[i].imageurl}` + "&w=500&h=300&dpr=2");
             }
 
             div.setAttribute("id", `${results[i].id}`);

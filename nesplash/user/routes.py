@@ -5,6 +5,7 @@ from nesplash.decorator import login_required
 from nesplash.user.util import send_register_mail, send_change_password_mail, s3_profile_pics, s3_public_pics
 from nesplash.ma import userSchema, photoSchema, collectionSchema, followSchema
 from werkzeug.security import check_password_hash
+
 import time
 
 user_bp = Blueprint("user", __name__)
@@ -380,7 +381,7 @@ def account_collections_page():
             photo = Photo.query.get_or_404(result["collected_id"])
             data = {
                 "id": photo.id,
-                "imageUrl": photo.imageUrl,
+                "imageurl": photo.imageurl,
                 "description": photo.description,
                 "download": photo.download,
                 "user": photo.author.username,
@@ -434,7 +435,6 @@ def uncollect_pics(photo_id):
         return jsonify({"ok": True})
     else:
         return jsonify({"error": "you have to login first"})
-
         
 # follow and unfollow routes
 @user_bp.route("/account/following")
@@ -451,6 +451,7 @@ def followers_page():
 def follow(user_id):
     sess = session.get("email")
     if sess:
+        
         current_user = User.query.filter_by(email=sess).first()
         followed_user = User.query.get_or_404(user_id)
         
@@ -458,6 +459,7 @@ def follow(user_id):
             return jsonify({"error": "none exist user"}), 400
 
         current_user.follow(followed_user)
+
         return jsonify({"ok": True})
     else:
         return jsonify({"error":  "you have to login first"})

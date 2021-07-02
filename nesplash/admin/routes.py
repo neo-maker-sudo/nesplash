@@ -87,7 +87,7 @@ def admin_photo_data():
             return jsonify({"error": "none exist photo"})
         data = {
             "id": photo.id,
-            "imageUrl": photo.imageUrl,
+            "imageurl": photo.imageurl,
             "username": photo.author.username,
             "user_id": photo.author.id
         }

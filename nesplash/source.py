@@ -8,10 +8,10 @@ from nesplash.extensions import db
 def create_admin():
     user = User(
         username="zhangneo",
-        email="zhangneo1031@gmail.com",
+        email="eyywqkgb@gmail.com",
         bio="Hello, I am neo",
         location="Taiwan",
-        profile_image="default.jpg",
+        profile_image="https://dkn8b9qqzonkk.cloudfront.net/profile_pics/default.jpg",
         link="www.neohub.cloud",
         methods=Method.query.filter_by(name="normal").first()
     )
@@ -48,7 +48,7 @@ def create_architecture():
     for result in results:
         for image in result["images"]:
             photo = Photo(
-                imageUrl=image["imageUrl"],
+                imageurl=image["imageUrl"],
                 description=image["alt_description"],
                 download=image["download"],
                 author=User.query.filter_by(username=result["username"]).first(),
@@ -86,7 +86,7 @@ def create_athletics():
     for result in results:
         for image in result["images"]:
             photo = Photo(
-                imageUrl=image["imageUrl"],
+                imageurl=image["imageUrl"],
                 description=image["alt_description"],
                 download=image["download"],
                 author=User.query.filter_by(username=result["username"]).first(),
@@ -124,7 +124,7 @@ def create_food_drink():
     for result in results:
         for image in result["images"]:
             photo = Photo(
-                imageUrl=image["imageUrl"],
+                imageurl=image["imageUrl"],
                 description=image["alt_description"],
                 download=image["download"],
                 author=User.query.filter_by(username=result["username"]).first(),
@@ -162,7 +162,7 @@ def create_nature():
     for result in results:
         for image in result["images"]:
             photo = Photo(
-                imageUrl=image["imageUrl"],
+                imageurl=image["imageUrl"],
                 description=image["alt_description"],
                 download=image["download"],
                 author=User.query.filter_by(username=result["username"]).first(),
@@ -200,7 +200,7 @@ def create_people():
     for result in results:
         for image in result["images"]:
             photo = Photo(
-                imageUrl=image["imageUrl"],
+                imageurl=image["imageUrl"],
                 description=image["alt_description"],
                 download=image["download"],
                 author=User.query.filter_by(username=result["username"]).first(),
@@ -238,7 +238,7 @@ def create_travel():
     for result in results:
         for image in result["images"]:
             photo = Photo(
-                imageUrl=image["imageUrl"],
+                imageurl=image["imageUrl"],
                 description=image["alt_description"],
                 download=image["download"],
                 author=User.query.filter_by(username=result["username"]).first(),
@@ -280,7 +280,7 @@ def create_contributor_photos():
         for result in results:
             for imageDT in result["images"]:
                 photo = Photo(
-                    imageUrl=imageDT["imageUrl"],
+                    imageurl=imageDT["imageUrl"],
                     description=imageDT["alt_description"],
                     download=imageDT["download"],
                     author=User.query.filter_by(username=result["username"]).first(),
@@ -296,7 +296,7 @@ def create_architecture_video():
         for result in results:
             video = Video(
                 name=result["name"],
-                videoUrl=result["videoUrl"],
+                videourl=result["videoUrl"],
                 link=result["website"],
                 categoryVideos=Category.query.filter_by(name=result["category"]).first()
             )
@@ -313,7 +313,7 @@ def create_athletics_video():
         for result in results:
             video = Video(
                 name=result["name"],
-                videoUrl=result["videoUrl"],
+                videourl=result["videoUrl"],
                 link=result["website"],
                 categoryVideos=Category.query.filter_by(name=result["category"]).first()
             )
@@ -330,7 +330,7 @@ def create_food_drink_video():
         for result in results:
             video = Video(
                 name=result["name"],
-                videoUrl=result["videoUrl"],
+                videourl=result["videoUrl"],
                 link=result["website"],
                 categoryVideos=Category.query.filter_by(name=result["category"]).first()
             )
@@ -347,7 +347,7 @@ def create_nature_video():
         for result in results:
             video = Video(
                 name=result["name"],
-                videoUrl=result["videoUrl"],
+                videourl=result["videoUrl"],
                 link=result["website"],
                 categoryVideos=Category.query.filter_by(
                     name=result["category"]).first()
@@ -365,7 +365,7 @@ def create_people_video():
         for result in results:
             video = Video(
                 name=result["name"],
-                videoUrl=result["videoUrl"],
+                videourl=result["videoUrl"],
                 link=result["website"],
                 categoryVideos=Category.query.filter_by(name=result["category"]).first()
             )
@@ -382,7 +382,7 @@ def create_travel_video():
         for result in results:
             video = Video(
                 name=result["name"],
-                videoUrl=result["videoUrl"],
+                videourl=result["videoUrl"],
                 link=result["website"],
                 categoryVideos=Category.query.filter_by(name=result["category"]).first()
             )

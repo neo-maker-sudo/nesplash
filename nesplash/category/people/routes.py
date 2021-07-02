@@ -6,6 +6,10 @@ from nesplash.ma import photoSchema, userSchema, videoSchema
 people_bp = Blueprint("people", __name__)
 
 
+@people_bp.route("/people")
+def people():
+    return render_template('category/people.html')
+
 @people_bp.route('/people/main')
 def index():
     return render_template('category/people/index.html')
@@ -29,7 +33,7 @@ def people_mainpage():
             photo = Photo.query.get_or_404(result["id"])
             data = {
                 "id": result["id"],
-                "imageUrl": result["imageUrl"],
+                "imageurl": result["imageurl"],
                 "description": result["description"],
                 "download": result["download"],
                 "user": photo.author.username,

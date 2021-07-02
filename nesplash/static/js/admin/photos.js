@@ -79,14 +79,14 @@ class Admin {
         a.setAttribute("target", "_blank");
         img.classList.add("photos-img");
 
-        if(result.imageUrl.split(".")[1] == "jpg"){
-            img.setAttribute("src", `/static/public_pics/${result.imageUrl}`);
+        if(result.imageurl.split(".")[1] == "jpg"){
+            img.setAttribute("src", `/static/public_pics/${result.imageurl}`);
         }
-        else if(result.imageUrl.split(".")[1] == "png"){
-            img.setAttribute("src", `/static/public_pics/${result.imageUrl}`);
+        else if(result.imageurl.split(".")[1] == "png"){
+            img.setAttribute("src", `/static/public_pics/${result.imageurl}`);
         }
         else{  
-            img.setAttribute("src", `${result.imageUrl}`);
+            img.setAttribute("src", `${result.imageurl}`);
         }
         img.setAttribute("id", `${result.id}`)
         button.textContent = "Delete";

@@ -66,7 +66,7 @@ class User(db.Model):
 
     role_id = db.Column(db.Integer, db.ForeignKey("role.id"))
     method_id = db.Column(db.Integer, db.ForeignKey("method.id"))
-
+    
     role = db.relationship('Role', back_populates="users")
     photos = db.relationship('Photo', back_populates='author', lazy="joined", cascade="all")
     collections = db.relationship("Collection", back_populates="collector", cascade="all")
@@ -173,7 +173,7 @@ class User(db.Model):
 
 class Photo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    imageUrl = db.Column(db.String(255), nullable=True)
+    imageurl = db.Column(db.String(255), nullable=True)
     description = db.Column(db.Text, nullable=True)
     download = db.Column(db.String(255), nullable=True)
     timestamp = db.Column(db.TIMESTAMP, nullable=True, default=datetime.utcnow)
@@ -213,7 +213,7 @@ class Category(db.Model):
 class Video(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50))
-    videoUrl = db.Column(db.String(255))
+    videourl = db.Column(db.String(255))
     link = db.Column(db.String(255))
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'), nullable=False)
     categoryVideos = db.relationship("Category", back_populates="videos")
@@ -255,3 +255,5 @@ class Permission(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), unique=True)
     roles = db.relationship("Role", secondary=roles_permissions, back_populates="permissions")
+
+
