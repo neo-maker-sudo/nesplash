@@ -4,7 +4,7 @@ class Login {
     submitRequest(){
         btn.onclick = (e)=>{
             e.preventDefault()
-            const url = `http://127.0.0.1:5000/api/user`
+            const url = `${window.port}/api/user`
             fetch(url,{
                 method: "PATCH",
                 body: JSON.stringify({

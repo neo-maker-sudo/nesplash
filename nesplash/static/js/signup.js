@@ -4,7 +4,7 @@ class Register {
     submitRequest(){
         btn.onclick = (e)=>{
             e.preventDefault()
-            const url = `http://localhost:5000/api/user`
+            const url = `${window.port}/api/user`
             fetch(url, {
                 method: "POST",
                 headers : {
