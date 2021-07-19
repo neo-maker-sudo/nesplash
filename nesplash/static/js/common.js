@@ -25,7 +25,7 @@ class Common {
 
     // check status
     confirmIdentity(){
-        const url = `http://127.0.0.1:5000/api/user`
+        const url = `${window.port}/api/user`
         fetch(url)
         .then( async ( response )=>{
             return await response.json()
@@ -37,7 +37,7 @@ class Common {
                 
                 const logout = document.getElementById("logout");
                 logout.onclick = ()=>{
-                    const url = "http://127.0.0.1:5000/api/user"
+                    const url = `${window.port}/api/user`
                     fetch(url, {
                         method: "DELETE"
                     })
