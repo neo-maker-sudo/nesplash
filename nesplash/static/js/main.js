@@ -349,7 +349,7 @@ class Main {
         if(post_flag) {
             return;
         };
-        const url = `http://localhost:5000/api/photos?page=${page}`;
+        const url = `${window.port}/api/photos?page=${page}`;
         post_flag = true;
         
         fetch(url)

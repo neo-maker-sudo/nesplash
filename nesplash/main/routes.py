@@ -114,41 +114,6 @@ def search_user():
         return jsonify({"message": []})
 
 
-@main_bp.route("/api/labels/search")
-def search_label():
-    arr = []
-    keyword = request.args.get("q", None)
-    page = request.args.get("page", None)
-    
-    # photos = Photo.query.filter(Photo.label.like("%"+keyword+"%")).order_by(Photo.timestamp.desc()).offset(int(page)*12).limit(12)
-    photos = Photo.query.whooshee_search(keyword).order_by(Photo.timestamp.desc()).offset(int(page)*12).limit(12)
-    results = photoSchema.dump(photos)
-    for result in results:
-        photo = Photo.query.get(result["id"])
-        data = {
-            "id": result["id"],
-            "imageurl": result["imageurl"],
-            "description": result["description"],
-            "download": result["download"],
-            "label": result["label"],
-            "User": {
-                "user": photo.author.username,
-                "link": photo.author.link,
-                "profile_image": photo.author.profile_image,
-                "user_id": photo.author.id
-            }
-        }
-        arr.append(data)
-
-    if len(results) < 12:
-        return jsonify({"nextPage": None, "message": arr})
-    else:
-        photo_check = Photo.query.whooshee_search(keyword).order_by(Photo.timestamp.desc()).offset((int(page)+1)*12).limit(12)
-        check_data = photoSchema.dump(photo_check)
-        if check_data != []:
-            return jsonify({"nextPage": int(page) + 1, "message": arr})
-        else:
-            return jsonify({"nextPage": None, "message": arr})
 
 @main_bp.route("/api/collected_photo_id")
 def collected_photo_id():

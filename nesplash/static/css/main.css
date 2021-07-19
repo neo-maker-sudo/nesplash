@@ -94,8 +94,7 @@ body{
     border: 1px solid black;
     cursor: pointer;
 }
-#search-users,
-#search-label{
+#search-users{
     width: 15px;
     height: 15px;
     background: white;
