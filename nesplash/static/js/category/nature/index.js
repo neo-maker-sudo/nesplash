@@ -130,7 +130,7 @@ class Nature {
         if(post_flag) {
             return;
         };
-        const url = `http://localhost:5000/nature/api/photos?page=${page}`;
+        const url = `${window.port}/nature/api/photos?page=${page}`;
         post_flag = true;
         fetch(url)
         .then( async (response)=>{

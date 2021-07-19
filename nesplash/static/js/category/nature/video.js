@@ -46,7 +46,7 @@ class Nature {
         if(post_flag) {
             return;
         };
-        const url = `http://localhost:5000/nature/api/videos?page=${page}`;
+        const url = `${window.port}/nature/api/videos?page=${page}`;
         post_flag = true;
         fetch(url)
         .then( async (response)=>{

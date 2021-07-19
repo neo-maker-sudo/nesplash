@@ -47,7 +47,7 @@ class People {
         if(post_flag) {
             return;
         };
-        const url = `http://localhost:5000/people/api/videos?page=${page}`;
+        const url = `${window.port}/people/api/videos?page=${page}`;
         post_flag = true;
         fetch(url)
         .then( async (response)=>{

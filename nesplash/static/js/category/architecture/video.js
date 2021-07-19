@@ -47,7 +47,7 @@ class Architecture {
         if(post_flag) {
             return;
         };
-        const url = `http://localhost:5000/architecture/api/videos?page=${page}`;
+        const url = `${window.port}/architecture/api/videos?page=${page}`;
         post_flag = true;
         fetch(url)
         .then( async (response)=>{

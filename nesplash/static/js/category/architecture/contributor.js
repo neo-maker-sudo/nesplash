@@ -46,7 +46,7 @@ class Architecture {
         if(post_flag) {
             return;
         };
-        const url = `http://localhost:5000/architecture/api/contributor?page=${page}`;
+        const url = `${window.port}/architecture/api/contributor?page=${page}`;
         post_flag = true;
         fetch(url)
         .then( async (response)=>{

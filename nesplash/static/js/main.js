@@ -8,7 +8,6 @@ const search = document.querySelector(".section-1-searchBox");
 
 const search_photos = document.getElementById("search-photos");
 const search_users = document.getElementById("search-users");
-const search_label = document.getElementById("search-label");
 
 const keywordLi = document.getElementsByClassName("search-keyword");
 
@@ -189,20 +188,6 @@ class Main {
         }
     }
 
-    // users(){
-    //     search_users.onclick = ()=>{
-    //         search_photos.style.background = 'white'
-    //         search_users.style.background = '#448899'
-    //     }
-    // }
-
-    // photos(){
-    //     search_photos.onclick = ()=>{
-    //         search_users.style.background = 'white'
-    //         search_photos.style.background = '#448899'
-    //     }
-    // }
-
     // switch keyword label
     switch(){
         for(let i=0;i<keywordLi.length;i++){
@@ -262,8 +247,8 @@ class Main {
 
             const photoSelected = search_photos.style.background
             const userSelected = search_users.style.background
-            const labelSelected = search_label.style.background
-            if(photoSelected == "rgb(68, 136, 153)" && userSelected == "" && labelSelected == ""){
+            
+            if(photoSelected == "rgb(68, 136, 153)" && userSelected == ""){
                 const url = `${window.port}/api/photos/search?page=${page}&q=${keyword}`;
                 post_flag = true;
                 fetch(url)
@@ -288,7 +273,7 @@ class Main {
                     }
                 })
             }
-            else if(userSelected == "rgb(68, 136, 153)" && photoSelected == "" && labelSelected == "") {
+            else if(userSelected == "rgb(68, 136, 153)" && photoSelected == "") {
                 const url = `${window.port}/api/users/search?page=${page}&q=${keyword}`;
                 post_flag = true;
                 fetch(url)
@@ -312,31 +297,7 @@ class Main {
                         }
                     }
                 })
-            } else if (labelSelected == "rgb(68, 136, 153)" && photoSelected == "" && userSelected == "") {
-                const url = `${window.port}/api/labels/search?page=${page}&q=${keyword}`;
-                post_flag = true;
-                fetch(url)
-                .then( async ( response ) =>{
-                    const data = response.json()
-                    post_flag = false;
-                    return data
-                })
-                .then(( result )=>{
-                    if(result.message.length == 0){
-                        this.removeAttraction()
-                        this.display_no_data()
-                        return;
-                    }
-                    this.display_search_photos(result.message)
-                    window.onscroll = () =>{
-                        if(result.message != null) {
-                            if(window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 100){
-                                this.search_nextpage_photos(result.nextPage, keyword)
-                            } 
-                        }
-                    }
-                })
-            }
+            } 
         })
     }
     // display data function

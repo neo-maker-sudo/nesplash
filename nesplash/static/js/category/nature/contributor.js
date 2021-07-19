@@ -47,7 +47,7 @@ class Nature {
         if(post_flag) {
             return;
         };
-        const url = `http://localhost:5000/nature/api/contributor?page=${page}`;
+        const url = `${window.port}/nature/api/contributor?page=${page}`;
         post_flag = true;
         fetch(url)
         .then( async (response)=>{

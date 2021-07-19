@@ -47,7 +47,7 @@ class Foodie {
         if(post_flag) {
             return;
         };
-        const url = `http://localhost:5000/foodie/api/contributor?page=${page}`;
+        const url = `${window.port}/foodie/api/contributor?page=${page}`;
         post_flag = true;
         fetch(url)
         .then( async (response)=>{

@@ -47,7 +47,7 @@ class Travel {
         if(post_flag) {
             return;
         };
-        const url = `http://localhost:5000/travel/api/videos?page=${page}`;
+        const url = `${window.port}/travel/api/videos?page=${page}`;
         post_flag = true;
         fetch(url)
         .then( async (response)=>{

@@ -131,7 +131,7 @@ class Architecture {
         if(post_flag) {
             return;
         };
-        const url = `http://localhost:5000/architecture/api/photos?page=${page}`;
+        const url = `${window.port}/architecture/api/photos?page=${page}`;
         post_flag = true;
         fetch(url)
         .then( async (response)=>{

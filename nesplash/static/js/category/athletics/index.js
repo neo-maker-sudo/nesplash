@@ -130,7 +130,7 @@ class Athletics {
         if(post_flag) {
             return;
         };
-        const url = `http://localhost:5000/athletics/api/photos?page=${page}`;
+        const url = `${window.port}/athletics/api/photos?page=${page}`;
         post_flag = true;
         fetch(url)
         .then( async (response)=>{
