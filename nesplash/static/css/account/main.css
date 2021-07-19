@@ -51,6 +51,10 @@
     display: grid;
 }
 
+.label-name {
+    margin-right: 10px;
+}
+
 .label-name,
 .label-email,
 .label-bio,
@@ -126,12 +130,14 @@ margin: 3px 8px;
 
 .person-modify-1,
 .person-modify-2,
+.person-modify-3,
 .person-modify-4{
     cursor: pointer;
 }
 
 .person-modify-1:hover,
 .person-modify-2:hover,
+.person-modify-3:hover,
 .person-modify-4:hover{
     color: blue
 }
@@ -393,6 +399,7 @@ margin: 3px 8px;
     border: none;
     margin: 30px 0 20px 0;;
     cursor: pointer;
+    letter-spacing: 1.5px;
 }
 
 .upload-button:hover{
@@ -433,6 +440,37 @@ margin: 3px 8px;
     margin-left: 8px;
 }
 
+
+.loading-div {
+    opacity: 0.5;
+    cursor: default;
+    pointer-events: none;
+    letter-spacing: 1.5px;
+}
+
+.loading-div:before {
+    content: '';
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    margin-right: 0.5em;
+    color: red;
+    border: 1px solid red;
+    border-radius: 50%;
+    vertical-align: -10%;
+    clip-path: polygon(0% 0%, 100% 0%, 100% 30%, 0% 30%);
+    animation: rotate 1s linear infinite;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotatez(0deg);
+    }
+
+    to {
+        transform: rotatez(360deg);
+    }
+}
 
 #collect-section-2 {
     display: flex;

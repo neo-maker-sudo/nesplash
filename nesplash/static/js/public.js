@@ -9,8 +9,16 @@ class Public {
     // display follow status
     getFollowStatus(){
         const follow_btn = document.querySelector(".public-follow");
-        const url = `${window.port}/api/is_following_or_not/${user_id}`;
-        fetch(url)
+        const url = `${window.port}/api/is_following_or_not`;
+        fetch(url, {
+            method: "POST",
+            body: JSON.stringify({
+                "user_id": user_id
+            }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
         .then( async ( response )=>{
             return await response.json()
         })
@@ -37,7 +45,6 @@ class Public {
                     return await response.json()
                 })
                 .then(( result )=>{
-                    console.log(result)
                     if(result.ok == true){
                         window.location.reload()
                     }
@@ -71,6 +78,7 @@ class Public {
     }
     // display user data
     display_public_userData(result){
+        console.log(result)
         const div = document.createElement("div");
         const div_2 = document.createElement("div");
         const s_div_1 = document.createElement("div");
@@ -172,18 +180,27 @@ class Public {
         for(var i=0;i<results.length;i++){
             const div = document.createElement("div");
             const img = document.createElement("img");
+            const label = document.createElement("label");
             const dp = document.createElement("p");
             const h3 = document.createElement("h3");
 
             public_section_2.appendChild(div);
             div.appendChild(h3);
             div.appendChild(img);
+            div.appendChild(label);
             div.appendChild(dp);
 
             h3.textContent = `${results[i].timestamp}`;
             div.classList.add("public-section-2-div");
             img.classList.add("public-section-2-img");
-            img.setAttribute("id", `${results[i].id}`)
+            img.setAttribute("id", `${results[i].id}`);
+
+            if(`${results[i].label}` == "" || `${results[i].label}` == undefined){
+                label.textContent = "";
+            }else{
+                label.textContent = `${results[i].label}`;
+            }
+            
             dp.textContent = `${results[i].description}`;
 
             if(results[i].imageurl.split(".")[1] == "cloudfront"){

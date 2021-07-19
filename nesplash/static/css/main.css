@@ -52,6 +52,7 @@ body{
 }
 .section-1-searchBox{
     display: flex;
+    margin-right: 15px;
 }
 
 
@@ -60,25 +61,20 @@ body{
     max-width: 1200px;
     margin: 0 auto;
 }
-.main-bigTitle{
-    color: black;
-    text-decoration: underline;
-}
 
 .main-section-1-div {
     max-width: 1200px;
     padding: 10px 0;
     font-weight: bold;
-    font-size: 28px;
+    font-size: 20px;
     font-style: italic;
     margin: 0 30px;
-    text-align: center;
     align-items: center;
     display: flex;
-    justify-content: space-between;
 }
 
-#section-1-input{
+#section-1-input-keyword,
+#section-1-input-username{
     border: none;
     border-radius: 5px 0 0 5px;
     padding-left: 1em;
@@ -89,6 +85,27 @@ body{
     width: 60px;
     height: 46px;
     position: relative;
+}
+
+#search-photos{
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
+    border: 1px solid black;
+    cursor: pointer;
+}
+#search-users,
+#search-label{
+    width: 15px;
+    height: 15px;
+    background: white;
+    border-radius: 15px;
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+.main-section-1-div label {
+    margin: 0 6px;
 }
 
 #section-1-mag{
@@ -135,11 +152,22 @@ body{
     height: 100%;
 }
 
+.search_2_topDiv{
+    text-align: center;
+}
+
 .sec_2_imgfile{
     width: 40px;
     height: 40px;
     margin: 10px;
     border-radius: 20px;
+}
+
+.search_2_imgfile{
+    width: 90%;
+    height: 90%;
+    margin: 10px;
+    border-radius: 100%;
 }
 
 .main-link-div {

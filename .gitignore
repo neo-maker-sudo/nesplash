@@ -124,13 +124,16 @@ venv.bak/
 /site
 
 # mypy
+data/
+download/
 .mypy_cache/
 .dmypy.json
 dmypy.json
 filter.py
 get.py
 test.py
-
+download.py
+training.py
 # Pyre type checker
 .pyre/
 

@@ -32,6 +32,7 @@ def foodie_mainpage():
                 "imageurl": result["imageurl"],
                 "description": result["description"],
                 "download": result["download"],
+                "label": result["label"],
                 "user": photo.author.username,
                 "link": photo.author.link,
                 "profile_image": photo.author.profile_image,

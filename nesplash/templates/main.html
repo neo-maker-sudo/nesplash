@@ -7,15 +7,20 @@
 
 {% block content %}
     <div class="main-section-1-div">
-        <form class="section-1-searchBox">
-            <input type="text" placeholder="輸入關鍵字" id="section-1-input">
+        <form class="section-1-searchBox" >
+            <input type="text" placeholder="輸入關鍵字" id="section-1-input-keyword"  minlength="3">
             <div class="section-1-searchDiv">
                 <button id="mag-btn">
                     <img src="{{ url_for('static', filename='icon_search.png') }}" id="section-1-mag" />
                 </button>
             </div>
         </form>
-        <legend class="main-bigTitle">A. Decorative Exhibition Via UnSplash Open API Data</legend>
+        <div id="search-photos" style="background: rgb(68, 136, 153);" class="search-keyword"></div>
+        <label>photos</label>
+        <div id="search-users" style="background: white;" class="search-keyword"></div>
+        <label>users</label>
+        <div id="search-label" style="background: white;" class="search-keyword"></div>
+        <label>label</label>
     </div>
     
     <section id="main-section-2">
@@ -25,5 +30,4 @@
 
 {% block script %}
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-    <!-- <script src="{{ url_for('static', filename='js/common.js') }}"></script> -->
 {% endblock %}

@@ -7,6 +7,8 @@ def login_required(func):
     def wrapper_func(*args, **kwargs):
         if session.get("email") == None:
             abort(403)
+        else:
+            kwargs["email"] = session.get("email")
         return func(*args, **kwargs)
     wrapper_func.__name__ = func.__name__
     return wrapper_func

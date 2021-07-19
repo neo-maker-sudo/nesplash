@@ -3,11 +3,18 @@ const photos_id = document.getElementsByClassName("main-section-2-div");
 const icons = document.getElementsByClassName("main-collect-icon");
 const hearts_1 = document.getElementsByClassName("heart1");
 const hearts_2 = document.getElementsByClassName("heart2");
-const search_btn = document.getElementById("section-1-mag");
+const search = document.querySelector(".section-1-searchBox");
 
+
+const search_photos = document.getElementById("search-photos");
+const search_users = document.getElementById("search-users");
+const search_label = document.getElementById("search-label");
+
+const keywordLi = document.getElementsByClassName("search-keyword");
 
 var page = 0;
 var post_flag = false;
+let index = 0;
 
 class Main {
     // for function for display
@@ -20,6 +27,7 @@ class Main {
             const s_div = document.createElement("div");
             const s_img = document.createElement("img");
             const img = document.createElement("img");
+            const label = document.createElement("label");
             const p = document.createElement("p");
             const download = document.createElement("a");
             const icon = document.createElement("div");
@@ -37,10 +45,12 @@ class Main {
             icon.appendChild(iconDiv_2);
             s_div.appendChild(download);
             div.appendChild(img);
+            div.appendChild(label);
             div.appendChild(p);
 
             div.classList.add("main-section-2-div");
             img.classList.add("main-section-2-img");
+            label.classList.add("main-label");
             s_img.classList.add("sec_2_imgfile");
             s_div.classList.add("sec_2_topDiv");
             link_div.classList.add("main-link-div");
@@ -59,13 +69,20 @@ class Main {
                 img.setAttribute("src", `${results[i].imageurl}` + "&w=500&h=300&dpr=2");
             }
             
-            s_img.setAttribute("src", `${results[i].profile_image}`);
+            s_img.setAttribute("src", `${results[i].User.profile_image}`);
             div.setAttribute("id", `${results[i].id}`);
-            outside_a.setAttribute("href", `${results[i].link}`);
+            outside_a.setAttribute("href", `${results[i].User.link}`);
             outside_a.setAttribute("target", "_blank");
             outside_a.textContent = "Unsplash";
-            inside_a.textContent = `${results[i].user}`;
-            inside_a.setAttribute("href", `/public/${results[i].user_id}`)
+            inside_a.textContent = `${results[i].User.user}`;
+            inside_a.setAttribute("href", `/public/${results[i].User.user_id}`);
+            
+            if(`${results[i].label}` == "" || `${results[i].label}` == undefined){
+                label.textContent = "";
+            }else{
+                label.textContent = `${results[i].label}`;
+            }
+            
             p.textContent = `${results[i].description}`;
             download.setAttribute("target", "_blank");
             download.setAttribute("href", `${results[i].download}` + "?force=true");
@@ -117,15 +134,45 @@ class Main {
         }   
     }
 
-    // display search data function
-    async display_search_section_2(results){
+    // display search photos function
+    async display_search_photos(results){
         await this.removeAttraction()
         this.for_function(results)
     }
 
+    // display search users function
+    async display_search_users(results){
+        await this.removeAttraction()
+        for(var i=0;i<results.length;i++){
+            const div = document.createElement("div");
+            const link_div = document.createElement("div");
+            const inside_a = document.createElement("a");
+            const s_div = document.createElement("div");
+            const s_img = document.createElement("img");
+            const img = document.createElement("img");
+
+            section_2.appendChild(div);
+            div.appendChild(s_div);
+            s_div.appendChild(link_div);
+            s_div.appendChild(s_img);
+            link_div.appendChild(inside_a);
+            div.appendChild(img);
+
+            div.classList.add("main-section-2-div");
+            img.classList.add("main-section-2-img");
+            s_img.classList.add("search_2_imgfile");
+            s_div.classList.add("search_2_topDiv");
+            link_div.classList.add("main-link-div");
+            inside_a.classList.add("main-section-2-inside-a");
+            
+            s_img.setAttribute("src", `${results[i].User.profile_image}`);
+            inside_a.textContent = `${results[i].User.user}`;
+            inside_a.setAttribute("href", `/public/${results[i].User.user_id}`);
+            inside_a.setAttribute("target", "_blank")
+        }
+    }
     // display no data after search
     display_no_data(){
-        console.log(section_2)
         const div = document.createElement("div");
         const h3 = document.createElement("h3");
 
@@ -142,15 +189,47 @@ class Main {
         }
     }
 
+    // users(){
+    //     search_users.onclick = ()=>{
+    //         search_photos.style.background = 'white'
+    //         search_users.style.background = '#448899'
+    //     }
+    // }
+
+    // photos(){
+    //     search_photos.onclick = ()=>{
+    //         search_users.style.background = 'white'
+    //         search_photos.style.background = '#448899'
+    //     }
+    // }
+
+    // switch keyword label
+    switch(){
+        for(let i=0;i<keywordLi.length;i++){
+            keywordLi[i].num = i
+            keywordLi[i].onclick = ()=>{
+                index = keywordLi[i].num;
+                this.labelColor()
+            }
+        }
+    }
+
+    labelColor(){
+        for(var i=0;i<keywordLi.length;i++){
+            keywordLi[i].style.background = '';
+        }
+        keywordLi[index].style.background = '#448899'
+    }
+
     // search keyword api for nextpage
-    search_nextpage_photos(nextpage, search_input){
+    search_nextpage_photos(nextpage, keyword){
         if(post_flag){
             return;
         }
-        if(nextPage == null){
+        if(nextpage == null){
             return
         }
-        const url = `${window.port}/api/photos/search?page=${nextpage}&q=${search_input}`;
+        const url = `${window.port}/api/photos/search?page=${nextpage}&q=${keyword}`;
         post_flag = true;
         fetch(url)
         .then( async ( response )=>{
@@ -163,7 +242,7 @@ class Main {
             window.onscroll = () => {
                 if(result.nextPage != null){
                     if(window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 100){
-                        this.search_nextpage_photos(result.nextPage, search_input)
+                        this.search_nextpage_photos(result.nextPage, keyword)
                     } 
                 }
             }
@@ -171,44 +250,100 @@ class Main {
 }
     // search keyword api
     search_photos(page){
-        search_btn.onclick = (e)=>{
-            e.preventDefault()
+        search.addEventListener("submit",(e)=>{
             if(post_flag){
                 return;
             }
-            const search_input = document.getElementById("section-1-input").value;
-            const url = `${window.port}/api/photos/search?page=${page}&q=${search_input}`;
-            post_flag = true;
-            fetch(url)
-            .then( async ( response )=>{
-                const data = await response.json()
-                post_flag = false;
-                return data
-            })
-            .then((result)=>{
-                console.log(result, result.message)
-                if(result.message.length == 0){
-                    this.removeAttraction()
-                    this.display_no_data()
-                    return;
-                }
-                this.display_search_section_2(result.message)
-                window.onscroll = () => {
-                    if(result.nextPage != null){
-                        if(window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 100){
-                            console.log(result.nextPage)
-                            this.search_nextpage_photos(result.nextPage, search_input)
-                        } 
+            e.preventDefault()
+            const keyword = document.getElementById("section-1-input-keyword").value;
+            if(keyword == ""){
+                alert("請至少輸入一個欄位的內容作查詢")
+            }
+
+            const photoSelected = search_photos.style.background
+            const userSelected = search_users.style.background
+            const labelSelected = search_label.style.background
+            if(photoSelected == "rgb(68, 136, 153)" && userSelected == "" && labelSelected == ""){
+                const url = `${window.port}/api/photos/search?page=${page}&q=${keyword}`;
+                post_flag = true;
+                fetch(url)
+                .then( async ( response )=>{
+                    const data = await response.json()
+                    post_flag = false;
+                    return data
+                })
+                .then((result)=>{
+                    if(result.message.length == 0){
+                        this.removeAttraction()
+                        this.display_no_data()
+                        return;
                     }
-                }
-            })
-        }
-        
+                    this.display_search_photos(result.message)
+                    window.onscroll = () => {
+                        if(result.nextPage != null){
+                            if(window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 100){
+                                this.search_nextpage_photos(result.nextPage, keyword)
+                            } 
+                        }
+                    }
+                })
+            }
+            else if(userSelected == "rgb(68, 136, 153)" && photoSelected == "" && labelSelected == "") {
+                const url = `${window.port}/api/users/search?page=${page}&q=${keyword}`;
+                post_flag = true;
+                fetch(url)
+                .then( async ( response )=>{
+                    const data = await response.json()
+                    post_flag = false;
+                    return data
+                })
+                .then((result)=>{
+                    if(result.message.length == 0){
+                        this.removeAttraction()
+                        this.display_no_data()
+                        return;
+                    }
+                    this.display_search_users(result.message)
+                    window.onscroll = () => {
+                        if(result.nextPage != null){
+                            if(window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 100){
+                                this.search_nextpage_photos(result.nextPage, keyword)
+                            } 
+                        }
+                    }
+                })
+            } else if (labelSelected == "rgb(68, 136, 153)" && photoSelected == "" && userSelected == "") {
+                const url = `${window.port}/api/labels/search?page=${page}&q=${keyword}`;
+                post_flag = true;
+                fetch(url)
+                .then( async ( response ) =>{
+                    const data = response.json()
+                    post_flag = false;
+                    return data
+                })
+                .then(( result )=>{
+                    if(result.message.length == 0){
+                        this.removeAttraction()
+                        this.display_no_data()
+                        return;
+                    }
+                    this.display_search_photos(result.message)
+                    window.onscroll = () =>{
+                        if(result.message != null) {
+                            if(window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 100){
+                                this.search_nextpage_photos(result.nextPage, keyword)
+                            } 
+                        }
+                    }
+                })
+            }
+        })
     }
     // display data function
     display_section_2(results){
         this.for_function(results)
     }
+
     // fetch api
     fetchData(page){
         if(post_flag) {
@@ -262,4 +397,6 @@ document.addEventListener('DOMContentLoaded', async ()=>{
     const main = new Main
     await main.fetchData(page)
     main.search_photos(page)
+    main.labelColor()
+    main.switch()
 })

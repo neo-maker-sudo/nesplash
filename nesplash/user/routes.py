@@ -1,10 +1,11 @@
-from flask import Blueprint, render_template, session, request, jsonify, redirect, url_for
+from flask import Blueprint, render_template, session, request, jsonify, redirect, url_for, abort
 from nesplash.models import User, Photo, Collection, Follow, Category, Method
 from nesplash.extensions import db
 from nesplash.decorator import login_required
 from nesplash.user.util import send_register_mail, send_change_password_mail, s3_profile_pics, s3_public_pics
 from nesplash.ma import userSchema, photoSchema, collectionSchema, followSchema
 from werkzeug.security import check_password_hash
+from nesplash.extensions import cache
 
 import time
 
@@ -13,10 +14,12 @@ user_bp = Blueprint("user", __name__)
 
 # signin and signup routes
 @user_bp.route("/signup")
+@cache.cached(timeout=60*60*24)
 def signup():
     return render_template("signup.html")
 
 @user_bp.route("/signin")
+@cache.cached(timeout=60*60*24)
 def signin():
     return render_template("signin.html")
 
@@ -119,9 +122,10 @@ def reset_password(token):
         
     return render_template("reset_password.html")
 
-@user_bp.route("/api/user/change-password/<int:user_id>", methods=['POST'])
-def change_password(user_id):
-    user = User.query.get_or_404(user_id)
+@user_bp.route("/api/user/change-password", methods=['POST'])
+@login_required
+def change_password(*args, **kwargs):
+    user = User.query.filter_by(email=kwargs['email']).first()
 
     if user is None:
         return jsonify({"error": "none exist user"}), 400
@@ -201,18 +205,18 @@ def public_page_api(user_id):
 # account person and pictures routes
 @user_bp.route("/account/upload_pictures")
 @login_required
-def upload_pictures_page():
+def upload_pictures_page(*args, **kwargs):
     return render_template("account/upload_pictures_page.html")
 
 @user_bp.route("/account/data")
 @login_required
-def person_data():
+def person_data(*args, **kwargs):
     return render_template("account/personData.html")
 
 @user_bp.route("/api/account/data")
 @login_required
-def person_data_api():
-    sess = session.get("email")
+def person_data_api(*args, **kwargs):
+    sess = kwargs["email"]
     if sess:
         current_user = User.query.filter_by(email=sess).first()
         return jsonify({"message": {
@@ -224,16 +228,18 @@ def person_data_api():
             "profile_image": current_user.profile_image,
             "confirmed_status": current_user.confirmed,
             "lock_status": current_user.lock_status,
-            "user_method": current_user.methods.name
+            "Method": {
+                "user_method": current_user.methods.name
+            }
         }})
     else:
-        return jsonify({"message": []})
+        jsonify({"message": []})
 
-@user_bp.route("/api/user/change-bio/<int:user_id>", methods=['POST'])
+
+@user_bp.route("/api/user/change-bio", methods=['POST'])
 @login_required
-def change_bio(user_id):
-    user = User.query.get_or_404(user_id)
-    
+def change_bio(*args, **kwargs):
+    user = User.query.filter_by(email=kwargs['email']).first()
     if user is None:
         return jsonify({"error": "none exist user"}), 400
 
@@ -243,11 +249,10 @@ def change_bio(user_id):
         db.session.commit()
         return jsonify({"ok": True})
 
-@user_bp.route("/api/user/change-username/<int:user_id>", methods=['POST'])
+@user_bp.route("/api/user/change-username", methods=['POST'])
 @login_required
-def change_username(user_id):
-    user = User.query.get_or_404(user_id)
-
+def change_username(*args, **kwargs):
+    user = User.query.filter_by(email=kwargs['email']).first()
     if user is None:
         return jsonify({"error": "none exist user"}), 400
 
@@ -262,11 +267,10 @@ def change_username(user_id):
             db.session.commit()
             return jsonify({"ok": True})
 
-@user_bp.route("/api/user/change-location/<int:user_id>", methods=['POST'])
+@user_bp.route("/api/user/change-location", methods=['POST'])
 @login_required
-def change_location(user_id):
-    user = User.query.get_or_404(user_id)
-
+def change_location(*args, **kwargs):
+    user = User.query.filter_by(email=kwargs['email']).first()
     if user is None:
         return jsonify({"error": "none exist user"}), 400
 
@@ -277,11 +281,10 @@ def change_location(user_id):
         db.session.commit()
         return jsonify({"ok": True})
 
-@user_bp.route("/api/user/delete-account/<int:user_id>", methods=['DELETE'])
+@user_bp.route("/api/user/delete-account", methods=['DELETE'])
 @login_required
-def delete_account(user_id):
-    user = User.query.get_or_404(user_id)
-
+def delete_account(*args, **kwargs):
+    user = User.query.filter_by(email=kwargs['email']).first()
     if user is None:
         return jsonify({"error": "none exist user"}), 400
 
@@ -291,11 +294,10 @@ def delete_account(user_id):
         session.pop("email")
         return jsonify({"ok": True})
 
-@user_bp.route("/api/user/upload-profile-image/<int:user_id>", methods=['POST'])
+@user_bp.route("/api/user/upload-profile-image", methods=['POST'])
 @login_required
-def upload_profile_image(user_id):
-    user = User.query.get_or_404(user_id)
-
+def upload_profile_image(*args, **kwargs):
+    user = User.query.filter_by(email=kwargs["email"]).first()
     if user is None:
         return jsonify({"error": "none exist user"}), 400
 
@@ -307,11 +309,10 @@ def upload_profile_image(user_id):
         db.session.commit()
         return jsonify({"ok": True, "message": clean_fn})
 
-@user_bp.route("/api/user/upload-public-image/<int:user_id>", methods=['POST'])
+@user_bp.route("/api/user/upload-public-image", methods=['POST'])
 @login_required
-def upload_public_image(user_id):
-    user = User.query.get_or_404(user_id)
-
+def upload_public_image(*args, **kwargs):
+    user = User.query.filter_by(email=kwargs["email"]).first()
     if user is None:
         return jsonify({"error": "none exist user"}), 400
 
@@ -319,15 +320,15 @@ def upload_public_image(user_id):
         file = request.files["file"]
         description = request.form["description"]
         category = request.form["category"]
-        clean_fn = s3_public_pics(file)
-        user.upload_public_photo(user, description, category, clean_fn)
+        clean_fn, labelName = s3_public_pics(file)
+        user.upload_public_photo(user, description, category, clean_fn, labelName)
         return jsonify({"ok": True})
     else:
         return jsonify({"message": []})
 
 @user_bp.route("/api/user/delete-public-image", methods=['POST'])
 @login_required
-def delete_public_image():
+def delete_public_image(*args, **kwargs):
     if request.method == 'POST':
         photo_id = request.json["id"]
         photo = Photo.query.get(photo_id)
@@ -335,40 +336,42 @@ def delete_public_image():
         if photo is None:
             return jsonify({"error": "none exist photo"}), 400
 
+        if photo.author.email != kwargs["email"]:
+            return jsonify({"error": "not your photo"}), 400
+
+        photo.author.total_photos -= 1
         db.session.delete(photo)
         db.session.commit()
         return jsonify({"ok": True})
 
 @user_bp.route("/api/user/personal-photos")
 @login_required
-def personal_photo_id():
+def personal_photo_id(*args, **kwargs):
     page = request.args.get("page", None)
-    sess = session.get("email")
-    if sess:
-        user = User.query.filter_by(email=sess).first()
-        photos = Photo.query.filter_by(author_id=user.id).offset(int(page)*12).limit(12)
-        results = photoSchema.dump(photos)
-        if len(results) < 12:
-            return jsonify({"nextPage": None, "message": results})
+    user = User.query.filter_by(email=kwargs["email"]).first()
+    photos = Photo.query.filter_by(author_id=user.id).offset(int(page)*12).limit(12)
+    results = photoSchema.dump(photos)
+    if len(results) < 12:
+        return jsonify({"nextPage": None, "message": results})
+    else:
+        photos_check = Photo.query.filter_by(author_id=user.id).offset((int(page)+1)*12).limit(12)
+        check_data = photoSchema.dump(photos_check)
+        if check_data != []:
+            return jsonify({"nextPage": int(page) + 1, "message": results})
         else:
-            photos_check = Photo.query.filter_by(author_id=user.id).offset((int(page)+1)*12).limit(12)
-            check_data = photoSchema.dump(photos_check)
-            if check_data != []:
-                return jsonify({"nextPage": int(page) + 1, "message": results})
-            else:
-                return jsonify({"nextPage": None, "message": results})
-    return jsonify({"message": []})
+            return jsonify({"nextPage": None, "message": results})
+
 
 
 # collection
 @user_bp.route("/account/collections")
 @login_required
-def collections_page():
+def collections_page(*args, **kwargs):
     return render_template("account/collections_page.html")
 
 @user_bp.route("/api/user/collect-photos")
 @login_required
-def account_collections_page():
+def account_collections_page(*args, **kwargs):
     arr = []
     page = request.args.get("page", None)
     sess = session.get("email")
@@ -384,6 +387,7 @@ def account_collections_page():
                 "imageurl": photo.imageurl,
                 "description": photo.description,
                 "download": photo.download,
+                "label": photo.label,
                 "user": photo.author.username,
                 "link": photo.author.link,
                 "profile_image": photo.author.profile_image,
@@ -436,15 +440,17 @@ def uncollect_pics(photo_id):
     else:
         return jsonify({"error": "you have to login first"})
         
+
+
 # follow and unfollow routes
 @user_bp.route("/account/following")
 @login_required
-def following_page():
+def following_page(*args, **kwargs):
     return render_template("account/following_page.html")
 
 @user_bp.route("/account/followers")
 @login_required
-def followers_page():
+def followers_page(*args, **kwargs):
     return render_template("account/followers_page.html")
 
 @user_bp.route("/api/follow/<int:user_id>")
@@ -479,88 +485,77 @@ def unfollow(user_id):
     else:
         return jsonify({"error":  "you have to login first"})
 
-@user_bp.route("/api/is_following_or_not/<int:user_id>")
+@user_bp.route("/api/is_following_or_not", methods=['POST'])
 @login_required
-def follow_status(user_id):
-    sess = session.get("email")
-    if sess:
-        current_user = User.query.filter_by(email=sess).first()
-        user = User.query.get_or_404(user_id)
-        result = current_user.is_following(user)
-        if result:
-            return jsonify({"message": "match"})
-        else:
-            return jsonify({"message": "nomatch"})
+def follow_status(*args, **kwargs):
+    user_id = request.json["user_id"]
+
+    current_user = User.query.filter_by(email=kwargs["email"]).first()
+    user = User.query.get_or_404(user_id)
+    result = current_user.is_following(user)
+    if result:
+        return jsonify({"message": "match"})
     else:
-        return jsonify({"message": []})
+        return jsonify({"message": "nomatch"})
     
 @user_bp.route("/api/user/following")
 @login_required
-def account_following_page():
+def account_following_page(*args, **kwargs):
     arr = []
     page = request.args.get("page", None)
-    sess = session.get("email")
-    if sess:
-        current_user = User.query.filter_by(email=sess).first()
-        followed = Follow.query.filter_by(follower_id=current_user.id).order_by(Follow.followed_id.asc()).offset(int(page)*12).limit(12)
-        results = followSchema.dump(followed)
-        for result in results:
-            if result["followed_id"] == current_user.id:
-                continue
-            user = User.query.get_or_404(result["followed_id"])
-            data = {
-                "id": user.id,
-                "username": user.username,
-                "link": user.link,
-                "profile_image": user.profile_image
-            }
-            arr.append(data)
-        if len(result) < 12:
-            return jsonify({"nextPage": None, "message": arr})
-        else:
-            followed_check = Follow.query.filter_by(follower_id=current_user.id).order_by(Follow.followed_id.asc()).offset((int(page)+1)*12).limit(12)
-            check_data = followSchema.dump(followed_check)
-            if check_data != []:
-                return jsonify({"nextPage": int(page) + 1,"message": arr})
-            else:
-                return jsonify({"nextPage": None, "message": arr})
+    current_user = User.query.filter_by(email=kwargs["email"]).first()
+    followed = Follow.query.filter_by(follower_id=current_user.id).order_by(Follow.followed_id.asc()).offset(int(page)*12).limit(12)
+    results = followSchema.dump(followed)
+    for result in results:
+        if result["followed_id"] == current_user.id:
+            continue
+        user = User.query.get_or_404(result["followed_id"])
+        data = {
+            "id": user.id,
+            "username": user.username,
+            "link": user.link,
+            "profile_image": user.profile_image
+        }
+        arr.append(data)
+    if len(result) < 12:
+        return jsonify({"nextPage": None, "message": arr})
     else:
-        return jsonify({"message": []})
+        followed_check = Follow.query.filter_by(follower_id=current_user.id).order_by(Follow.followed_id.asc()).offset((int(page)+1)*12).limit(12)
+        check_data = followSchema.dump(followed_check)
+        if check_data != []:
+            return jsonify({"nextPage": int(page) + 1,"message": arr})
+        else:
+            return jsonify({"nextPage": None, "message": arr})
 
 @user_bp.route("/api/user/followers")
 @login_required
-def account_followers_page():
+def account_followers_page(*args, **kwargs):
     arr = []
     page = request.args.get("page", None)
-    sess = session.get("email")
-    if sess:
-        current_user = User.query.filter_by(email=sess).first()
-        followers = Follow.query.filter_by(followed_id=current_user.id).order_by(Follow.follower_id.asc()).offset(int(page)*12).limit(12)
-        results = followSchema.dump(followers)
+    current_user = User.query.filter_by(email=kwargs["email"]).first()
+    followers = Follow.query.filter_by(followed_id=current_user.id).order_by(Follow.follower_id.asc()).offset(int(page)*12).limit(12)
+    results = followSchema.dump(followers)
 
-        for result in results:
-            if result["follower_id"] == current_user.id:
-                continue
-            user = User.query.get_or_404(result["follower_id"])
-            data = {
-                "id": user.id,
-                "username": user.username,
-                "link": user.link,
-                "profile_image": user.profile_image
-            }
-            arr.append(data)
+    for result in results:
+        if result["follower_id"] == current_user.id:
+            continue
+        user = User.query.get_or_404(result["follower_id"])
+        data = {
+            "id": user.id,
+            "username": user.username,
+            "link": user.link,
+            "profile_image": user.profile_image
+        }
+        arr.append(data)
 
-        if len(results) < 12:
-            return jsonify({"nextPage": None, "message": arr})
-        else:
-            followers_check = Follow.query.filter_by(followed_id=current_user.id).order_by(Follow.follower_id.asc()).offset((int(page)+1)*12).limit(12)
-            check_data = followSchema.dump(followers_check)
-            if check_data != []:
-                return jsonify({"nextPage": int(page) + 1, "message": arr})
-            else:
-                return jsonify({"nextPage": None, "message": arr})
+    if len(results) < 12:
+        return jsonify({"nextPage": None, "message": arr})
     else:
-        return jsonify({"message": []})
-
+        followers_check = Follow.query.filter_by(followed_id=current_user.id).order_by(Follow.follower_id.asc()).offset((int(page)+1)*12).limit(12)
+        check_data = followSchema.dump(followers_check)
+        if check_data != []:
+            return jsonify({"nextPage": int(page) + 1, "message": arr})
+        else:
+            return jsonify({"nextPage": None, "message": arr})
 
 

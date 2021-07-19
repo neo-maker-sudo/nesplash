@@ -6,6 +6,7 @@ const mainSwitch_1 = document.getElementsByClassName("close")[0];
 const mainSwitch_2 = document.getElementsByClassName("close")[1];
 const password_btn = document.querySelector(".password-button");
 const authority_btn = document.querySelector(".authority-button");
+const searchBtn = document.getElementById("search-button");
 
 const authorityLi = document.getElementsByClassName("authority-li");
 const a = document.getElementsByClassName("admin-a")[0];
@@ -13,6 +14,7 @@ const a = document.getElementsByClassName("admin-a")[0];
 let id;
 let index = 0;
 let authority_status;
+var post_flag = false;
 
 class Admin {
     // admin send change password api
@@ -181,6 +183,86 @@ class Admin {
         this.send_forget_mail()
         this.lock_authority()
     }
+
+    // display search users
+    async search_users(data){
+        await this.removeUsers()
+
+        for(let i=0;i<data.length;i++){
+            const userDiv = document.createElement("div");
+            const userImage = document.createElement("img");
+            const gridDiv = document.createElement("div");
+            const userName = document.createElement("a");
+            const div = document.createElement("div");
+            const forgetBtn = document.createElement("button");
+            const lockBtn = document.createElement("button");
+            
+            admin_section_2.appendChild(userDiv)
+            userDiv.appendChild(userImage);
+            userDiv.appendChild(gridDiv);
+            gridDiv.appendChild(userName);
+            gridDiv.appendChild(div);
+            div.appendChild(forgetBtn);
+            div.appendChild(lockBtn);
+            userDiv.classList.add("admin-userDiv");
+            userImage.classList.add("admin-userImage");
+
+            userImage.setAttribute("src", `${data[i].profile_image}`);
+            gridDiv.classList.add("admin-gridDiv");
+            userName.textContent = `${data[i].username}`;
+            console.log(data[i].username)
+            userName.classList.add("admin-userName");
+            userName.setAttribute("href", `/public/${data[i].id}`);
+            userName.setAttribute("target", `_blank`);
+            forgetBtn.textContent = "password";
+            forgetBtn.classList.add("admin-forgetBtn");
+            forgetBtn.setAttribute("id", `${data[i].id}`);
+            lockBtn.textContent = "authority";
+            lockBtn.classList.add("admin-lockBtn");
+            lockBtn.setAttribute("id", `${data[i].id}`);
+        }
+        this.send_forget_mail()
+        this.lock_authority()
+    }
+
+    // remove exist users
+    removeUsers(){
+        while(admin_section_2.hasChildNodes()){
+            admin_section_2.removeChild(admin_section_2.firstChild)
+        }
+    }
+    // search api
+    searchData(){
+        searchBtn.onclick = (e)=>{
+            e.preventDefault()
+            const user_input = document.querySelector(".search-input")
+            if(post_flag){
+                return
+            }
+
+            post_flag = true
+            const url = `${window.port}/api/admin/users-data`
+            fetch(url,{
+                method: 'POST',
+                body: JSON.stringify({
+                    "username": user_input.value
+                }),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            .then( async ( response )=>{
+                const data = await response.json()
+                post_flag = false
+                return data
+            })
+            .then((result)=>{
+                if(result.ok == true){
+                    this.search_users(result.message)
+                }
+            })
+        }
+    }
     // fetch api
     fetchData(){
         a.style.color = "blue"
@@ -200,5 +282,6 @@ class Admin {
 document.addEventListener("DOMContentLoaded", ()=>{
     const admin = new Admin
     admin.fetchData()
+    admin.searchData()
     admin.close()
 })

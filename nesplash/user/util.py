@@ -1,12 +1,19 @@
 import secrets
 import os
 import boto3
+import time
 from werkzeug.utils import secure_filename
 from PIL import Image
 from flask import url_for, current_app
 from threading import Thread
 from flask_mail import Message
-from nesplash.extensions import mail
+from nesplash.extensions import mail, model
+
+from keras.preprocessing.image import load_img
+from keras.preprocessing.image import img_to_array
+from keras.applications.vgg16 import preprocess_input
+from keras.applications.vgg16 import decode_predictions
+import numpy as np
 
 s3 = boto3.client('s3',
                     aws_access_key_id=os.getenv("AWS_ACCESS_KEY"),
@@ -81,12 +88,42 @@ def s3_public_pics(picture):
     filename = secure_filename(pic_filename)
     picture.save(pic_path)
     key_path = "public_pics/" + pic_filename
-    
+    labelName = keras_model(pic_path)
     thr = Thread(s3.upload_file(Bucket=bucket, Filename=pic_path, Key=key_path))
     thr.start()
     
-    return pic_filename
+    return pic_filename, labelName
 
 
 def obj_last_modified(myobj):
     return myobj.last_modified
+
+
+def keras_model(img_path):
+    image = load_img(img_path, target_size=(224, 224))
+    image = img_to_array(image)
+    image = np.expand_dims(image, axis=0)
+    image = preprocess_input(image)
+    result = model.predict(image)
+    
+    # label 第一次出來會有五個預測內容 
+    # [
+    #     [
+    #         ('n03724870', 'mask', 0.10736913), 
+    #         ('n03866082', 'overskirt', 0.09860326),
+    #         ('n03958227', 'plastic_bag', 0.096884824), 
+    #         ('n03534580', 'hoopskirt', 0.07662964),
+    #         ('n07836838', 'chocolate_sauce', 0.06463431)
+    #     ]
+    # ]
+    label = decode_predictions(result)
+
+    # 取出label最高機率的內容
+    label = label[0][0]
+    
+    # 最終結果，並加入字串與轉換為百分比 Ex : mask (10.74%)
+    classification = '%s (%.2f%%)' % (label[1], label[2]*100)
+
+    return classification
+
+

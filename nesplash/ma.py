@@ -2,7 +2,7 @@ from nesplash.extensions import ma
 
 class PhotoSchama(ma.Schema):
     class Meta:
-        fields = ('id', 'imageurl', 'description','download', 'timestamp', 'category_id')
+        fields = ('id', 'imageurl', 'description','download', 'timestamp', 'category_id', 'label')
 
 
 class VideoSchema(ma.Schema):

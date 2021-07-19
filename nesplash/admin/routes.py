@@ -12,19 +12,19 @@ admin_bp = Blueprint("admin", __name__)
 @admin_bp.route("/admin")
 @login_required
 @admin_required("ADMINISTER")
-def admin_users_page():
+def admin_users_page(*args, **kwargs):
     return render_template("admin/users.html")
 
 @admin_bp.route("/admin/photos")
 @login_required
 @admin_required("ADMINISTER")
-def admin_photos_page():
+def admin_photos_page(*args, **kwargs):
     return render_template("admin/photos.html")
 
 @admin_bp.route("/admin/users")
 @login_required
 @admin_required("ADMINISTER")
-def admin_user_data():
+def admin_user_data(*args, **kwargs):
     users = User.query.all()
     results = userSchema.dump(users)
     return jsonify({"ok": True, "message": results}) 
@@ -32,7 +32,7 @@ def admin_user_data():
 @admin_bp.route("/api/admin/help-resend-mail", methods=['POST'])
 @login_required
 @admin_required("ADMINISTER")
-def admin_help_user_send_forgetEmail():
+def admin_help_user_send_forgetEmail(*args, **kwargs):
     if request.method == "POST":
         user_id = request.json["id"]
 
@@ -46,7 +46,7 @@ def admin_help_user_send_forgetEmail():
 @admin_bp.route("/api/admin/lock-authority", methods=['POST'])
 @login_required
 @admin_required("ADMINISTER")
-def admin_lower_authority():
+def admin_lower_authority(*args, **kwargs):
     if request.method == "POST":
         user_id = request.json["id"]
 
@@ -62,7 +62,7 @@ def admin_lower_authority():
 @admin_bp.route("/api/admin/unlock-authority", methods=['POST'])
 @login_required
 @admin_required("ADMINISTER")
-def admin_recover_authority():
+def admin_recover_authority(*args, **kwargs):
     if request.method == "POST":
         user_id = request.json["id"]
 
@@ -75,10 +75,21 @@ def admin_recover_authority():
 
         return jsonify({"ok": True})
 
+@admin_bp.route("/api/admin/users-data", methods=['POST'])
+@login_required
+@admin_required("ADMINISTER")
+def admin_specific_user_data(*args, **kwargs):
+    if request.method == 'POST':
+        username =request.json["username"]
+        users = User.query.whooshee_search(username)
+        results = userSchema.dump(users)
+        return jsonify({"ok": True, "message": results})
+
+
 @admin_bp.route("/api/admin/photos-data", methods=['POST'])
 @login_required
 @admin_required("ADMINISTER")
-def admin_photo_data():
+def admin_photo_data(*args, **kwargs):
     if request.method == 'POST': 
         photo_id = request.json["photo_id"]   
         photo = Photo.query.get(photo_id)
@@ -96,7 +107,7 @@ def admin_photo_data():
 @admin_bp.route("/api/admin/delete/photos-data", methods=['DELETE'])
 @login_required
 @admin_required("ADMINISTER")
-def admin_delete_photo_data():
+def admin_delete_photo_data(*args, **kwargs):
     if request.method == 'DELETE':
         photo_id = request.json["photo_id"]
         photo = Photo.query.get(photo_id)

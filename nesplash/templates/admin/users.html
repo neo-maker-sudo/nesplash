@@ -8,8 +8,13 @@
     <div class="admin-section-1">
         <a class="admin-a" href="{{ url_for('admin.admin_users_page') }}">Users</a>
         <a class="admin-a" href="{{ url_for('admin.admin_photos_page') }}">Photos</a>
-        <input>
     </div>
+
+    <div class="admin-search">
+        <input class="search-input" placeholder="輸入使用者名稱">
+        <button id="search-button">搜尋</button>
+    </div>
+
     <div class="admin-section-2">
         <!-- dynamic loading user's data -->
     </div>

@@ -1,5 +1,6 @@
 import os
 import click
+
 from flask import Flask, render_template, redirect, url_for
 
 from nesplash.config import config
@@ -14,7 +15,7 @@ from nesplash.category.architecture.routes import architecture_bp
 from nesplash.category.travel.routes import travel_bp
 from nesplash.category.athletics.routes import athletics_bp
 from nesplash.category.people.routes import people_bp
-from nesplash.extensions import db, ma, cors, mail, oauth
+from nesplash.extensions import db, ma, cors, mail, oauth, whooshee, cache, toolbar
 
 def create_app(config_name=None):
     if config_name is None:
@@ -22,7 +23,6 @@ def create_app(config_name=None):
 
     app = Flask('nesplash')
     app.config.from_object(config[config_name])
-
     register_blueprints(app)
     register_extensions(app)
     register_commands(app)
@@ -47,6 +47,9 @@ def register_extensions(app):
     cors.init_app(app)
     mail.init_app(app)
     oauth.init_app(app)
+    whooshee.init_app(app)
+    cache.init_app(app)
+    toolbar.init_app(app)
 
 def register_commands(app):
     
@@ -159,3 +162,4 @@ def register_errorHandler(app):
     @app.errorhandler(500)
     def internal_server_error(e):
         return render_template("errors/500.html"), 500
+

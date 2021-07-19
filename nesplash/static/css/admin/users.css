@@ -89,10 +89,15 @@
 }
 
 /* admin */
-.admin-section-1{
+.admin-section-1,
+.admin-search{
     display: flex;
     margin-top: 40px;
     justify-content: center;
+}
+
+.search-input {
+    margin-right: 5px;
 }
 
 .admin-section-1 a {

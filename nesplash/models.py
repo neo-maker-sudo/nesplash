@@ -1,6 +1,6 @@
 from flask import current_app
 from datetime import datetime
-from nesplash.extensions import db
+from nesplash.extensions import db, whooshee
 from werkzeug.security import generate_password_hash, check_password_hash
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from itsdangerous import BadSignature, SignatureExpired
@@ -50,13 +50,15 @@ class Follow(db.Model):
     follower = db.relationship("User", foreign_keys=[follower_id], back_populates="following", lazy='joined')
     followed = db.relationship("User", foreign_keys=[followed_id], back_populates="followers", lazy="joined")
 
+
+@whooshee.register_model('username')
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(50), nullable=False, unique=True)
-    email = db.Column(db.String(50), nullable=False, unique=True)
+    username = db.Column(db.String(50), nullable=False, unique=True, index=True)
+    email = db.Column(db.String(50), nullable=False, unique=True, index=True)
     password = db.Column(db.Text)
     bio = db.Column(db.Text, nullable=True)
-    location = db.Column(db.String(50), nullable=True)
+    location = db.Column(db.String(100), nullable=True)
     profile_image = db.Column(db.String(255), nullable=False, default='https://dkn8b9qqzonkk.cloudfront.net/profile_pics/default.jpg')
     total_collections = db.Column(db.Integer, default=0)
     total_photos = db.Column(db.Integer, default=0)
@@ -107,12 +109,13 @@ class User(db.Model):
             return None
         return User.query.get(user_id)
 
-    def upload_public_photo(self, user, description, category, clean_fn):
+    def upload_public_photo(self, user, description, category, clean_fn, label):
         if user is not None:
             photo = Photo(
-                imageUrl=("https://dkn8b9qqzonkk.cloudfront.net/public_pics/" + clean_fn),
+                imageurl=("https://dkn8b9qqzonkk.cloudfront.net/public_pics/" + clean_fn),
                 description=description,
                 download=("https://dkn8b9qqzonkk.cloudfront.net/public_pics/" + clean_fn),
+                label=label,
                 author=user,
                 categorys=Category.query.filter_by(name=category).first()
             )
@@ -171,12 +174,14 @@ class User(db.Model):
         return False
 
 
+@whooshee.register_model('description', 'label')
 class Photo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    imageurl = db.Column(db.String(255), nullable=True)
+    imageurl = db.Column(db.String(255), nullable=True, unique=True)
     description = db.Column(db.Text, nullable=True)
     download = db.Column(db.String(255), nullable=True)
     timestamp = db.Column(db.TIMESTAMP, nullable=True, default=datetime.utcnow)
+    label = db.Column(db.String(100), default="")
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'), nullable=False)
 

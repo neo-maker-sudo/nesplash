@@ -13,7 +13,8 @@ def create_admin():
         location="Taiwan",
         profile_image="https://dkn8b9qqzonkk.cloudfront.net/profile_pics/default.jpg",
         link="www.neohub.cloud",
-        methods=Method.query.filter_by(name="normal").first()
+        methods=Method.query.filter_by(name="normal").first(),
+        confirmed=1
     )
     user.set_password("123456")
     db.session.add(user)
@@ -52,7 +53,8 @@ def create_architecture():
                 description=image["alt_description"],
                 download=image["download"],
                 author=User.query.filter_by(username=result["username"]).first(),
-                categorys=Category.query.filter_by(name=image["category"]).first()
+                categorys=Category.query.filter_by(name=image["category"]).first(),
+                label=image["label"]
             )
             db.session.add(photo)
             try:
@@ -90,7 +92,8 @@ def create_athletics():
                 description=image["alt_description"],
                 download=image["download"],
                 author=User.query.filter_by(username=result["username"]).first(),
-                categorys=Category.query.filter_by(name=image["category"]).first()
+                categorys=Category.query.filter_by(name=image["category"]).first(),
+                label=image["label"]
             )
             db.session.add(photo)
             try:
@@ -123,14 +126,18 @@ def create_food_drink():
 
     for result in results:
         for image in result["images"]:
-            photo = Photo(
-                imageurl=image["imageUrl"],
-                description=image["alt_description"],
-                download=image["download"],
-                author=User.query.filter_by(username=result["username"]).first(),
-                categorys=Category.query.filter_by(name=image["category"]).first()
-            )
-            db.session.add(photo)
+            try:
+                photo = Photo(
+                    imageurl=image["imageUrl"],
+                    description=image["alt_description"],
+                    download=image["download"],
+                    author=User.query.filter_by(username=result["username"]).first(),
+                    categorys=Category.query.filter_by(name=image["category"]).first(),
+                    label=image["labelName"]
+                )
+                db.session.add(photo)
+            except:
+                print("Error")
             try:
                 db.session.commit()
             except IntegrityError:
@@ -166,7 +173,8 @@ def create_nature():
                 description=image["alt_description"],
                 download=image["download"],
                 author=User.query.filter_by(username=result["username"]).first(),
-                categorys=Category.query.filter_by(name=image["category"]).first()
+                categorys=Category.query.filter_by(name=image["category"]).first(),
+                label=image["label"]
             )
             db.session.add(photo)
             try:
@@ -204,7 +212,8 @@ def create_people():
                 description=image["alt_description"],
                 download=image["download"],
                 author=User.query.filter_by(username=result["username"]).first(),
-                categorys=Category.query.filter_by(name=image["category"]).first()
+                categorys=Category.query.filter_by(name=image["category"]).first(),
+                label=image["label"]
             )
             db.session.add(photo)
             try:
@@ -242,7 +251,8 @@ def create_travel():
                 description=image["alt_description"],
                 download=image["download"],
                 author=User.query.filter_by(username=result["username"]).first(),
-                categorys=Category.query.filter_by(name=image["category"]).first()
+                categorys=Category.query.filter_by(name=image["category"]).first(),
+                label=image["label"]
             )
             db.session.add(photo)
             try:
@@ -284,7 +294,8 @@ def create_contributor_photos():
                     description=imageDT["alt_description"],
                     download=imageDT["download"],
                     author=User.query.filter_by(username=result["username"]).first(),
-                    categorys=Category.query.filter_by(name=imageDT["category"]).first()
+                    categorys=Category.query.filter_by(name=imageDT["category"]).first(),
+                    label=imageDT["label"]
                 )
                 db.session.add(photo)
                 db.session.commit()

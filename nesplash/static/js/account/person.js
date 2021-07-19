@@ -37,9 +37,11 @@ const chage_password_input_2 = document.getElementById("change-password-input_2"
 const iform = document.getElementById("iform");
 const iform_2 = document.getElementById("iform_2");
 const upload_publicImg = document.querySelector(".person-upload");
+const upload_div = document.querySelector(".upload-div");
 
 const categoryLi = document.getElementsByClassName("category-li");
 const categoryTextarea = document.querySelector(".upload-textarea");
+
 
 let index = 0;
 let category_status ;
@@ -67,6 +69,8 @@ class Person {
             }
             public_image_btn.onclick = (e)=>{ 
                 e.preventDefault()
+                public_image_btn.classList.add("loading-div");
+                public_image_btn.textContent = "submitting";
                 if(iform_2.files[0] == undefined){
                     alert("請選擇圖片檔案");
                     return;
@@ -76,7 +80,7 @@ class Person {
                     return
                 }
                 else{
-                    const url = `${window.port}/api/user/upload-public-image/${idDiv.id}`
+                    const url = `${window.port}/api/user/upload-public-image`
 
                     var formData = new FormData()
                     formData.append("file", iform_2.files[0]);
@@ -115,7 +119,7 @@ class Person {
                     alert("傳輸檔案請小於2MB")
                     return;
                 }
-                const url = `${window.port}/api/user/upload-profile-image/${idDiv.id}`
+                const url = `${window.port}/api/user/upload-profile-image`
                 var formData = new FormData()
 
                 formData.append("file", iform.files[0])
@@ -143,7 +147,7 @@ class Person {
         delete_account.onclick = ()=>{
             model_delete.style.display = "block";
             delete_btn.onclick = ()=>{
-                const url = `${window.port}/api/user/delete-account/${idDiv.id}`
+                const url = `${window.port}/api/user/delete-account`
                 fetch(url, {
                     method: "DELETE"
                 })
@@ -163,7 +167,7 @@ class Person {
         modify_1.onclick = ()=>{
             model_name.style.display = "block";
             name_btn.onclick = ()=>{
-                const url = `${window.port}/api/user/change-username/${idDiv.id}`;
+                const url = `${window.port}/api/user/change-username`;
                 fetch(url,{
                     method: "POST",
                     body : JSON.stringify({
@@ -200,7 +204,7 @@ class Person {
                     alert("your account is github, don't need to change password")
                 }
                 else{
-                    const url = `${window.port}/api/user/change-password/${idDiv.id}`
+                    const url = `${window.port}/api/user/change-password`
                     fetch(url,{
                         method: "POST",
                         body : JSON.stringify({
@@ -229,8 +233,8 @@ class Person {
             }
         }
         modify_3.onclick = ()=>{
-            const textarea = document.querySelector(".label-bio");
-            const url = `${window.port}/api/user/change-bio/${idDiv.id}`
+            const textarea = document.querySelector(".textarea-bio");
+            const url = `${window.port}/api/user/change-bio`
             fetch(url,{
                 method: "POST",
                 body : JSON.stringify({
@@ -253,7 +257,7 @@ class Person {
         modify_4.onclick = ()=>{
             model_lcation.style.display = "block";
             location_btn.onclick = ()=>{
-                const url = `${window.port}/api/user/change-location/${idDiv.id}`;
+                const url = `${window.port}/api/user/change-location`;
                 fetch(url,{
                     method: "POST",
                     body : JSON.stringify({
@@ -280,19 +284,20 @@ class Person {
     // modal close function
     close(){
         mainSwitch_1.onclick = ()=>{
-            model_name.style.display = "none"
+            model_name.style.display = "none";
         }
         mainSwitch_2.onclick = ()=>{
-            model_change_password.style.display = "none"
+            model_change_password.style.display = "none";
         }
         mainSwitch_3.onclick = ()=>{
-            model_lcation.style.display = "none"
+            model_lcation.style.display = "none";
         }
         mainSwitch_4.onclick = ()=>{
-            model_delete.style.display = "none"
+            model_delete.style.display = "none";
         }
         mainSwitch_5.onclick = ()=>{
-            model_upload.style.display = "none"
+            model_upload.style.display = "none";
+            public_image_btn.classList.remove("loading-div");
         }
     }
     // display personal data function
@@ -308,15 +313,15 @@ class Person {
         
 
         idDiv.setAttribute("id", `${data.id}`);
-        method = data.user_method
-        if(data.user_method == "google"){
+        method = data.Method.user_method
+        if(data.Method.user_method == "google"){
             const google = document.querySelector(".bind-googleDiv");
             const google_span = document.createElement("span");
             google.appendChild(google_span);
             google_span.textContent = `----- ${data.username}`
             
         }
-        else if(data.user_method == "github"){
+        else if(data.Method.user_method == "github"){
             const github = document.querySelector(".bind-githubDiv");
             const github_span = document.createElement("span");
             github.appendChild(github_span);

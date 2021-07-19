@@ -61,6 +61,7 @@ class People {
             const s_div = document.createElement("div");
             const s_img = document.createElement("img");
             const img = document.createElement("img");
+            const label = document.createElement("label");
             const p = document.createElement("p");
             const download = document.createElement("a");
             const icon = document.createElement("div");
@@ -78,6 +79,7 @@ class People {
             icon.appendChild(iconDiv_2);
             s_div.appendChild(download);
             div.appendChild(img);
+            div.appendChild(label);
             div.appendChild(p);
 
             div.classList.add("people-section-2-div");
@@ -106,7 +108,14 @@ class People {
             outside_a.setAttribute("target", "_blank");
             outside_a.textContent = "Unsplash";
             inside_a.textContent = `${results[i].user}`;
-            inside_a.setAttribute("href", `/public/${results[i].user_id}`)
+            inside_a.setAttribute("href", `/public/${results[i].user_id}`);
+
+            if(`${results[i].label}` == "" || `${results[i].label}` == undefined){
+                label.textContent = "";
+            }else{
+                label.textContent = `${results[i].label}`;
+            }
+            
             p.textContent = `${results[i].description}`;
             download.setAttribute("target", "_blank");
             download.setAttribute("href", `${results[i].download}` + "?force=true");
