@@ -69,8 +69,6 @@ class Person {
             }
             public_image_btn.onclick = (e)=>{ 
                 e.preventDefault()
-                public_image_btn.classList.add("loading-div");
-                public_image_btn.textContent = "submitting";
                 if(iform_2.files[0] == undefined){
                     alert("請選擇圖片檔案");
                     return;
@@ -80,28 +78,43 @@ class Person {
                     return
                 }
                 else{
-                    const url = `${window.port}/api/user/upload-public-image`
+                    const size = iform_2.files[0]["size"] / 1024 / 1024
+                    const type = iform_2.files[0]["type"].split("/")[1]
+                    if (size > 10) {
+                        alert("傳輸檔案請小於10MB")
+                        return
+                    }
 
-                    var formData = new FormData()
-                    formData.append("file", iform_2.files[0]);
-                    formData.append("description", categoryTextarea.value);
-                    formData.append("category", category_status);
+                    if( type === "jpeg" || type === "png"){
+                        public_image_btn.classList.add("loading-div");
+                        public_image_btn.textContent = "submitting";
 
-                    fetch(url, {
-                        method: "POST",
-                        body : formData
-                    })
-                    .then( async (response)=>{
-                        return await response.json()
-                    })
-                    .then((result)=>{
-                        if(result.ok == true){
-                            location.href = `${window.port}` + "/account/upload_pictures"
-                        }
-                        if(result.message == "you are not allow to do this action"){
-                            location.href = `${window.port}` + "/"
-                        }
-                    })
+                        const url = `${window.port}/api/user/upload-public-image`
+
+                        var formData = new FormData()
+                        formData.append("file", iform_2.files[0]);
+                        formData.append("description", categoryTextarea.value);
+                        formData.append("category", category_status);
+
+                        fetch(url, {
+                            method: "POST",
+                            body : formData
+                        })
+                        .then( async (response)=>{
+                            return await response.json()
+                        })
+                        .then((result)=>{
+                            if(result.ok == true){
+                                location.href = `${window.port}` + "/account/upload_pictures"
+                            }
+                            if(result.message == "you are not allow to do this action"){
+                                location.href = `${window.port}` + "/"
+                            }
+                        })
+                    } else {
+                        alert("錯誤照片格式")
+                        return
+                    }
                 }
             }
         }
@@ -115,30 +128,36 @@ class Person {
                 return;
             }else{
                 const size = iform.files[0]["size"] / 1024 / 1024 // Mib
+                const type = iform.files[0]["type"].split("/")[1]
                 if(size > 2){
                     alert("傳輸檔案請小於2MB")
                     return;
                 }
-                const url = `${window.port}/api/user/upload-profile-image`
-                var formData = new FormData()
+                if( type === "jpeg" || type === "png"){
+                    const url = `${window.port}/api/user/upload-profile-image`
+                    var formData = new FormData()
 
-                formData.append("file", iform.files[0])
+                    formData.append("file", iform.files[0])
 
-                fetch(url, {
-                    method: "POST",
-                    body : formData
-                })
-                .then( async (response)=>{
-                    return await response.json()
-                })
-                .then((result)=>{
-                    if(result.ok == true){
-                        window.location.reload()
-                    }
-                    if(result.message == "you are not allow to do this action"){
-                        location.href = `${window.port}` + "/"
-                    }
-                })
+                    fetch(url, {
+                        method: "POST",
+                        body : formData
+                    })
+                    .then( async (response)=>{
+                        return await response.json()
+                    })
+                    .then((result)=>{
+                        if(result.ok == true){
+                            window.location.reload()
+                        }
+                        if(result.message == "you are not allow to do this action"){
+                            location.href = `${window.port}` + "/"
+                        }
+                    })
+                } else {
+                    alert("錯誤照片格式")
+                    return
+                }
             }
         }
     }
