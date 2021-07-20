@@ -1,8 +1,8 @@
 import os
 
 class BaseConfig():
-    SERVER_NAME = "www.nesplash.tw"
-    PREFERRED_URL_SCHEME = "https"
+    # SERVER_NAME = "www.nesplash.tw"
+    # PREFERRED_URL_SCHEME = "https"
     SECRET_KEY = os.getenv("SECRET_KEY", os.urandom(24))
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     WHOOSHEE_MIN_STRING_LEN = 1

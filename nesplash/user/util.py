@@ -32,7 +32,7 @@ def send_register_mail(user):
     message = Message("SIGNUP REGISTER CONFIRM MAIL", sender="noreply@demo.com", recipients=[user.email])
     message.body = f"""
     confirm email to grant your personal nesplash function
-    {url_for("user.confirm_email", token=token, _external=True)}
+    {url_for("user.confirm_email", token=token, _external=True, _scheme="https")}
     If you did not make this request, then just ignore this email and no change anything
     """
     app = current_app._get_current_object()
@@ -46,7 +46,7 @@ def send_change_password_mail(user):
     message = Message("Reset Password", sender="noreply@demo.com", recipients=[user.email])
     message.body = f"""
     to reset your password, visiting below link : 
-    {url_for("user.reset_password", token=token, _external=True)}
+    {url_for("user.reset_password", token=token, _external=True, _scheme="https")}
     If you did not make this request, then just ignore this email and no change anything
     """
     app = current_app._get_current_object()
