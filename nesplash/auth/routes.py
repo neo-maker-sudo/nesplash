@@ -73,7 +73,7 @@ def oauth_login(provider_name):
     if session.get("email"):
         return redirect(url_for("main.index"))
 
-    callback = url_for('auth.oauth_callback', provider_name=provider_name , _external=True)
+    callback = url_for('auth.oauth_callback', provider_name=provider_name , _external=True, _scheme="https")
     return providers[provider_name].authorize(callback=callback)
 
 
