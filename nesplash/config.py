@@ -22,7 +22,7 @@ class BaseConfig():
 
 class DevelopmentConfig(BaseConfig):
     SQLALCHEMY_DATABASE_URI = f"mysql+pymysql://neo:{os.getenv('NEO_MYSQL')}@localhost:3306/nesplash?charset=utf8mb4"
-    ADMIN_EMAIL = "eyywqkgb@gmail.com"
+    ADMIN_EMAIL = os.getenv("ADMIN_ACCOUNT")
 
 
 config = {

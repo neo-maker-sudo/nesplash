@@ -104,7 +104,6 @@ def oauth_callback(provider_name):
             profile_image=profile_image,
             link=website,
             methods=Method.query.filter_by(name=f"{provider_name}").first(),
-            confirmed=1
         )
         db.session.add(user)
         db.session.commit()
