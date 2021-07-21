@@ -8,7 +8,7 @@ from nesplash.extensions import db
 def create_admin():
     user = User(
         username="zhangneo",
-        email="eyywqkgb@gmail.com",
+        email=os.getenv("ADMIN_ACCOUNT"),
         bio="Hello, I am neo",
         location="Taiwan",
         profile_image="https://dkn8b9qqzonkk.cloudfront.net/profile_pics/default.jpg",
@@ -16,7 +16,7 @@ def create_admin():
         methods=Method.query.filter_by(name="normal").first(),
         confirmed=1
     )
-    user.set_password("123456")
+    user.set_password(os.getenv("ADMIN_PASSWORD"))
     db.session.add(user)
     try:
         db.session.commit()
