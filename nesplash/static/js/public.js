@@ -9,7 +9,7 @@ class Public {
     // display follow status
     getFollowStatus(){
         const follow_btn = document.querySelector(".public-follow");
-        const url = `${window.port}/api/is_following_or_not`;
+        const url = `${window.port}/api/is-following-or-not`;
         fetch(url, {
             method: "POST",
             body: JSON.stringify({
@@ -40,6 +40,7 @@ class Public {
         follow_btn.onclick = ()=>{
             if(follow_btn.style.background !== "rgb(204, 204, 204)"){
                 const url = `${window.port}/api/follow/${user_id}`
+
                 fetch(url)
                 .then( async ( response )=>{
                     return await response.json()
@@ -78,7 +79,6 @@ class Public {
     }
     // display user data
     display_public_userData(result){
-        console.log(result)
         const div = document.createElement("div");
         const div_2 = document.createElement("div");
         const s_div_1 = document.createElement("div");
@@ -126,7 +126,7 @@ class Public {
         n_div_1.classList.add("public-nameDiv")
         img.classList.add("public_image_profile");
         name.classList.add("public_name");
-        name.textContent = `${result.username}`;
+        name.textContent = `${result.username}` == "" ? "anonymous" : `${result.username}`;
         
         follow.textContent = `Follow`
         follow.classList.add("public-follow");
@@ -150,10 +150,24 @@ class Public {
             link.classList.add("public-link");
         }
 
-        location.classList.add("public-location");
-        location.textContent = `${result.location}`;
-        bio.classList.add("public-bio")
-        bio.textContent = `${result.bio}` ? `${result.bio}`: "";
+
+        if (result.location !== null){
+            if (result.location === ""){
+                location.textContent = `${result.location}`
+            } else {
+                location.classList.add("public-location");
+                location.textContent = `${result.location}`
+            }
+        }
+
+        if (result.bio !== null){
+            if (result.bio === ""){
+                bio.textContent = `${result.bio}`;
+            } else {
+                bio.classList.add("public-bio");
+                bio.textContent = `${result.bio}`;
+            }
+        }
 
         span_photo.textContent = `${result.total_photos}`;
         span_photo.classList.add("public-spanPhoto");

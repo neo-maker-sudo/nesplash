@@ -1,11 +1,16 @@
 const admin_section_2 = document.querySelector(".admin-section-2");
+
 const model_password = document.getElementById("modal-password");
 const model_authority = document.getElementById("modal-authority");
+const model_email = document.getElementById("modal-email")
 
 const mainSwitch_1 = document.getElementsByClassName("close")[0];
 const mainSwitch_2 = document.getElementsByClassName("close")[1];
+const mainSwitch_3 = document.getElementsByClassName("close")[2];
+
 const password_btn = document.querySelector(".password-button");
 const authority_btn = document.querySelector(".authority-button");
+const email_btn = document.querySelector(".email-button");
 const searchBtn = document.getElementById("search-button");
 
 const authorityLi = document.getElementsByClassName("authority-li");
@@ -17,8 +22,36 @@ let authority_status;
 var post_flag = false;
 
 class Admin {
+    // admin send confirm email api
+    resendConfirmEmail(){
+        email_btn.onclick = ()=>{
+            const url = `${window.port}/api/admin/help-resend-confirm-mail`
+            fetch(url, {
+                method: "POST",
+                body: JSON.stringify({
+                    id: id
+                }),
+                headers : {
+                    "Content-Type": "application/json"
+                }
+            })
+            .then( async ( response )=>{
+                return await response.json()
+            })
+            .then((result)=>{
+                if(result.ok == true){
+                    alert("發送成功");
+                    model_password.style.display = "none";
+                }
+                else{
+                    alert("使用者不存在，請排除異常")
+                }
+            })
+        }
+        
+    }
     // admin send change password api
-    resend(){
+    resendPassword(){
         password_btn.onclick = ()=>{
             const url = `${window.port}/api/admin/help-resend-mail`
             fetch(url, {
@@ -52,7 +85,23 @@ class Admin {
         mainSwitch_2.onclick = ()=>{
             model_authority.style.display = "none";
         }
+        mainSwitch_3.onclick = ()=>{
+            model_email.style.display = "none";
+        }
     }
+
+    // send authentication email
+    send_authentication_email(){
+        const emailBtn = document.getElementsByClassName("admin-emailBtn");
+        for(let i=0;i<emailBtn.length;i++){
+            emailBtn[i].onclick = ()=>{
+                model_email.style.display = "block";
+                id = emailBtn[i].id
+            }
+        }
+        this.resendConfirmEmail()
+    }
+
     // forget password confirm page function
     send_forget_mail(){
         const forgetBtn = document.getElementsByClassName("admin-forgetBtn");
@@ -62,7 +111,7 @@ class Admin {
                 id = forgetBtn[i].id
             }
         }
-        this.resend()
+        this.resendPassword()
     }
 
     // lock or unlock user's authority api
@@ -154,6 +203,7 @@ class Admin {
             const gridDiv = document.createElement("div");
             const userName = document.createElement("a");
             const div = document.createElement("div");
+            const emailBtn = document.createElement("button");
             const forgetBtn = document.createElement("button");
             const lockBtn = document.createElement("button");
             
@@ -164,24 +214,33 @@ class Admin {
             gridDiv.appendChild(div);
             div.appendChild(forgetBtn);
             div.appendChild(lockBtn);
+            div.appendChild(emailBtn);
             userDiv.classList.add("admin-userDiv");
             userImage.classList.add("admin-userImage");
 
             userImage.setAttribute("src", `${data[i].profile_image}`);
             gridDiv.classList.add("admin-gridDiv");
-            userName.textContent = `${data[i].username}`;
+            userName.textContent = `${data[i].username}` == "" ? "anonymous" : `${data[i].username}`;
             userName.classList.add("admin-userName");
             userName.setAttribute("href", `/public/${data[i].id}`);
             userName.setAttribute("target", `_blank`);
+
             forgetBtn.textContent = "password";
             forgetBtn.classList.add("admin-forgetBtn");
             forgetBtn.setAttribute("id", `${data[i].id}`);
+
             lockBtn.textContent = "authority";
             lockBtn.classList.add("admin-lockBtn");
             lockBtn.setAttribute("id", `${data[i].id}`);
+
+            emailBtn.textContent = "Send Authentication Email";
+            emailBtn.classList.add("admin-emailBtn");
+            emailBtn.setAttribute("id", `${data[i].id}`);
+
         }
         this.send_forget_mail()
         this.lock_authority()
+        this.send_authentication_email()
     }
 
     // display search users
@@ -196,7 +255,8 @@ class Admin {
             const div = document.createElement("div");
             const forgetBtn = document.createElement("button");
             const lockBtn = document.createElement("button");
-            
+            const emailBtn = document.createElement("button");
+
             admin_section_2.appendChild(userDiv)
             userDiv.appendChild(userImage);
             userDiv.appendChild(gridDiv);
@@ -204,13 +264,14 @@ class Admin {
             gridDiv.appendChild(div);
             div.appendChild(forgetBtn);
             div.appendChild(lockBtn);
+            div.appendChild(emailBtn);
             userDiv.classList.add("admin-userDiv");
             userImage.classList.add("admin-userImage");
 
             userImage.setAttribute("src", `${data[i].profile_image}`);
             gridDiv.classList.add("admin-gridDiv");
-            userName.textContent = `${data[i].username}`;
-            console.log(data[i].username)
+            userName.textContent = `${data[i].username}` == "" ? "anonymous" : `${data[i].username}`;
+
             userName.classList.add("admin-userName");
             userName.setAttribute("href", `/public/${data[i].id}`);
             userName.setAttribute("target", `_blank`);
@@ -220,9 +281,13 @@ class Admin {
             lockBtn.textContent = "authority";
             lockBtn.classList.add("admin-lockBtn");
             lockBtn.setAttribute("id", `${data[i].id}`);
+            emailBtn.textContent = "Send Authentication Email";
+            emailBtn.classList.add("admin-emailBtn");
+            emailBtn.setAttribute("id", `${data[i].id}`);
         }
         this.send_forget_mail()
         this.lock_authority()
+        this.send_authentication_email()
     }
 
     // remove exist users

@@ -85,8 +85,16 @@ def s3_public_pics(picture):
     pic_filename = random_hex + _ext
     pic_path = os.path.join(current_app.root_path,'static/public_pics', pic_filename)
 
-    filename = secure_filename(pic_filename)
-    picture.save(pic_path)
+
+    basewidth = 320
+    i = Image.open(picture)
+    if i.mode == "P":
+        i = i.convert("RGB")
+    wpercent = (basewidth/float(i.size[0]))
+    hsize = int((float(i.size[1])*float(wpercent)))
+    i = i.resize((basewidth, hsize), Image.ANTIALIAS)
+    i.save(pic_path)
+
     key_path = "public_pics/" + pic_filename
     labelName = keras_model(pic_path)
     thr = Thread(s3.upload_file(Bucket=bucket, Filename=pic_path, Key=key_path))

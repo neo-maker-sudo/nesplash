@@ -69,20 +69,34 @@ class Main {
             }
             
             s_img.setAttribute("src", `${results[i].User.profile_image}`);
+
             div.setAttribute("id", `${results[i].id}`);
-            outside_a.setAttribute("href", `${results[i].User.link}`);
-            outside_a.setAttribute("target", "_blank");
-            outside_a.textContent = "Unsplash";
-            inside_a.textContent = `${results[i].User.user}`;
+            
+            if (results[i].User.link == null){
+                outside_a.textContent = "No Link";
+            } else {
+                outside_a.setAttribute("href", `${results[i].User.link}`);
+                outside_a.setAttribute("target", "_blank");
+                outside_a.textContent = "Website";
+            }
+
+            inside_a.textContent = `${results[i].User.user}` ==  "" ? "anonymous" : `${results[i].User.user}`;
             inside_a.setAttribute("href", `/public/${results[i].User.user_id}`);
             
             if(`${results[i].label}` == "" || `${results[i].label}` == undefined){
+                label.classList.add("label-desc")
                 label.textContent = "";
             }else{
+                label.classList.add("label-desc")
                 label.textContent = `${results[i].label}`;
             }
+            if(results[i].description == null){
+                p.textContent = ""
+            } else {
+                p.textContent = `${results[i].description}`;
+            }
+
             
-            p.textContent = `${results[i].description}`;
             download.setAttribute("target", "_blank");
             download.setAttribute("href", `${results[i].download}` + "?force=true");
             download.setAttribute('download', 'download');

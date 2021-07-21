@@ -224,6 +224,7 @@ def person_data_api(*args, **kwargs):
             "email": current_user.email,
             "username": current_user.username,
             "location": current_user.location,
+            "link": current_user.link,
             "bio": current_user.bio,
             "profile_image": current_user.profile_image,
             "confirmed_status": current_user.confirmed,
@@ -280,6 +281,19 @@ def change_location(*args, **kwargs):
         user.location = location
         db.session.commit()
         return jsonify({"ok": True})
+
+@user_bp.route("/api/user/change-link", methods=['POST'])
+@login_required
+def change_link(*args, **kwargs):
+    user = User.query.filter_by(email=kwargs["email"]).first()
+    if user is None:
+        return jsonify({"error": "none exist user"}), 400
+
+    link = request.json["link"]
+    print(link)
+    user.link = link
+    db.session.commit()
+    return jsonify({"ok": True})
 
 @user_bp.route("/api/user/delete-account", methods=['DELETE'])
 @login_required
@@ -485,7 +499,8 @@ def unfollow(user_id):
     else:
         return jsonify({"error":  "you have to login first"})
 
-@user_bp.route("/api/is_following_or_not", methods=['POST'])
+
+@user_bp.route("/api/is-following-or-not", methods=['POST'])
 @login_required
 def follow_status(*args, **kwargs):
     user_id = request.json["user_id"]

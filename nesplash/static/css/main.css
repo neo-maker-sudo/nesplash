@@ -19,8 +19,8 @@ body{
     color: black;
     margin: 0 5px;
 }
-.main-header li:hover{
-    color:rgb(128, 128, 238)
+.main-header a:hover{
+    color:rgb(216, 91, 83)
 }
 .nav {
     list-style: none;
@@ -32,6 +32,11 @@ body{
     align-items: center;
     padding: 10px 0;
 }
+
+.website-title{
+    font-size: 20px;
+}
+
 .nav-div-left {
     display: inline-flex;
     position: static;
@@ -39,6 +44,7 @@ body{
     font-weight:bolder;
     margin: 10px 0;
     width: 150px;
+    align-items: baseline;
 }
 
 .nav-div-right {
@@ -253,4 +259,20 @@ body{
 
 .main-no-data{
     margin: 150px auto;
+}
+
+.label-desc{
+    background: #eee;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 14px;
+    text-transform: capitalize;
+    line-height: 26px;
+    padding: 6px 8px;
+    color: #767676;
+    cursor: pointer;
+}
+
+.label-desc:hover {
+    color: navy;
 }

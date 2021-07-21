@@ -41,6 +41,11 @@
                         <label class="label-location"></label>
                         <label class="person-modify-4">修改</label>
                     </div>
+                    <div class="person-link">
+                        <i class="fas fa-link"></i>
+                        <a class="label-link"></a>
+                        <label class="person-modify-5">修改</label>
+                    </div>
                     <div>
                         <i class="fas fa-file"></i>
                         <label class="label-bio">自傳 : </label>
@@ -48,7 +53,6 @@
                             <textarea class="textarea-bio"></textarea>
                             <label class="person-modify-3">修改</label>
                         </div>
-
                     </div>
                 </div>
                 <div>
@@ -94,7 +98,7 @@
             <div class="name-div">
                 <span class="close">&times;</span>
                 <h3 class="name-h3">Modify Username</h3>
-                <input type="text" placeholder="輸入姓名" name="email" id="name-input_1" minlength="3" maxlength="30" required>
+                <input type="text" placeholder="輸入姓名" name="email" id="name-input_1" minlength="3" maxlength="15" required>
                 <button type="submit" class="name-button">Confirm</button>
             </div>
         </div>
@@ -119,6 +123,17 @@
                 <h3 class="location-h3">Modify Location</h3>
                 <input type="test" placeholder="新地區" name="password" id="location-input" required>
                 <button type="submit" class="location-button">Confirm</button>
+            </div>
+        </div>
+    </form>
+
+    <form onsubmit="return false">
+        <div id="modal-link" class="modal">
+            <div class="link-div">
+                <span class="close">&times;</span>
+                <h3 class="link-h3">Modify link</h3>
+                <input type="test" placeholder="新地區" name="password" id="link-input" required>
+                <button type="submit" class="link-button">Confirm</button>
             </div>
         </div>
     </form>

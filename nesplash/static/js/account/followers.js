@@ -8,7 +8,6 @@ let post_flag = false;
 class Account {
     // display personal following users
     display_followers(results){
-        console.log(results)
         li.classList.add("select");
         for(let i=0;i<results.length;i++){
             const img = document.createElement("img");
@@ -36,10 +35,23 @@ class Account {
 
             div.setAttribute("id", `${results[i].id}`);
             img.setAttribute("src", `${results[i].profile_image}`);
-            outside_a.setAttribute("href", `${results[i].link}`);
-            outside_a.setAttribute("target", "_blank");
-            outside_a.textContent = "Unsplash";
-            inside_a.textContent = `${results[i].username}`;
+
+
+            if (results[i].link == null){
+                outside_a.textContent = "No Link";
+            } else {
+                if(results[i].link.split(".")[0] === "www"){
+                    outside_a.textContent = "Website";
+                    outside_a.setAttribute("href", `https://${results[i].link}`);
+                }else{
+                    outside_a.textContent = "Unsplash";
+                    outside_a.setAttribute("href", `${results[i].link}`);
+                }
+            
+                outside_a.setAttribute("target", "_blank")
+            }
+
+            inside_a.textContent = `${results[i].username}` == "" ? "anonymous" : `${results[i].username}`;
             inside_a.setAttribute("href", `/public/${results[i].id}`)
         }
     }

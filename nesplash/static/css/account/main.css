@@ -55,9 +55,15 @@
     margin-right: 10px;
 }
 
+.label-link{
+    text-decoration: none;
+    color: black;
+}
+
 .label-name,
 .label-email,
 .label-bio,
+.label-link,
 .label-location,
 .label-change-password{
     margin-left: 25px;
@@ -77,6 +83,10 @@
 
 .label-location::before {
     content : "地區 : "
+}
+
+.label-link::before {
+    content : "網站 : "
 }
 
 .person-publicDiv{
@@ -115,6 +125,7 @@ margin: 3px 8px;
 .person-email,
 .person-change-password,
 .person-location,
+.person-link,
 .person-bio{
     display: flex;
     justify-content: space-between;
@@ -131,14 +142,16 @@ margin: 3px 8px;
 .person-modify-1,
 .person-modify-2,
 .person-modify-3,
-.person-modify-4{
+.person-modify-4,
+.person-modify-5{
     cursor: pointer;
 }
 
 .person-modify-1:hover,
 .person-modify-2:hover,
 .person-modify-3:hover,
-.person-modify-4:hover{
+.person-modify-4:hover,
+.person-modify-5:hover{
     color: blue
 }
 
@@ -254,13 +267,15 @@ margin: 3px 8px;
 .fa-file,
 .fa-envelope,
 .fa-lock,
-.fa-location-arrow{
+.fa-location-arrow,
+.fa-link{
     position: absolute;
 }
 
 .name-div,
 .delete-div,
 .location-div,
+.link-div,
 .change-password-div{
     position: relative;
     max-width: 340px;
@@ -295,7 +310,8 @@ margin: 3px 8px;
 #name-input_1,
 #change-password-input_1,
 #change-password-input_2,
-#location-input{
+#location-input,
+#link-input{
     width: 310px;
     height: 45px;
     border: 1px solid #CCCCCC;
@@ -372,6 +388,26 @@ margin: 3px 8px;
 }
 
 .location-button{
+    height: 40px;
+    background: #f89753;
+    border-radius: 5px;
+    color: white;
+    border: none;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+.link-h3 {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 24px;
+    color: #666666;
+    margin: 15px 0 15px 11px;
+    text-align: left;
+}
+
+.link-button{
     height: 40px;
     background: #f89753;
     border-radius: 5px;

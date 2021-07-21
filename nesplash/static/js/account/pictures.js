@@ -58,7 +58,6 @@ class Account {
             div.appendChild(img);
             div.appendChild(label)
             div.appendChild(p);
-            
 
             const date = new Date(results[i].timestamp)
             h4.textContent = `${date.toGMTString()}`;
@@ -75,7 +74,12 @@ class Account {
                 label.textContent = `${results[i].label}`;
             }
 
-            p.textContent = `${results[i].description}`;
+            if(results[i].description == null ){
+                p.textContent = ""
+            } else {
+                p.textContent = `${results[i].description}`;
+            }
+            
             button.textContent = "Delete";
             button.classList.add("picture-delete-button");
         }

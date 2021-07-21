@@ -40,7 +40,12 @@ class Account {
                 img.setAttribute("src", `${results[i].imageurl}` + "&w=500&h=300&dpr=2");
             }
             
-            p.textContent = `${results[i].description}`;
+            if(results[i].description == null) {
+                p.textContent = ""
+            } else {
+                p.textContent = `${results[i].description}`;
+            }
+            
         }
     }
     // fetch api

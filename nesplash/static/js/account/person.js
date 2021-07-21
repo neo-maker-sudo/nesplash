@@ -5,10 +5,12 @@ const mainSwitch_2 = document.getElementsByClassName("close")[1];
 const mainSwitch_3 = document.getElementsByClassName("close")[2];
 const mainSwitch_4 = document.getElementsByClassName("close")[3];
 const mainSwitch_5 = document.getElementsByClassName("close")[4];
+const mainSwitch_6 = document.getElementsByClassName("close")[5];
 
 const model_name = document.getElementById("modal-name");
 const model_change_password = document.getElementById("modal-change-password");
-const model_lcation = document.getElementById("modal-location");
+const model_location = document.getElementById("modal-location");
+const model_link = document.getElementById("modal-link");
 const model_delete = document.getElementById("modal-delete");
 const model_upload = document.getElementById("modal-upload");
 
@@ -20,16 +22,19 @@ const modify_1 = document.querySelector(".person-modify-1");
 const modify_2 = document.querySelector(".person-modify-2");
 const modify_3 = document.querySelector(".person-modify-3");
 const modify_4 = document.querySelector(".person-modify-4");
+const modify_5 = document.querySelector(".person-modify-5");
 const delete_account = document.querySelector(".person-delete");
 
 const name_btn = document.querySelector(".name-button");
 const change_password_btn = document.querySelector(".change-password-button");
 const delete_btn = document.querySelector(".delete-button")
 const location_btn = document.querySelector(".location-button");
+const link_btn = document.querySelector(".link-button");
 const image_profile_btn = document.querySelector(".upload-btn");
 const public_image_btn = document.querySelector(".upload-button");
 
 const change_location_input = document.getElementById("location-input");
+const change_link_input = document.getElementById("link-input");
 const change_username_input_1 = document.getElementById("name-input_1");
 const chage_password_input_1 = document.getElementById("change-password-input_1");
 const chage_password_input_2 = document.getElementById("change-password-input_2");
@@ -186,6 +191,10 @@ class Person {
         modify_1.onclick = ()=>{
             model_name.style.display = "block";
             name_btn.onclick = ()=>{
+                if(change_username_input_1.value == ""){
+                    alert("無法送出空值")
+                    return
+                }
                 const url = `${window.port}/api/user/change-username`;
                 fetch(url,{
                     method: "POST",
@@ -272,15 +281,40 @@ class Person {
                 }
             })
         }
-
         modify_4.onclick = ()=>{
-            model_lcation.style.display = "block";
+            model_location.style.display = "block";
             location_btn.onclick = ()=>{
                 const url = `${window.port}/api/user/change-location`;
                 fetch(url,{
                     method: "POST",
                     body : JSON.stringify({
                         "location": change_location_input.value
+                    }),
+                    headers : {
+                        "Content-Type": "application/json"
+                    }
+                })
+                .then( async (response)=>{
+                    return await response.json()
+                })
+                .then((result)=>{
+                    if(result.ok == true){
+                        window.location.reload();
+                    }
+                    else if (result.error == "none exist user"){
+                        alert("none exist user");
+                    }
+                })
+            }
+        }
+        modify_5.onclick = ()=>{
+            model_link.style.display = "block";
+            link_btn.onclick = ()=>{
+                const url = `${window.port}/api/user/change-link`;
+                fetch(url,{
+                    method: "POST",
+                    body : JSON.stringify({
+                        "link": change_link_input.value
                     }),
                     headers : {
                         "Content-Type": "application/json"
@@ -309,23 +343,28 @@ class Person {
             model_change_password.style.display = "none";
         }
         mainSwitch_3.onclick = ()=>{
-            model_lcation.style.display = "none";
+            model_location.style.display = "none";
         }
         mainSwitch_4.onclick = ()=>{
-            model_delete.style.display = "none";
+            model_link.style.display = "none";
         }
         mainSwitch_5.onclick = ()=>{
+            model_delete.style.display = "none";
+        }
+        mainSwitch_6.onclick = ()=>{
             model_upload.style.display = "none";
             public_image_btn.classList.remove("loading-div");
         }
     }
     // display personal data function
     display_personTopDiv(data){
+        console.log(data)
         li.classList.add("select");
 
         const name = document.querySelector(".label-name");
         const email = document.querySelector(".label-email");
         const location = document.querySelector(".label-location");
+        const link = document.querySelector(".label-link")
         const bio = document.querySelector(".textarea-bio");
         const pro_fileImage = document.querySelector(".person-image");
         const status = document.querySelector(".confirm-status");
@@ -354,10 +393,39 @@ class Person {
         }
 
         pro_fileImage.setAttribute("src", `${data.profile_image}`)
-        name.textContent = `${data.username}`;
+        name.textContent = `${data.username}` == "" ? "anonymous" : `${data.username}`;
         email.textContent = `${data.email}`;
-        location.textContent = `${data.location}`;
-        bio.textContent = `${data.bio}`;
+        
+        if (data.location !== null){
+            if (data.location === ""){
+                location.textContent = `${data.location}`
+            } else {
+                location.textContent = `${data.location}`
+            }
+        }
+        
+        if (data.link !== null){
+            if (data.link === ""){
+                link.textContent = `${data.link}`
+            }else{
+                if(data.link.split(".")[0] === "www"){
+                    link.textContent = `${data.link}`;
+                    link.setAttribute("href", `https://${data.link}`);
+                }else{
+                    link.textContent = `${data.link}`;
+                    link.setAttribute("href", `${data.link}`);
+                }
+                link.setAttribute("target", "_blank")
+            }
+        }
+        if (data.bio !== null){
+            if (data.bio === ""){
+                bio.textContent = `${data.bio}`;
+            } else {
+                bio.textContent = `${data.bio}`;
+            }
+        }
+        
         public_page.setAttribute("href", `/public/${data.id}`);
         public_page.setAttribute("target", `_blank`);
         if(data.lock_status == true){

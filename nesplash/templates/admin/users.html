@@ -1,53 +1,97 @@
-{% extends 'layout.html' %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block style %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/admin/users.css') }}">
-{% endblock %}
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
+        integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
+    <title>Nesplash_O</title>
+</head>
 
-{% block content %}
-    <div class="admin-section-1">
-        <a class="admin-a" href="{{ url_for('admin.admin_users_page') }}">Users</a>
-        <a class="admin-a" href="{{ url_for('admin.admin_photos_page') }}">Photos</a>
-    </div>
-
-    <div class="admin-search">
-        <input class="search-input" placeholder="輸入使用者名稱">
-        <button id="search-button">搜尋</button>
-    </div>
-
-    <div class="admin-section-2">
-        <!-- dynamic loading user's data -->
-    </div>
-
-    <form onsubmit="return false">
-        <div id="modal-password" class="modal">
-            <div class="password-div">
-                <span class="close">&times;</span>
-                <h3 class="password-h3">Resend Password </h3>
-                <button type="submit" class="password-button">Confirm</button>
+<body>
+    <header class="main-header">
+        <nav class="nav">
+            <div class="nav-div-left">
+                <li><a class="website-title navbar-brand-2" href="{{ url_for('main.index') }}">Nesplash_O</a></li>
+                <li><a class="navbar-brand-2" href="{{ url_for('foodie.index') }}">Foodie</a></li>
+                <li><a class="navbar-brand-2" href="{{ url_for('nature.index') }}">Nature</a></li>
+                <li><a class="navbar-brand-2" href="{{ url_for('architecture.index') }}">Architecture</a></li>
+                <li><a class="navbar-brand-2" href="{{ url_for('travel.index') }}">Travel</a></li>
+                <li><a class="navbar-brand-2" href="{{ url_for('athletics.index') }}">Athletics</a></li>
+                <li><a class="navbar-brand-2" href="{{ url_for('people.index') }}">People</a></li>
             </div>
-        </div>
-    </form>
+            <div class="nav-div-right">
+                <li class="nav-li-right">
+                    <a id="signin" class="navbar-brand-2" href="{{ url_for('user.signin') }}">Signin</a>
+                    <a id="signup" class="navbar-brand-2" href="{{ url_for('user.signup') }}">Signup</a>
+                </li>
+            </div>
+        </nav>
+    </header>
 
-    <form onsubmit="return false">
-        <div id="modal-authority" class="modal">
-            <div class="authority-div">
-                <span class="close">&times;</span>
-                <h3 class="authority-h3">Lower or Recover Authority</h3>
-                <div>
-                    <ul class="authority-ul">
-                        <li class="authority-li">Lock</li>
-                        <li class="authority-li">Unlock</li>
-                    </ul>
+    <section class="admin-section">
+        <div class="admin-section-1">
+            <a class="admin-a" href="{{ url_for('admin.admin_users_page') }}">Users</a>
+            <a class="admin-a" href="{{ url_for('admin.admin_photos_page') }}">Photos</a>
+        </div>
+        
+        <div class="admin-search">
+            <input class="search-input" placeholder="輸入使用者名稱">
+            <button id="search-button">搜尋</button>
+        </div>
+        
+        <div class="admin-section-2">
+            <!-- dynamic loading user's data -->
+        </div>
+        
+        <form onsubmit="return false">
+            <div id="modal-password" class="modal">
+                <div class="password-div">
+                    <span class="close">&times;</span>
+                    <h3 class="password-h3">Resend Password</h3>
+                    <button type="submit" class="password-button">Confirm</button>
                 </div>
-
-                <button type="submit" class="authority-button">Confirm</button>
             </div>
-        </div>
-    </form>
-{% endblock %}
+        </form>
+        
+        <form onsubmit="return false">
+            <div id="modal-authority" class="modal">
+                <div class="authority-div">
+                    <span class="close">&times;</span>
+                    <h3 class="authority-h3">Lower or Recover Authority</h3>
+                    <div>
+                        <ul class="authority-ul">
+                            <li class="authority-li">Lock</li>
+                            <li class="authority-li">Unlock</li>
+                        </ul>
+                    </div>
+        
+                    <button type="submit" class="authority-button">Confirm</button>
+                </div>
+            </div>
+        </form>
+        
+        <form onsubmit="return false">
+            <div id="modal-email" class="modal">
+                <div class="email-div">
+                    <span class="close">&times;</span>
+                    <h3 class="email-h3">Send Authentication Email</h3>
+                    <button type="submit" class="email-button">Confirm</button>
+                </div>
+            </div>
+        </form>
+    </section>
 
-
-{% block script %}
+    <script>
+        window.port = "http://127.0.0.1:5000"
+    </script>
+    <script src="{{ url_for('static', filename='js/common.js') }}"></script>
     <script src="{{ url_for('static', filename='js/admin/users.js') }}"></script>
-{% endblock %}
+</body>
+
+</html>

@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, jsonify, request
 from nesplash.decorator import login_required, admin_required
 from nesplash.models import User, Photo
 from nesplash.ma import userSchema, photoSchema
-from nesplash.user.util import send_change_password_mail
+from nesplash.user.util import send_change_password_mail, send_register_mail
 from nesplash.extensions import db
 
 
@@ -59,6 +59,16 @@ def admin_lower_authority(*args, **kwargs):
         
         return jsonify({"ok": True})
 
+@admin_bp.route("/api/admin/help-resend-confirm-mail", methods=['POST'])
+@login_required
+def admn_help_user_send_confirmEmail(*args, **kwargs):
+    user_id = request.json["id"]
+    user = User.query.get(user_id)
+    if user:
+        send_register_mail(user)
+        return jsonify({"ok": True})
+    else:
+        return ({"error": "none exist user"})
 @admin_bp.route("/api/admin/unlock-authority", methods=['POST'])
 @login_required
 @admin_required("ADMINISTER")

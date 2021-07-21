@@ -104,10 +104,16 @@ class Nature {
             
             div.setAttribute("id", `${results[i].id}`);
             s_img.setAttribute("src", `${results[i].profile_image}`);
-            outside_a.setAttribute("href", `${results[i].link}`);
-            outside_a.setAttribute("target", "_blank");
-            outside_a.textContent = "Unsplash";
-            inside_a.textContent = `${results[i].user}`;
+
+            if (results[i].link == null){
+                outside_a.textContent = "No Link";
+            } else {
+                outside_a.setAttribute("href", `${results[i].link}`);
+                outside_a.setAttribute("target", "_blank");
+                outside_a.textContent = "Website";
+            }
+
+            inside_a.textContent = `${results[i].user}` == "" ? "anonymous" : `${results[i].user}`;
             inside_a.setAttribute("href", `/public/${results[i].user_id}`);
 
             if(`${results[i].label}` == "" || `${results[i].label}` == undefined){
@@ -116,7 +122,12 @@ class Nature {
                 label.textContent = `${results[i].label}`;
             }
             
-            p.textContent = `${results[i].description}`;
+            if(results[i].description == null){
+                p.textContent = ""
+            } else {
+                p.textContent = `${results[i].description}`;
+            }
+            
             download.setAttribute("target", "_blank");
             download.setAttribute("href", `${results[i].download}` + "?force=true");
             download.setAttribute('download', 'download');
