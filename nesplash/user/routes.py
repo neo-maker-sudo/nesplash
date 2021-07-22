@@ -211,7 +211,7 @@ def upload_pictures_page(*args, **kwargs):
 @user_bp.route("/account/data")
 @login_required
 def person_data(*args, **kwargs):
-    return render_template("account/personData.html")
+    return render_template("account/profile.html")
 
 @user_bp.route("/api/account/data")
 @login_required

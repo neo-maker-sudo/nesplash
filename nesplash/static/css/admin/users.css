@@ -134,7 +134,7 @@
 .admin-userDiv{
     display: flex;
     align-items: center;
-    margin: 30px 20px 0px 0;
+    margin: 30px 5px 0px 5px;
     border: 1px #ccc inset;
     padding: 10px;
     border-radius: 5px;

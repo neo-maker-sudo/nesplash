@@ -16,6 +16,9 @@
 <body>
     <header class="main-header">
         <nav class="nav">
+            <div class="nav-div-bars">
+                <i class="fas fa-bars"></i>
+            </div>
             <div class="nav-div-left">
                 <li><a class="website-title navbar-brand-2" href="{{ url_for('main.index') }}">Nesplash_O</a></li>
                 <li><a class="navbar-brand-2" href="{{ url_for('foodie.index') }}">Foodie</a></li>
@@ -30,6 +33,19 @@
                     <a id="signin" class="navbar-brand-2" href="{{ url_for('user.signin') }}">Signin</a>
                     <a id="signup" class="navbar-brand-2" href="{{ url_for('user.signup') }}">Signup</a>
                 </li>
+            </div>
+
+            <div class="bars-div">
+                <div class="bars-triangle"></div>
+                <div class="nav-div-barsBlock">
+                    <li><a class="website-title navbar-brand-3" href="{{ url_for('main.index') }}">Nesplash_O</a></li>
+                    <li><a class="navbar-brand-3" href="{{ url_for('foodie.index') }}">Foodie</a></li>
+                    <li><a class="navbar-brand-3" href="{{ url_for('nature.index') }}">Nature</a></li>
+                    <li><a class="navbar-brand-3" href="{{ url_for('architecture.index') }}">Architecture</a></li>
+                    <li><a class="navbar-brand-3" href="{{ url_for('travel.index') }}">Travel</a></li>
+                    <li><a class="navbar-brand-3" href="{{ url_for('athletics.index') }}">Athletics</a></li>
+                    <li><a class="navbar-brand-3" href="{{ url_for('people.index') }}">People</a></li>
+                </div>
             </div>
         </nav>
     </header>
