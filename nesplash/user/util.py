@@ -85,7 +85,6 @@ def s3_public_pics(picture):
     pic_filename = random_hex + _ext
     pic_path = os.path.join(current_app.root_path,'static/public_pics', pic_filename)
 
-
     basewidth = 320
     i = Image.open(picture)
     if i.mode == "P":

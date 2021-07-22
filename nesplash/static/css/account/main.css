@@ -1,8 +1,8 @@
 .main-account-2 {
-    list-style: none;
     display: flex;
     animation: example 1s;
     transition-timing-function: ease;
+    flex-wrap: wrap;
 }
 
 .account-2-a {
@@ -33,12 +33,11 @@
 .person-topDiv {
     display: flex;
     background-color: transparent;
-    padding: 45px 0;
+    padding: 70px 0;
     border-radius: 5px;
     box-shadow: 0 5px 12px rgb(0 0 0 / 15%);
-    margin-top: 70px;
+    margin-top: 50px;
     justify-content: center;
-    height: 400px;
 }
 
 .person-topDiv label {
@@ -47,7 +46,6 @@
 
 .data-area {
     width: 40%; 
-    margin-right: 60px;
     display: grid;
 }
 
@@ -105,20 +103,14 @@
 .person-public:hover{
     color:#f89753;
 }
-.person-confirm-spanDiv {
+
+.confirm-status{
+    margin: 3px 8px;
     position: absolute;
-    right: 20px;
     background: rgb(206, 161, 161);
     border-radius: 24px;
-    color:rgb(165, 49, 49)
-}
-
-.success{
-    background-color: #b7e7cb;
-    color: #36a162;
-}
-.confirm-status{
-margin: 3px 8px;
+    color:rgb(165, 49, 49);
+    padding: 3px 8px;
 }
 
 .person-name,
@@ -135,7 +127,7 @@ margin: 3px 8px;
     margin-top: 10px;
 }
 .textarea-bio{
-    width: 300px;
+    width: 295px;
     height: 100px;
 }
 
@@ -156,7 +148,8 @@ margin: 3px 8px;
 }
 
 .image-area{
-    text-align: center;
+    width: 30%;
+    text-align: left;
 }
 
 .person-changeImage {
@@ -184,6 +177,7 @@ margin: 3px 8px;
     font-size: 13px;
     transition: 1s;
 }
+
 .person-upload-forbidden{
     background-color: #CCCCCC;
     padding: 10px;
@@ -192,31 +186,45 @@ margin: 3px 8px;
     font-size: 13px;
     transition: 1s;
 }
+
 .person-upload:hover,
 .upload-btn:hover {
-    background-color: transparent;
-    border: 1px solid black;
-    color : rgb(31, 192, 31);
+    color:aliceblue;
+    background-color : rgb(28, 168, 28);
 }
 
 .person-changeImage:hover {
-    color : rgb(31, 192, 31);
+    color : rgb(28, 168, 28);;
 }
 
-.person-delete-area{
-    text-align: end;
-    margin-top: 30px;
+.person-upload-profile{
+    margin: 30px 0 45px 10px;
+}
+.person-delete-account,
+.person-upload-public{
+    margin: 30px 0 30px 10px;
 }
 
-.person-upload-area{
-    text-align: end;
-    margin-top: 85px;
-}
 
 .person-delete:hover {
     background-color: red;
     color: white;
 }
+
+.remind-span-success-warning,
+.remind-span-success {
+    position: absolute;
+    top: 0%;
+    color: #36a162;
+    font-style: italic;
+    left: 10px;
+}
+
+.remind-span-success-warning::after{
+    content: "( Warning! ) Your account already been lock, can not upload images, if you have issue please contact administrator email: eyywqkgb@gmail.com";
+    color: red;
+}
+
 .remind-span{
     position: absolute;
     top: 0%;
@@ -297,6 +305,13 @@ margin: 3px 8px;
     z-index: 5;
     padding: 10px;
 }
+
+.upload-public-popout{
+    display: flex; 
+    justify-content: center;
+    margin-top: 50px;
+}
+
 .name-h3 {
     font-style: normal;
     font-weight: bold;
@@ -458,22 +473,19 @@ margin: 3px 8px;
 }
 
 .person-image {
-    border: solid 2px black;
+    border: solid 2px rgb(201, 198, 198);
     border-radius: 50%;
     width: 125px;
     height: 125px;
 }
 .upload-btn{
-    position: absolute;
-    left: 0;
-    padding: 5px 10px;
+    padding: 10px;
     border: none;
     cursor: pointer;
     transition: 1s;
-    top: 55px;
     background-color: #CCCCCC;
     border-radius: 5px;
-    margin-left: 8px;
+    font-size: 13px;
 }
 
 
@@ -649,6 +661,12 @@ margin: 3px 8px;
     margin: 0 0 15px 15px;
 }
 
+.pictureless{
+    margin: 15px 15px 0 15px;
+    box-shadow: 0 5px 10px rgb(0 0 0 / 15%);
+    padding: 10px;
+}
+
 .picture-delete-button{
     cursor: pointer;
 }
@@ -658,4 +676,30 @@ margin: 3px 8px;
 .confirm-section-1 {
     text-align: center;
     margin-top: 100px;
+}
+
+/* person-topDiv RWD */
+
+@media only screen and (max-width: 800px) {
+    .person-topDiv{
+        display: block;
+    }
+    .image-area {
+        width: 90%;
+        margin-top: 20px;
+    }
+    .data-area{
+        width: 90%;
+        margin: auto;
+        height: 400px;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .main-account-2{
+        justify-content: center;
+    }
+    .upload-public-popout{
+        display: block;
+    }
 }

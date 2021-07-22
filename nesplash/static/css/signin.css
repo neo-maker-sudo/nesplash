@@ -90,3 +90,9 @@
     color: red;
     font-style: italic;
 }
+
+@media only screen and (max-width: 600px) {
+    .signin-form{
+        width: 85%;
+    }
+}

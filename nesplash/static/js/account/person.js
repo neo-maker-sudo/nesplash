@@ -16,7 +16,7 @@ const model_upload = document.getElementById("modal-upload");
 
 const idDiv = document.querySelector(".person-topDiv");
 const public_page = document.querySelector(".person-public");
-const spanDiv = document.querySelector(".person-confirm-spanDiv");
+
 
 const modify_1 = document.querySelector(".person-modify-1");
 const modify_2 = document.querySelector(".person-modify-2");
@@ -115,6 +115,9 @@ class Person {
                             if(result.message == "you are not allow to do this action"){
                                 location.href = `${window.port}` + "/"
                             }
+                        })
+                        .catch((err)=>{
+                            console.log(err)
                         })
                     } else {
                         alert("錯誤照片格式")
@@ -358,7 +361,6 @@ class Person {
     }
     // display personal data function
     display_personTopDiv(data){
-        console.log(data)
         li.classList.add("select");
 
         const name = document.querySelector(".label-name");
@@ -367,9 +369,7 @@ class Person {
         const link = document.querySelector(".label-link")
         const bio = document.querySelector(".textarea-bio");
         const pro_fileImage = document.querySelector(".person-image");
-        const status = document.querySelector(".confirm-status");
         
-
         idDiv.setAttribute("id", `${data.id}`);
         method = data.Method.user_method
         if(data.Method.user_method == "google"){
@@ -429,27 +429,26 @@ class Person {
         public_page.setAttribute("href", `/public/${data.id}`);
         public_page.setAttribute("target", `_blank`);
         if(data.lock_status == true){
-            spanDiv.classList.add("success");
-            status.textContent = "Account Confrimed";
-            upload_publicImg.className = "person-upload-forbidden";
-            const remind_span = document.createElement("span")
+            const remind_span = document.createElement("span");
             idDiv.appendChild(remind_span);
-            remind_span.textContent = "Your account already been lock, can not upload images, if you have issue please contact administrator email: eyywqkgb@gmail.com";
-            remind_span.classList.add("remind-span");
+            upload_publicImg.className = "person-upload-forbidden";
+            remind_span.textContent = "Account Confrimed : "
+            remind_span.classList.add("remind-span-success-warning");
             return;
         }
 
         if(data.confirmed_status == true){
-            status.textContent = "Account Confrimed";
-            spanDiv.classList.add("success");
+            const remind_span = document.createElement("span");
+            idDiv.appendChild(remind_span);
+            remind_span.textContent = "Account Confrimed";
+            remind_span.classList.add("remind-span-success");
             this.upload_publicImage()
         }
         else{
-            status.textContent = "Account UnConfrim";
             upload_publicImg.className = "person-upload-forbidden";
             const remind_span = document.createElement("span")
             idDiv.appendChild(remind_span);
-            remind_span.textContent = "Your account not confirm yet, if you have issue please contact administrator email: eyywqkgb@gmail.com";
+            remind_span.textContent = "Account UnConfrim : Your account not confirm yet, if you have issue please contact administrator email: eyywqkgb@gmail.com";
             remind_span.classList.add("remind-span");
         }
         

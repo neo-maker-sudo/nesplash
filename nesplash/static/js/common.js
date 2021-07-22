@@ -1,7 +1,11 @@
 const signin = document.getElementById("signin");
 const signup = document.getElementById("signup");
+const nav = document.querySelector(".nav");
 const nav_right = document.querySelector(".nav-li-right");
+const bars = document.querySelector(".nav-div-bars");
+const bars_div = document.querySelector(".bars-div");
 
+let switchbar = false;
 
 class Common {
     // change navbar info
@@ -64,10 +68,22 @@ class Common {
             }
         })
     }
+
+    navbarSwitch(){
+        bars.onclick = ()=>{
+            if(switchbar) {
+                switchbar = false
+                bars_div.style.display = "none"
+            } else {
+                switchbar = true
+                bars_div.style.display = "block"
+            }
+        }
+    }
 }
 
 document.addEventListener("DOMContentLoaded", async ()=>{
     const common = new Common
     await common.confirmIdentity()
-
+    common.navbarSwitch()
 })

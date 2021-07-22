@@ -41,49 +41,57 @@ class Account {
 
     // display personal photo function
     display_personal_photoData(results){
-
-        for(let i=0;i<results.length;i++){
+        if(results.length === 0){
             const div = document.createElement("div");
-            const img = document.createElement("img");
-            const label = document.createElement("label");
             const p = document.createElement("p");
-            const h4 = document.createElement("h4");
-            const button = document.createElement("button");
-            const div_2 = document.createElement("div");
-
             picture_section.appendChild(div);
-            div.appendChild(div_2);
-            div_2.appendChild(h4);
-            div_2.appendChild(button);
-            div.appendChild(img);
-            div.appendChild(label)
             div.appendChild(p);
+            p.textContent = "您尚未有任何上傳照片，可至Profile頁面新增。"
+            p.classList.add("pictureless")
+        } else {
+            for(let i=0;i<results.length;i++){
+                const div = document.createElement("div");
+                const img = document.createElement("img");
+                const label = document.createElement("label");
+                const p = document.createElement("p");
+                const h4 = document.createElement("h4");
+                const button = document.createElement("button");
+                const div_2 = document.createElement("div");
 
-            const date = new Date(results[i].timestamp)
-            h4.textContent = `${date.toGMTString()}`;
-            div_2.classList.add("picture-section-2-topDiv");
-            div.classList.add("picture-section-2-div");
-            div.setAttribute("id", `${results[i].id}`)
-            img.classList.add("picture-section-2-img");
-            img.setAttribute("src", `${results[i].imageurl}`);
-            label.classList.add("picture-label");
-            
-            if(`${results[i].label}` == "" || `${results[i].label}` == undefined){
-                label.textContent = "";
-            }else{
-                label.textContent = `${results[i].label}`;
-            }
+                picture_section.appendChild(div);
+                div.appendChild(div_2);
+                div_2.appendChild(h4);
+                div_2.appendChild(button);
+                div.appendChild(img);
+                div.appendChild(label)
+                div.appendChild(p);
 
-            if(results[i].description == null ){
-                p.textContent = ""
-            } else {
-                p.textContent = `${results[i].description}`;
+                const date = new Date(results[i].timestamp)
+                h4.textContent = `${date.toGMTString()}`;
+                div_2.classList.add("picture-section-2-topDiv");
+                div.classList.add("picture-section-2-div");
+                div.setAttribute("id", `${results[i].id}`)
+                img.classList.add("picture-section-2-img");
+                img.setAttribute("src", `${results[i].imageurl}`);
+                label.classList.add("picture-label");
+                
+                if(`${results[i].label}` == "" || `${results[i].label}` == undefined){
+                    label.textContent = "";
+                }else{
+                    label.textContent = `${results[i].label}`;
+                }
+
+                if(results[i].description == null ){
+                    p.textContent = ""
+                } else {
+                    p.textContent = `${results[i].description}`;
+                }
+                
+                button.textContent = "Delete";
+                button.classList.add("picture-delete-button");
             }
-            
-            button.textContent = "Delete";
-            button.classList.add("picture-delete-button");
+            this.delete_personal_photoData()
         }
-        this.delete_personal_photoData()
     }
 
     // fetch api

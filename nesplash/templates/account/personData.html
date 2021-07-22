@@ -6,18 +6,37 @@
 
 {% block content %}
     <div class="main-account-2">
-        <a class="account-2-a" href="{{ url_for('user.person_data') }}">Personal Data</a>
-        <a class="account-2-a" href="{{ url_for('user.upload_pictures_page') }}">Upload_Pictures</a>
+        <a class="account-2-a" href="{{ url_for('user.person_data') }}">Profile</a>
+        <a class="account-2-a" href="{{ url_for('user.upload_pictures_page') }}">Pictures</a>
         <a class="account-2-a" href="{{ url_for('user.collections_page') }}">Collections</a>
         <a class="account-2-a" href="{{ url_for('user.following_page') }}">Following</a>
         <a class="account-2-a" href="{{ url_for('user.followers_page') }}">Followers</a>
     </div>
     <div class="person-section">
-        <div class="person-confirm-spanDiv">
-            <p class="confirm-status"></p>
-        </div>
+
         <div>
             <div class="person-topDiv">
+                <div class="image-area">
+                    <div>
+                        <div style="padding-left: 10px;">
+                            <img class="person-image">
+                        </div>
+                        <form style="display: flex; position:relative;">
+                            <div>
+                                <input type="file" class="person-changeImage" accept=".jpg,.png" size="2" name="file" id="iform">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="person-upload-profile">
+                        <a class="upload-btn">更換大頭貼</a>
+                    </div>
+                    <div class="person-upload-public">
+                        <a class="person-upload">上傳照片</a>
+                    </div>
+                    <div class="person-delete-account">
+                        <button class="person-delete">刪除帳號</button>
+                    </div>
+                </div>
                 <div class="data-area">
                     <div class="person-name">
                         <i class="fas fa-user"></i>
@@ -55,25 +74,7 @@
                         </div>
                     </div>
                 </div>
-                <div>
-                    <div class="image-area">
-                        <div>
-                            <img class="person-image">
-                        </div>
-                        <form style="display: flex; position:relative;">
-                            <div>
-                                <input type="file" class="person-changeImage" accept=".jpg,.png" size="2" name="file" id="iform">
-                            </div>
-                            <button class="upload-btn">更換大頭貼</button>
-                        </form>
-                    </div>
-                    <div class="person-upload-area">
-                        <a class="person-upload">上傳照片</a>
-                    </div>
-                    <div class="person-delete-area">
-                        <button class="person-delete">刪除帳號</button>
-                    </div>
-                </div>
+
             </div>
             <div class="person-botDiv">
                 <h2>綁定帳號</h2>
@@ -154,7 +155,7 @@
                 <span class="close">&times;</span>
                 <h3 class="upload-h3">Upload Photo</h3>
                 <!-- 描述、類別、下載、檔案 -->
-                <div style="display: flex; justify-content: center; margin-top: 50px;">
+                <div class="upload-public-popout">
                     <div class="upload-categoryDiv">
                         <h3 class="upload-CategoryTitle">Category</h3>
                         <div style="display: flex;">
