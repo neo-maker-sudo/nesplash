@@ -112,5 +112,9 @@ def oauth_callback(provider_name):
         send_register_mail(user)
         return redirect(url_for('user.person_data'))
     else:
-        session["email"] = user.email
-        return redirect(url_for('main.index'))
+        if user.useAuthy is True:
+            session["email"] = user.email
+            return redirect(url_for('authy.twofa_token'))
+        else:
+            session["email"] = user.email
+            return redirect(url_for('main.index'))
