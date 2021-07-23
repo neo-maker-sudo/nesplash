@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+
+{% block style %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/account/main.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="check-2fa-html-div">
+        <input type="text" placeholder="請輸入7位數授權碼" id="twofa-check-input" maxlength="7" required>
+        <button id="twofa-check-button" type="button">送出</button>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{{ url_for('static', filename='js/account/authy/check_token.js') }}"></script>
+{% endblock %}

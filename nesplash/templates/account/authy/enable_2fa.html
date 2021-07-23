@@ -1,0 +1,20 @@
+{% extends 'layout.html' %}
+
+{% block style %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/account/main.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="enable-2fa-html-div">
+        <h1>Enable Two-Factor Authentication</h1>
+        <p>To enable Two-Factor Authentication, you need to have the <a href="https://authy.com/" target="_blank">Authy</a> app
+            installed on your smartphone. <a href="https://authy.com/download/" target="_blank">Download</a> it now!</p>
+        <div>
+            <button id="enable-2fa-button">Enable 2fa</button>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{{ url_for('static', filename='js/account/authy/enable_2fa.js') }}"></script>
+{% endblock %}

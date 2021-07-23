@@ -359,6 +359,49 @@ class Person {
             public_image_btn.classList.remove("loading-div");
         }
     }
+
+    // enable 2fa
+    enable2fa(){
+        const enable = document.querySelector(".twofa-enable");
+        if (enable !== null){
+            enable.onclick = ()=>{
+                const url = `${window.port}/api/user/2fa/enable`;
+                fetch(url)
+                .then( async ( response )=>{
+                    return await response.json()
+                })
+                .then((result)=>{
+                    if(result.message == "transfer to enable 2fa html") {
+                        window.location = `${window.port}` + "/2fa/enable"
+                    } else {
+                        alert("請再重新嘗試，若數次還是有異常情形，請聯繫管理人員 : eyywqkgb@gmail.com")
+                    }
+                })
+            }
+        }
+    }
+
+    // disable 2fa
+    disable2fa(){
+        const disable = document.querySelector(".twofa-disable");
+        if (disable !== null){
+            disable.onclick = ()=>{
+                const url = `${window.port}/api/user/2fa/disable`;
+                fetch(url)
+                .then( async ( response )=>{
+                    return await response.json()
+                })
+                .then((result)=>{
+                    if(result.ok == true){
+                        window.location.reload()
+                    }
+                    else if (result.error == "An error has occurred. Please try again."){
+                        alert("請再重新嘗試，若數次還是有異常情形，請聯繫管理人員 : eyywqkgb@gmail.com")
+                    } 
+                })
+            }
+        }
+    }
     // display personal data function
     display_personTopDiv(data){
         li.classList.add("select");
@@ -396,6 +439,20 @@ class Person {
         name.textContent = `${data.username}` == "" ? "anonymous" : `${data.username}`;
         email.textContent = `${data.email}`;
         
+        if(data.useAuthy){
+            const emailDiv = document.querySelector(".person-email");
+            const label = document.createElement("label");
+            emailDiv.appendChild(label)
+            label.classList.add("twofa-disable");
+            label.textContent = "Disable two-factor authentication";
+        } else {
+            const emailDiv = document.querySelector(".person-email");
+            const label = document.createElement("label");
+            emailDiv.appendChild(label)
+            label.classList.add("twofa-enable");
+            label.textContent = "Enable two-factor authentication";
+        }
+
         if (data.location !== null){
             if (data.location === ""){
                 location.textContent = `${data.location}`
@@ -432,7 +489,8 @@ class Person {
             const remind_span = document.createElement("span");
             idDiv.appendChild(remind_span);
             upload_publicImg.className = "person-upload-forbidden";
-            remind_span.textContent = "Account Confrimed : "
+            upload_publicImg.textContent = "無法上傳照片";
+            remind_span.textContent = "Account Confrimed : ";
             remind_span.classList.add("remind-span-success-warning");
             return;
         }
@@ -446,12 +504,14 @@ class Person {
         }
         else{
             upload_publicImg.className = "person-upload-forbidden";
-            const remind_span = document.createElement("span")
+            upload_publicImg.textContent = "無法上傳照片";
+            const remind_span = document.createElement("span");
             idDiv.appendChild(remind_span);
             remind_span.textContent = "Account UnConfrim : Your account not confirm yet, if you have issue please contact administrator email: eyywqkgb@gmail.com";
             remind_span.classList.add("remind-span");
         }
-        
+        this.enable2fa()
+        this.disable2fa()
     }
     // fetch api
     fetchData(){

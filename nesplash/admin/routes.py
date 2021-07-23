@@ -25,7 +25,7 @@ def admin_photos_page(*args, **kwargs):
 @login_required
 @admin_required("ADMINISTER")
 def admin_user_data(*args, **kwargs):
-    users = User.query.all()
+    users = User.query.order_by(User.id.desc()).all()
     results = userSchema.dump(users)
     return jsonify({"ok": True, "message": results}) 
 

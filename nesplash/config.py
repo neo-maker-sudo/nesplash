@@ -20,6 +20,10 @@ class BaseConfig():
     CACHE_REDIS_HOST = '127.0.0.1'
     CACHE_REDIS_PORT = '6379'
 
+    # authy
+    AUTHY_APP_NAME = os.getenv("AUTHY_APP_NAME")
+    AUTHY_APP_ID = os.getenv("AUTHY_APP_ID")
+    AUTHY_PRODUCTION_API_KEY = os.getenv("AUTHY_PRODUCTION_API_KEY")
 class DevelopmentConfig(BaseConfig):
     SQLALCHEMY_DATABASE_URI = f"mysql+pymysql://neo:{os.getenv('NEO_MYSQL')}@localhost:3306/nesplash?charset=utf8mb4"
     ADMIN_EMAIL = os.getenv("ADMIN_ACCOUNT")

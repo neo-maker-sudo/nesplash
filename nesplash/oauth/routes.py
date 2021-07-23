@@ -4,7 +4,7 @@ from nesplash.extensions import oauth, db
 from nesplash.models import User, Method
 from nesplash.user.util import send_register_mail
 
-auth_bp = Blueprint("auth", __name__)
+oauth_bp = Blueprint("auth", __name__)
 
 github = oauth.remote_app(
     name='github',
@@ -65,7 +65,8 @@ def get_social_profile(provider, access_token):
 
     return username, email, website, bio, profile_image
 
-@auth_bp.route("/login/<provider_name>")
+
+@oauth_bp.route("/login/<provider_name>")
 def oauth_login(provider_name):
     if provider_name not in providers.keys():
         abort(404)
@@ -77,7 +78,7 @@ def oauth_login(provider_name):
     return providers[provider_name].authorize(callback=callback)
 
 
-@auth_bp.route("/callback/<provider_name>")
+@oauth_bp.route("/callback/<provider_name>")
 def oauth_callback(provider_name):
     if provider_name not in providers.keys():
         abort(404)

@@ -8,14 +8,15 @@ from nesplash.models import Role, Category, Method
 from nesplash.admin.routes import admin_bp
 from nesplash.main.routes import main_bp
 from nesplash.user.routes import user_bp
-from nesplash.auth.routes import auth_bp
+from nesplash.oauth.routes import oauth_bp
+from nesplash.authy.routes import authy_bp
 from nesplash.category.foodie.routes import foodie_bp
 from nesplash.category.nature.routes import nature_bp
 from nesplash.category.architecture.routes import architecture_bp
 from nesplash.category.travel.routes import travel_bp
 from nesplash.category.athletics.routes import athletics_bp
 from nesplash.category.people.routes import people_bp
-from nesplash.extensions import db, ma, cors, mail, oauth, whooshee, cache, toolbar
+from nesplash.extensions import db, ma, cors, mail, oauth, whooshee, cache
 
 def create_app(config_name=None):
     if config_name is None:
@@ -33,7 +34,8 @@ def register_blueprints(app):
     app.register_blueprint(admin_bp)
     app.register_blueprint(main_bp)
     app.register_blueprint(user_bp)
-    app.register_blueprint(auth_bp)
+    app.register_blueprint(oauth_bp)
+    app.register_blueprint(authy_bp)
     app.register_blueprint(foodie_bp)
     app.register_blueprint(nature_bp)
     app.register_blueprint(architecture_bp)
@@ -49,7 +51,6 @@ def register_extensions(app):
     oauth.init_app(app)
     whooshee.init_app(app)
     cache.init_app(app)
-    toolbar.init_app(app)
 
 def register_commands(app):
     

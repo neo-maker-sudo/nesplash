@@ -62,7 +62,7 @@ def member():
         else:
             if user.validate_password(password):
                 session["email"] = user.email
-                return jsonify({"ok": True}), 201
+                return jsonify({"ok": True, "message": user.useAuthy}), 201
             else:
                 return jsonify({"error": True, "message": "wrong password"}), 401
     # 登出
@@ -227,6 +227,7 @@ def person_data_api(*args, **kwargs):
             "link": current_user.link,
             "bio": current_user.bio,
             "profile_image": current_user.profile_image,
+            "useAuthy": current_user.useAuthy,
             "confirmed_status": current_user.confirmed,
             "lock_status": current_user.lock_status,
             "Method": {

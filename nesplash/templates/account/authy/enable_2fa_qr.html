@@ -1,0 +1,30 @@
+
+{% extends 'layout.html' %}
+
+{% block style %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/account/main.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="enable-2fa-qr-html-div">
+        <h1 style="color: red; font-style:italic">請於15分鐘內，下載AUTHY APP並新增帳號，點選APP裡面的QRCODE掃描器掃描本網頁之QRCODE，若APP顯示Account couldn't be added，為QRCODE已失效，請重新再操作一次。</h1>
+        <h1>Enable Two-Factor Authentication</h1>
+        <h2>IOS Instructions</h2>
+        <ul>
+            <li>打開 Authy iOS app.</li>
+            <li>點選 紅十字 icon ( Add Account ).</li>
+            <li>點選 Scan QR Code</li>
+        </ul>
+        <h2>Android Instructions</h2>
+        <ul>
+            <li>打開 Authy Android app.</li>
+            <li>點選右上角 the … (menu) icon, and then select Add Account.</li>
+            <li>點選 Scan QR Code</li>
+        </ul>
+        <img src="{{ url_for('authy.enable_2fa_qrcode') }}">
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{{ url_for('static', filename='js/account/authy/check_registration.js') }}"></script>
+{% endblock %}

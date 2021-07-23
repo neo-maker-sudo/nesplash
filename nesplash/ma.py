@@ -23,10 +23,13 @@ class FollowSchema(ma.Schema):
     class Meta:
         fields = ("follower_id", "followed_id", "timestamp")
 
-
+class AuthySchema(ma.Schema):
+    class Meta:
+        fields = ("user_id", "authy_id")
 
 photoSchema = PhotoSchama(many=True)
 videoSchema = VideoSchema(many=True)
 userSchema = UserSchema(many=True)
 collectionSchema = CollectionSchema(many=True)
 followSchema = FollowSchema(many=True)
+authySchema = AuthySchema(many=True)

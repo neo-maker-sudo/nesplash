@@ -166,25 +166,28 @@
     margin-top: 5px;
     transition: 1s;
     cursor: pointer;
-    background-color: #CCCCCC;
+    background-color: transparent;
+    box-shadow: 0 5px 10px rgb(0 0 0 / 15%);
 }
 
 .person-upload{
-    background-color: #CCCCCC;
+    background-color: transparent;
     padding: 10px;
     border-radius: 5px;
     cursor: pointer;
     font-size: 13px;
     transition: 1s;
+    box-shadow: 0 5px 10px rgb(0 0 0 / 15%);
 }
 
 .person-upload-forbidden{
-    background-color: #CCCCCC;
+    background-color: transparent;
     padding: 10px;
     border-radius: 5px;
     cursor: no-drop;
     font-size: 13px;
     transition: 1s;
+    box-shadow: 0 5px 10px rgb(0 0 0 / 15%);
 }
 
 .person-upload:hover,
@@ -478,14 +481,16 @@
     width: 125px;
     height: 125px;
 }
+
 .upload-btn{
     padding: 10px;
     border: none;
     cursor: pointer;
     transition: 1s;
-    background-color: #CCCCCC;
+    background-color: transparent;
     border-radius: 5px;
     font-size: 13px;
+    box-shadow: 0 5px 10px rgb(0 0 0 / 15%);
 }
 
 
@@ -678,7 +683,78 @@
     margin-top: 100px;
 }
 
-/* person-topDiv RWD */
+/* 2fa  */
+.twofa-enable{
+    cursor: pointer;
+    font-style: italic;
+    color: blue;
+    text-align: right !important;
+}
+
+.twofa-enable:hover{
+    color: rgb(55, 173, 55);
+}
+
+.twofa-disable{
+    cursor: pointer;
+    font-style: italic;
+    color: blue;
+    text-align: right !important;
+}
+
+.twofa-disable:hover {
+    color: red
+}
+
+.check-2fa-html-div{
+    box-shadow: 0 5px 10px rgb(0 0 0 / 15%);
+    padding: 15px;
+    margin: 200px auto;
+    width: 250px;
+    text-align: center;
+}
+
+#twofa-check-input{
+    width: 90%;
+    height: 20px;
+    border-radius: 5px;
+    padding: 10px;
+    border: 1px solid #757575;
+    margin-bottom: 10px;
+}
+
+#twofa-check-button{
+    border: none;
+    padding: 10px;
+    background: transparent;
+    box-shadow: 0 5px 10px rgb(0 0 0 / 15%);
+    cursor: pointer;
+}
+
+.enable-2fa-html-div{
+    box-shadow: 0 5px 10px rgb(0 0 0 / 15%);
+    padding: 15px;
+    margin: 200px 30px 0 30px;
+}
+
+.enable-2fa-qr-html-div{
+    box-shadow: 0 5px 10px rgb(0 0 0 / 15%);
+    padding: 15px;
+    margin: 60px 30px 0 30px;
+}
+
+#enable-2fa-button{
+    box-shadow: 0 5px 15px rgb(0 0 0 / 15%);
+    padding: 10px;
+    background: transparent;
+    cursor: pointer;
+    border-style: none;
+}
+
+#enable-2fa-button:hover {
+    color: blue;
+}
+/* RWD */
 
 @media only screen and (max-width: 800px) {
     .person-topDiv{

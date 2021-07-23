@@ -21,7 +21,11 @@ class Login {
             })
             .then((result)=>{
                 if(result.ok == true){
-                    location.href = `${window.port}` + "/" 
+                    if(result.message === true){
+                        location.href = `${window.port}` + "/2fa/check"
+                    } else {
+                        location.href = `${window.port}` + "/" 
+                    }
                 }
                 else if(result.message == "none exist user"){
                     if(!document.querySelector('.signin-error')){

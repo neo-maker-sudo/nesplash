@@ -25,6 +25,14 @@ from itsdangerous import BadSignature, SignatureExpired
 # Permission table
 # 1.FOLLOW 2.COLLECT 3.UPLOAD 4.ADMINISTER
 
+
+class Authy(db.Model):
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False, primary_key=True)
+    authy_id = db.Column(db.String(10), nullable=False, default="")
+    timestamp = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+
+    users = db.relationship("User", back_populates="authys", lazy="joined")
+
 class Method(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), nullable=False)
@@ -63,6 +71,7 @@ class User(db.Model):
     total_collections = db.Column(db.Integer, default=0)
     total_photos = db.Column(db.Integer, default=0)
     link = db.Column(db.String(255))
+    useAuthy = db.Column(db.Boolean, default=False)
     lock_status = db.Column(db.Boolean, default=False)
     confirmed = db.Column(db.Boolean, default=False)
 
@@ -73,6 +82,7 @@ class User(db.Model):
     photos = db.relationship('Photo', back_populates='author', lazy="joined", cascade="all")
     collections = db.relationship("Collection", back_populates="collector", cascade="all")
     methods = db.relationship("Method", back_populates="users")
+    authys = db.relationship("Authy", back_populates="users", cascade="all")
 
     following = db.relationship("Follow", foreign_keys=[Follow.follower_id], back_populates="follower", lazy="dynamic", cascade="all")
     followers = db.relationship("Follow", foreign_keys=[Follow.followed_id], back_populates="followed", lazy="dynamic", cascade="all")
