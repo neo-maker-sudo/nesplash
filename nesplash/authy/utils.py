@@ -28,7 +28,6 @@ def get_registration_jwt(user_id, expires_in=5 * 60):
     return jwt.encode(payload, current_app.config['AUTHY_PRODUCTION_API_KEY'])
 
 def get_qrcode(jwt):
-    print(qrcode.image.svg.SvgImage)
     qr = qrcode.make("authy://account?token=" + jwt,
                         image_factory=qrcode.image.svg.SvgImage)
     stream = BytesIO()

@@ -210,12 +210,20 @@ class Public {
             img.setAttribute("id", `${results[i].id}`);
 
             if(`${results[i].label}` == "" || `${results[i].label}` == undefined){
+                label.classList.add("label-desc")
                 label.textContent = "";
             }else{
+                label.classList.add("label-desc")
                 label.textContent = `${results[i].label}`;
             }
             
-            dp.textContent = `${results[i].description}`;
+            
+            if(results[i].description == null){
+                dp.textContent = "";
+            } else {
+                dp.textContent = `${results[i].description}`;
+            }
+            
 
             if(results[i].imageurl.split(".")[1] == "cloudfront"){
                 img.setAttribute("src", `${results[i].imageurl}`);

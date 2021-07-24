@@ -118,8 +118,10 @@ class Architecture {
             inside_a.setAttribute("href", `/public/${results[i].user_id}`);
 
             if(`${results[i].label}` == "" || `${results[i].label}` == undefined){
+                label.classList.add("label-desc")
                 label.textContent = "";
             }else{
+                label.classList.add("label-desc")
                 label.textContent = `${results[i].label}`;
             }
             
