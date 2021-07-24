@@ -2,7 +2,11 @@
 
 link : https://www.nesplash.tw
 
-
+USE API:  
+  Unsplash Open API : https://unsplash.com/documentation  
+  Pexel Open API : https://www.pexels.com/zh-tw/api/documentation/  
+  Twilio Open API : https://www.twilio.com/docs  
+  
 using image classification - tensorflow & keras 
 
 
