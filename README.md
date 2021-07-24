@@ -1,11 +1,11 @@
 # nesplash
 
-link : https://www.nesplash.tw
+* link : https://www.nesplash.tw
 
 ## USE OPEN API :  
-  Unsplash : https://unsplash.com/documentation  
-  Pexel : https://www.pexels.com/zh-tw/api/documentation/  
-  Twilio : https://www.twilio.com/docs  
+  * Unsplash : https://unsplash.com/documentation  
+  * Pexel : https://www.pexels.com/zh-tw/api/documentation/  
+  * Twilio : https://www.twilio.com/docs  
   
 image classification - tensorflow & keras 
 
