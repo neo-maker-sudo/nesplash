@@ -13,7 +13,7 @@
    * HTML、CSS、Javascript
  ### BACKEND : 
    * FLASK - ( pipenv )
- ### DataBase :
+ ### DataBase ( MYSQL ) :
    * ORM - Flask-sqlalchemy
    * Index Optimizer - Flask-whooshee
  ### Others :  
