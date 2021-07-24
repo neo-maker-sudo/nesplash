@@ -7,7 +7,7 @@ USE API:
   Pexel Open API : https://www.pexels.com/zh-tw/api/documentation/  
   Twilio Open API : https://www.twilio.com/docs  
   
-using image classification - tensorflow & keras 
+image classification - tensorflow & keras 
 
 
 心智圖 : 
