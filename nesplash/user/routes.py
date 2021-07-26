@@ -62,8 +62,8 @@ def member():
             return jsonify({"error": True, "message": "none exist user"}), 400
         else:
             if user.validate_password(password):
-                session["email"] = user.email
                 if user.useAuthy == False:
+                    session["email"] = user.email
                     global check
                     check = True
                     return jsonify({"ok": True, "message": user.useAuthy}), 201
@@ -107,6 +107,7 @@ def check_2fa_token(*args, **kwargs):
     verification = verify_authy_token(authy[0]["authy_id"], token)
     message = verification.ok()
     if message:
+        session["email"] = user.email
         global check
         check = True
         return jsonify({"ok": True})
