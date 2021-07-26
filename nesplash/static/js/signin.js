@@ -1,6 +1,5 @@
 const btn = document.querySelector(".signin-btn");
 
-
 class Login {
     submitRequest(){
         btn.onclick = (e)=>{
@@ -22,9 +21,9 @@ class Login {
             .then((result)=>{
                 if(result.ok == true){
                     if(result.message === true){
-                        location.href = `${window.port}` + "/2fa/check"
+                        location.href = `${window.port}` + "/2fa/check";
                     } else {
-                        location.href = `${window.port}` + "/" 
+                        location.href = `${window.port}` + "/";
                     }
                 }
                 else if(result.message == "none exist user"){

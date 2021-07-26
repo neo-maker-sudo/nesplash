@@ -131,9 +131,11 @@ download/
 dmypy.json
 filter.py
 get.py
-test.py
+algorithm.py
 download.py
 training.py
+test.db
+test.py
 # Pyre type checker
 .pyre/
 

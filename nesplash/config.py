@@ -29,6 +29,12 @@ class DevelopmentConfig(BaseConfig):
     ADMIN_EMAIL = os.getenv("ADMIN_ACCOUNT")
 
 
+class TestingConfig(BaseConfig):
+    TESTING = True
+    ADMIN_EMAIL = os.getenv("ADMIN_ACCOUNT")
+    SQLALCHEMY_DATABASE_URI = "sqlite:///test.db"
+    
 config = {
-    "development": DevelopmentConfig
+    "development": DevelopmentConfig,
+    "TESTING": TestingConfig
 }

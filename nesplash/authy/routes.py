@@ -89,21 +89,3 @@ def disable_2fa(*args, **kwargs):
         return jsonify({"error": "An error has occurred. Please try again."})
 
 
-@authy_bp.route("/api/user/2fa/check/token", methods=['POST'])
-@login_required
-def check_2fa_token(*args, **kwargs):
-    token = request.json["token"]
-    if token is None:
-        return jsonify({"error": "none exist token"}), 400
-
-    user = User.query.filter_by(email=kwargs["email"]).first()
-    if user == None:
-        return jsonify({"error": "none exist user"}), 400
-    
-    authy = authySchema.dump(user.authys)
-    verification = verify_authy_token(authy[0]["authy_id"], token)
-    message = verification.ok()
-    if message:
-        return jsonify({"ok": True})
-    else:
-        return jsonify({"error": "Token is invalid"})

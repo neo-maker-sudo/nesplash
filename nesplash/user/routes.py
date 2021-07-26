@@ -3,7 +3,8 @@ from nesplash.models import User, Photo, Collection, Follow, Category, Method
 from nesplash.extensions import db
 from nesplash.decorator import login_required
 from nesplash.user.util import send_register_mail, send_change_password_mail, s3_profile_pics, s3_public_pics
-from nesplash.ma import userSchema, photoSchema, collectionSchema, followSchema
+from nesplash.ma import userSchema, photoSchema, collectionSchema, followSchema, authySchema
+from nesplash.authy.utils import verify_authy_token
 from werkzeug.security import check_password_hash
 from nesplash.extensions import cache
 
@@ -11,7 +12,7 @@ import time
 
 user_bp = Blueprint("user", __name__)
 
-
+check = False
 # signin and signup routes
 @user_bp.route("/signup")
 @cache.cached(timeout=60*60*24)
@@ -62,12 +63,18 @@ def member():
         else:
             if user.validate_password(password):
                 session["email"] = user.email
-                return jsonify({"ok": True, "message": user.useAuthy}), 201
+                if user.useAuthy == False:
+                    global check
+                    check = True
+                    return jsonify({"ok": True, "message": user.useAuthy}), 201
+                else:
+                    return jsonify({"ok": True, "message": user.useAuthy}), 201
             else:
                 return jsonify({"error": True, "message": "wrong password"}), 401
     # 登出
     elif request.method == "DELETE":
         session.pop("email")
+        check = False 
         return jsonify({"ok": True})
     else:
         sess = session.get("email")
@@ -78,11 +85,33 @@ def member():
                 "email": user.email,
                 "username": user.username,
                 "role_id": user.role_id,
-                "lock_status": user.lock_status
+                "lock_status": user.lock_status,
+                "check": check
             }})
         else:
             return jsonify({"message": None}), 403
 
+
+@user_bp.route("/api/user/2fa/check/token", methods=['POST'])
+@login_required
+def check_2fa_token(*args, **kwargs):
+    token = request.json["token"]
+    if token is None:
+        return jsonify({"error": "none exist token"}), 400
+
+    user = User.query.filter_by(email=kwargs["email"]).first()
+    if user == None:
+        return jsonify({"error": "none exist user"}), 400
+
+    authy = authySchema.dump(user.authys)
+    verification = verify_authy_token(authy[0]["authy_id"], token)
+    message = verification.ok()
+    if message:
+        global check
+        check = True
+        return jsonify({"ok": True})
+    else:
+        return jsonify({"error": "Token is invalid"})
 
 # reset change routes
 @user_bp.route("/api/user/reset-page", methods=['GET', 'POST'])
