@@ -14,8 +14,7 @@ from nesplash.ma import authySchema, userSchema
 authy_bp = Blueprint("authy", __name__)
 
 @authy_bp.route("/2fa/check")
-@login_required
-def twofa_token(*args, **kwargs):
+def twofa_token():
     return render_template("account/authy/check_2fa.html")
 
 @authy_bp.route("/2fa/enable")
