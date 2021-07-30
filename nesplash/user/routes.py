@@ -320,7 +320,6 @@ def change_link(*args, **kwargs):
         return jsonify({"error": "none exist user"}), 400
 
     link = request.json["link"]
-    print(link)
     user.link = link
     db.session.commit()
     return jsonify({"ok": True})
@@ -531,11 +530,14 @@ def unfollow(user_id):
 
 
 @user_bp.route("/api/is-following-or-not", methods=['POST'])
-@login_required
-def follow_status(*args, **kwargs):
+def follow_status():
+    sess = session.get("email")
+    if sess == None:
+        return jsonify({"message": "nomatch"})
+    
     user_id = request.json["user_id"]
 
-    current_user = User.query.filter_by(email=kwargs["email"]).first()
+    current_user = User.query.filter_by(email=sess).first()
     user = User.query.get_or_404(user_id)
     result = current_user.is_following(user)
     if result:
