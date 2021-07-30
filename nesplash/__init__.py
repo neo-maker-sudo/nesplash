@@ -16,7 +16,7 @@ from nesplash.category.architecture.routes import architecture_bp
 from nesplash.category.travel.routes import travel_bp
 from nesplash.category.athletics.routes import athletics_bp
 from nesplash.category.people.routes import people_bp
-from nesplash.extensions import db, ma, cors, mail, oauth, whooshee, cache
+from nesplash.extensions import db, ma, cors, mail, oauth, whooshee, cache, sess
 
 def create_app(config_name=None):
     if config_name is None:
@@ -51,6 +51,7 @@ def register_extensions(app):
     oauth.init_app(app)
     whooshee.init_app(app)
     cache.init_app(app)
+    sess.init_app(app)
 
 def register_commands(app):
     

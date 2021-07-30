@@ -25,6 +25,7 @@ authy = "*"
 qrcode = "*"
 pyjwt = "*"
 pytest = "*"
+flask-session = "*"
 
 [dev-packages]
 

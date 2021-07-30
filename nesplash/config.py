@@ -1,4 +1,5 @@
 import os
+from redis import Redis
 
 class BaseConfig():
     # SERVER_NAME = "www.nesplash.tw"
@@ -24,6 +25,16 @@ class BaseConfig():
     AUTHY_APP_NAME = os.getenv("AUTHY_APP_NAME")
     AUTHY_APP_ID = os.getenv("AUTHY_APP_ID")
     AUTHY_PRODUCTION_API_KEY = os.getenv("AUTHY_PRODUCTION_API_KEY")
+
+    # session
+    SESSION_TYPE = "redis"
+    SESSION_REDIS = Redis(  
+        host='127.0.0.1',  
+        port=6379)
+    SESSION_USE_SIGNER = True
+    SESSION_PERMANENT = False
+    PERMANENT_SESSION_LIFETIME = 3600
+
 class DevelopmentConfig(BaseConfig):
     SQLALCHEMY_DATABASE_URI = f"mysql+pymysql://neo:{os.getenv('NEO_MYSQL')}@localhost:3306/nesplash?charset=utf8mb4"
     ADMIN_EMAIL = os.getenv("ADMIN_ACCOUNT")
